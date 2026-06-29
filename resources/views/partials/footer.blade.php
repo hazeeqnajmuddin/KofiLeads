@@ -3,8 +3,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Brand -->
             <div>
-                <span class="text-xl font-bold text-white tracking-tight block mb-4">AppLogo</span>
-                <p class="text-sm text-slate-400">Delivering exceptional experiences through innovative solutions.</p>
+                <span class="text-xl font-bold text-white tracking-tight block mb-4">Rahmah Consulting</span>
+                <p class="text-sm text-slate-400">Menyediakan servis berkualiti tinggi untuk keperluan anda.</p>
             </div>
             
             <!-- Quick Links -->
@@ -24,7 +24,7 @@
         </div>
         
         <div class="mt-8 pt-8 border-t border-slate-800 text-sm text-center text-slate-500">
-            &copy; {{ date('Y') }} AppLogo Inc. All rights reserved.
+            &copy; {{ date('Y') }} Rahmah Consulting Inc. All rights reserved.
         </div>
     </div>
 </footer>

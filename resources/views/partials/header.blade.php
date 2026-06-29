@@ -8,9 +8,10 @@
             
             <!-- Desktop Navigation (Hidden on Mobile) -->
             <nav class="hidden md:flex space-x-8">
-                <a href="#services" class="text-slate-600 hover:text-indigo-600 transition">Services</a>
-                <a href="#stats" class="text-slate-600 hover:text-indigo-600 transition">Stats</a>
-                <a href="#faqs" class="text-slate-600 hover:text-indigo-600 transition">FAQs</a>
+                <a href="#services" class="text-slate-600 hover:text-indigo-600 transition">Servis</a>
+                <a href="#stats" class="text-slate-600 hover:text-indigo-600 transition">Statistik</a>
+                <a href="#faqs" class="text-slate-600 hover:text-indigo-600 transition">Soalan Lazim</a>
+                 <a href="#contact" class="text-slate-600 hover:text-indigo-600 transition">Semak Kelayakan</a>
             </nav>
 
             <!-- Mobile Menu Button (UI only, requires JS/Alpine to toggle) -->
