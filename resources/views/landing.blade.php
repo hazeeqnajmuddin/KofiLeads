@@ -125,37 +125,92 @@
         <div class="max-w-3xl mx-auto">
             <h2 class="text-4xl font-serif font-bold text-center text-brand-navy mb-12">Soalan Lazim</h2>
             <div class="space-y-6">
-                <!-- FAQ Item -->
-                <div class="bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200">
-                    <h3 class="font-serif font-semibold text-xl text-brand-navy mb-3">Apakah servis utama RCS?</h3>
-                    <p class="text-brand-gray leading-relaxed">RCS menyediakan khidmat konsultasi kewangan, semakan kelayakan pembiayaan peribadi, penyatuan hutang dan panduan berkaitan isu CCRIS, CTOS, AKPK, SAA, legal action serta komitmen kewangan.</p>
-                </div>
                 
-                <div class="bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200">
-                    <h3 class="font-serif font-semibold text-xl text-brand-navy mb-3">Siapa yang boleh membuat semakan?</h3>
-                    <p class="text-brand-gray leading-relaxed">Semakan terbuka kepada kakitangan kerajaan, GLC, badan berkanun dan pekerja swasta yang mempunyai pendapatan tetap serta dokumen sokongan yang lengkap.</p>
-                </div>
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Apakah servis utama RCS?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">RCS menyediakan khidmat konsultasi kewangan, semakan kelayakan pembiayaan peribadi, penyatuan hutang dan panduan berkaitan isu CCRIS, CTOS, AKPK, SAA, legal action serta komitmen kewangan.</p>
+                </details>
                 
-                <div class="bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200">
-                    <h3 class="font-serif font-semibold text-xl text-brand-navy mb-3">Apakah kelayakan asas untuk semakan awal?</h3>
-                    <p class="text-brand-gray leading-relaxed">
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Siapa yang boleh membuat semakan?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Semakan terbuka kepada kakitangan kerajaan, GLC, badan berkanun dan pekerja swasta yang mempunyai pendapatan tetap serta dokumen sokongan yang lengkap.</p>
+                </details>
+                
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Apakah kelayakan asas untuk semakan awal?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">
                         Kelayakan asas adalah seperti berikut:<br><br>
                         <span class="font-semibold text-brand-navy">&bull; Kerajaan:</span> Gaji asas minimum RM1,500<br>
                         <span class="font-semibold text-brand-navy">&bull; GLC / Badan Berkanun:</span> Gaji asas minimum RM2,500<br>
                         <span class="font-semibold text-brand-navy">&bull; Swasta:</span> Gaji asas minimum RM3,000<br><br>
                         Namun, kelayakan sebenar masih bergantung kepada dokumen, rekod kewangan dan polisi bank / koperasi.
                     </p>
-                </div>
+                </details>
                 
-                <div class="bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200">
-                    <h3 class="font-serif font-semibold text-xl text-brand-navy mb-3">Adakah perlu bayar dahulu sebelum semakan dibuat?</h3>
-                    <p class="text-brand-gray leading-relaxed">Tidak. RCS mengamalkan konsep bayaran hanya apabila permohonan berjaya diluluskan, tertakluk kepada terma perkhidmatan.</p>
-                </div>
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Adakah perlu bayar dahulu sebelum semakan dibuat?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Tidak. RCS mengamalkan konsep bayaran hanya apabila permohonan berjaya diluluskan, tertakluk kepada terma perkhidmatan.</p>
+                </details>
                 
-                <div class="bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200">
-                    <h3 class="font-serif font-semibold text-xl text-brand-navy mb-3">Bolehkah pelanggan yang ada CCRIS, CTOS, AKPK, SAA atau legal action membuat semakan?</h3>
-                    <p class="text-brand-gray leading-relaxed">Boleh. Namun kelayakan bergantung kepada tahap rekod kewangan, jenis isu, dokumen sokongan, status pekerjaan dan polisi pihak bank / koperasi.</p>
-                </div>
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Bolehkah pelanggan yang ada CCRIS, CTOS, AKPK, SAA atau legal action membuat semakan?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Boleh. Namun kelayakan bergantung kepada tahap rekod kewangan, jenis isu, dokumen sokongan, status pekerjaan dan polisi pihak bank / koperasi.</p>
+                </details>
+
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Adakah RCS menjamin kelulusan pinjaman?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Tidak. Kelulusan adalah tertakluk sepenuhnya kepada penilaian pihak bank atau koperasi. RCS membantu dari segi semakan awal, konsultasi, penyusunan dokumen dan cadangan solusi yang bersesuaian.</p>
+                </details>
+
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Berapa lama proses permohonan?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Tempoh proses bergantung kepada kelengkapan dokumen, jenis produk pembiayaan, polisi institusi kewangan dan keadaan rekod pelanggan.</p>
+                </details>
+
+                <details class="group bg-gray-50 p-8 rounded-lg border border-gray-100 hover:border-brand-gold/50 transition-colors duration-200 cursor-pointer">
+                    <summary class="font-serif font-semibold text-xl text-brand-navy list-none flex justify-between items-center outline-none">
+                        Adakah maklumat pelanggan dirahsiakan?
+                        <span class="transition-transform duration-200 group-open:rotate-180">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    <p class="text-brand-gray leading-relaxed mt-4">Ya. Semua maklumat dan dokumen pelanggan digunakan hanya untuk tujuan semakan dan permohonan berkaitan, tertakluk kepada persetujuan pelanggan.</p>
+                </details>
             </div>
         </div>
     </section>
