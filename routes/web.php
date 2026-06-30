@@ -10,3 +10,8 @@ Route::get('/', function () {
 
 // Simple route to access the admin portal
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+// Access via: yourdomain.com/
+Route::get('/acknowledgement', function () {
+    return view('partials.acknowledgement');
+});
