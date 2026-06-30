@@ -15,7 +15,7 @@
                 
                 <!-- Brand Identity -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black tracking-tighter text-sm shadow-sm shadow-indigo-500/30">
+                    <div class="w-9 h-9 rounded-xl bg-navy flex items-center justify-center text-gold font-black tracking-tighter text-sm shadow-sm">
                         RC
                     </div>
                     <div class="flex flex-col">
