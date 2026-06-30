@@ -378,7 +378,7 @@
                     <p class="text-slate-400 text-xs mt-0.5">Semua maklumat adalah SULIT dan dilindungi</p>
                 </div>
 
-                <form action="#" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
+                <form id="borang-permohonan" action="#" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
                     @csrf
 
                     {{-- Group 1: Maklumat Peribadi --}}
@@ -520,23 +520,141 @@
                         </div>
                     </fieldset>
 
-                    {{-- Consent --}}
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" name="consent" id="consent" class="mt-0.5 accent-navy flex-shrink-0" required>
-                            <span class="text-xs text-slate-600 leading-relaxed">
-                                Saya mengesahkan bahawa maklumat yang diberikan adalah benar dan saya bersetuju untuk pihak RCS menghubungi saya bagi tujuan semakan kelayakan dan konsultasi kewangan.
-                            </span>
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-gold-metallic w-full font-bold py-4 px-4 text-sm tracking-wide shadow-sm">
+                    <button type="button" onclick="openConsentModal()" class="btn-gold-metallic w-full font-bold py-4 px-4 text-sm tracking-wide shadow-sm">
                         Hantar Permohonan Sekarang
                     </button>
                     <p class="text-center text-[10px] text-slate-400">
                         Dengan menghantar borang ini, anda bersetuju dengan <a href="#" class="text-navy underline">Dasar Privasi</a> kami.
                     </p>
                 </form>
+
+                {{-- Consent Modal --}}
+                <div id="consent-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+                    {{-- Backdrop --}}
+                    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeConsentModal()"></div>
+
+                    {{-- Modal card --}}
+                    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
+
+                        {{-- Header --}}
+                        <div class="px-6 pt-6 pb-4 border-b border-slate-100 flex items-start justify-between gap-4 flex-shrink-0">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base leading-snug">Pengesahan & Persetujuan</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Sila baca dan tandakan persetujuan anda sebelum menghantar</p>
+                            </div>
+                            <button onclick="closeConsentModal()" class="text-slate-400 hover:text-slate-600 transition mt-0.5 flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        {{-- Scrollable body --}}
+                        <div class="overflow-y-auto px-6 py-5 space-y-5 flex-1">
+
+                            {{-- Declaration text --}}
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Saya mengesahkan bahawa semua maklumat dan dokumen yang diberikan adalah benar. Saya bersetuju membenarkan <span class="font-semibold text-navy">Rahmah Consultancy Services</span> mengumpul, menyimpan, memproses dan berkongsi maklumat saya kepada bank, koperasi, institusi kewangan, banker, panel atau rakan strategik berkaitan bagi tujuan semakan kelayakan, penyatuan hutang, permohonan pembiayaan, pemulihan rekod dan susulan kes. Saya faham bahawa semakan ini <span class="font-semibold">tidak menjamin kelulusan</span>.
+                                </p>
+                            </div>
+
+                            {{-- Mandatory checkboxes --}}
+                            <div class="space-y-3">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Wajib</p>
+
+                                <label class="flex items-start gap-3 cursor-pointer group">
+                                    <input type="checkbox" id="modal-consent-pdpa" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
+                                    <span class="text-xs text-slate-600 leading-relaxed group-hover:text-slate-800 transition">
+                                        Saya telah membaca, memahami dan bersetuju dengan <a href="#" class="text-navy underline font-medium">Notis Perlindungan Data Peribadi</a>.
+                                    </span>
+                                </label>
+
+                                <label class="flex items-start gap-3 cursor-pointer group">
+                                    <input type="checkbox" id="modal-consent-contact" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
+                                    <span class="text-xs text-slate-600 leading-relaxed group-hover:text-slate-800 transition">
+                                        Saya bersetuju untuk dihubungi melalui WhatsApp/telefon/emel bagi tujuan semakan dan susulan kes.
+                                    </span>
+                                </label>
+                            </div>
+
+                            {{-- Optional marketing checkbox --}}
+                            <div class="pt-2 border-t border-slate-100 space-y-3">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pilihan</p>
+
+                                <label class="flex items-start gap-3 cursor-pointer group">
+                                    <input type="checkbox" id="modal-consent-marketing" name="consent_marketing" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
+                                    <span class="text-xs text-slate-500 leading-relaxed group-hover:text-slate-700 transition">
+                                        Saya bersetuju menerima maklumat promosi/pendidikan kewangan daripada Rahmah Consultancy Services.
+                                    </span>
+                                </label>
+                            </div>
+
+                            {{-- Inline error --}}
+                            <p id="consent-error" class="hidden text-xs text-rose-500 font-medium">
+                                Sila tandakan kedua-dua kotak wajib sebelum menghantar.
+                            </p>
+
+                        </div>
+
+                        {{-- Footer actions --}}
+                        <div class="px-6 py-4 border-t border-slate-100 flex gap-3 flex-shrink-0">
+                            <button onclick="closeConsentModal()" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition">
+                                Batal
+                            </button>
+                            <button onclick="submitWithConsent()" class="flex-1 btn-gold-metallic py-2.5 px-4 text-sm font-bold rounded-xl">
+                                Hantar Permohonan
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <script>
+                function openConsentModal() {
+                    const form = document.getElementById('borang-permohonan') || document.querySelector('form');
+                    if (form && !form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+                    document.getElementById('consent-modal').classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeConsentModal() {
+                    document.getElementById('consent-modal').classList.add('hidden');
+                    document.body.style.overflow = '';
+                    document.getElementById('consent-error').classList.add('hidden');
+                }
+
+                function submitWithConsent() {
+                    const pdpa    = document.getElementById('modal-consent-pdpa').checked;
+                    const contact = document.getElementById('modal-consent-contact').checked;
+
+                    if (!pdpa || !contact) {
+                        document.getElementById('consent-error').classList.remove('hidden');
+                        return;
+                    }
+
+                    // Sync marketing opt-in value into the real form before submit
+                    const marketing = document.getElementById('modal-consent-marketing').checked;
+                    const form = document.getElementById('borang-permohonan') || document.querySelector('form');
+                    let hiddenMarketing = form.querySelector('input[name="consent_marketing"]');
+                    if (!hiddenMarketing) {
+                        hiddenMarketing = document.createElement('input');
+                        hiddenMarketing.type  = 'hidden';
+                        hiddenMarketing.name  = 'consent_marketing';
+                        form.appendChild(hiddenMarketing);
+                    }
+                    hiddenMarketing.value = marketing ? '1' : '0';
+
+                    form.submit();
+                }
+
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape') closeConsentModal();
+                });
+                </script>
             </div>
 
             <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
