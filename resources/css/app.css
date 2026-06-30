@@ -16,3 +16,78 @@
     --color-gold-dark:  #A8882E;
     --color-gold-light: #FBF3D5;
 }
+
+/* Desktop typography — scales all rem-based sizes proportionally, mobile untouched */
+@media (min-width: 1024px) {
+    html { font-size: 17px; }
+}
+@media (min-width: 1280px) {
+    html { font-size: 18px; }
+}
+
+/* Elegant dot-grid background for light content sections */
+.bg-dot-grid {
+    background-color: #f8fafc;
+    background-image: radial-gradient(circle, rgba(27, 43, 107, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* DM Serif Display for the hero headline */
+.hero-headline {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+}
+
+/* Metallic gold gradient text */
+.gold-metallic-text {
+    background: linear-gradient(135deg, #C9A840 0%, #FFE87C 30%, #F5D060 50%, #C9A840 70%, #A8882E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Metallic gold CTA button */
+.btn-gold-metallic {
+    background: linear-gradient(135deg, #A8882E 0%, #C9A840 25%, #FFE87C 50%, #C9A840 75%, #A8882E 100%);
+    color: #0F1A45;
+    border-radius: 0.75rem;
+    display: inline-block;
+    transition: filter 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+}
+.btn-gold-metallic:hover {
+    filter: brightness(0.87);
+    box-shadow: 0 6px 28px rgba(201, 168, 64, 0.5);
+}
+
+/* Hero background photo — subtle zoom on load */
+@keyframes heroZoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.05); }
+}
+.hero-bg {
+    animation: heroZoom 9s ease-out forwards;
+    will-change: transform;
+    background-size: cover;
+    background-position: center top;
+}
+
+/* Service pill chips inside hero */
+.service-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 1.05rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(6px);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    text-decoration: none;
+}
+.service-chip:hover {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1B2B6B;
+    border-color: transparent;
+}

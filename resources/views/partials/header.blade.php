@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center h-16">
 
             <a href="/" class="flex-shrink-0">
-                <img src="/images/logo.jpeg" alt="Rahmah Consultancy Services" class="h-11 w-auto">
+                <img src="{{ asset('images/logo.jpeg') }}" alt="Rahmah Consultancy Services" class="h-16 w-auto">
             </a>
 
             <nav class="hidden md:flex items-center space-x-8">
