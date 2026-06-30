@@ -165,7 +165,7 @@
         <div class="max-w-2xl mx-auto bg-white p-10 rounded-2xl shadow-xl border-t-8 border-brand-navy">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-serif font-bold text-brand-navy mb-4">Semak Kelayakan Sekarang</h2>
-                <p class="text-brand-gray">Sila isi maklumat di bawah dengan tepat untuk proses semakan yang lancar.</p>
+                <p class="text-brand-gray">Isi maklumat ringkas & upload dokumen untuk semakan awal.</p>
             </div>
             
             <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
