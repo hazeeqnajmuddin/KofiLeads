@@ -1,3 +1,6 @@
+/* Import the extracted Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap');
+
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -6,6 +9,26 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* --- Typography --- */
+    /* Sans-serif for clean body copy, subheadings, and UI elements */
+    --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    /* Serif for elegant, authoritative primary headings */
+    --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+
+    /* --- Brand Color Palette --- */
+    --color-brand-navy: #0A2240; /* Primary brand color (Logo "R" and main text) */
+    --color-brand-gold: #B98D43; /* Accent color (Logo geometric swoosh and highlight text) */
+    --color-brand-gray: #4A5568; /* Softer neutral for readable body text */
+}
+
+/* Optional: Custom utility classes for specific logo-inspired styles */
+@layer utilities {
+    .text-spacing-wide {
+        letter-spacing: 0.1em; /* Matches the wide tracking on "CONSULTANCY SERVICES" */
+    }
+    
+    .bg-gold-gradient {
+        background: linear-gradient(135deg, #D4AF37 0%, #B98D43 100%);
+    }
 }
