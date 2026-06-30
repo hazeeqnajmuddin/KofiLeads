@@ -1,204 +1,118 @@
 @extends('layouts.admin')
 
-@section('title', 'Utama Pentadbir - Rahmah Consulting')
+@section('title', 'Papan Pemuka')
+@section('page_title', 'Papan Pemuka')
+@section('page_subtitle', 'Gambaran keseluruhan sistem permohonan')
 
 @section('admin_content')
-<div class="space-y-8">
-    
-    <!-- Title / Headline Banner -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">
+
+<!-- Stats cards -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+    <div class="rounded-xl p-5 shadow-sm border-l-4 border-navy bg-white">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Jumlah</p>
+            <div class="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center">
+                <svg class="w-4 h-4 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-navy">{{ $stats['jumlah'] }}</p>
+        <p class="text-xs text-slate-400 mt-1">Semua permohonan</p>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border-l-4 border-amber-400 bg-white">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Menunggu</p>
+            <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-amber-500">{{ $stats['pending'] }}</p>
+        <p class="text-xs text-slate-400 mt-1">Perlu semakan</p>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border-l-4 border-emerald-500 bg-white">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Diluluskan</p>
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-emerald-600">{{ $stats['approved'] }}</p>
+        <p class="text-xs text-slate-400 mt-1">Berjaya diproses</p>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border-l-4 border-red-500 bg-white">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-semibold text-red-600 uppercase tracking-wider">Ditolak</p>
+            <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-red-600">{{ $stats['rejected'] }}</p>
+        <p class="text-xs text-slate-400 mt-1">Tidak layak</p>
+    </div>
+
+</div>
+
+<!-- Quick actions -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+
+    <a href="{{ route('admin.permohonan') }}"
+       class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:border-navy/30 hover:shadow-md transition group flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center group-hover:bg-navy/8 transition">
+            <svg class="w-5 h-5 text-slate-500 group-hover:text-navy transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </div>
         <div>
-            <h1 class="text-2xl font-bold text-slate-950 tracking-tight">Ringkasan Pengurusan</h1>
-            <p class="text-sm text-slate-500">Pantau kemasukan pelanggan dan kemas kini tetapan iklan pemasaran.</p>
+            <p class="font-semibold text-slate-800 text-sm">Urus Permohonan</p>
+            <p class="text-xs text-slate-400 mt-0.5">Semak, luluskan atau tolak</p>
         </div>
-        
-        <!-- Only 1 KPI Counter Retained -->
-        <div class="bg-white px-5 py-3 rounded-xl shadow-xs border border-slate-200/60 flex items-center space-x-4 self-start sm:self-auto">
-            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-            <div>
-                <div class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Dihantar ke WhatsApp</div>
-                <div class="text-2xl font-extrabold text-slate-900 tracking-tight">294</div>
-            </div>
+    </a>
+
+    <a href="{{ route('admin.laporan') }}"
+       class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:border-navy/30 hover:shadow-md transition group flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center group-hover:bg-navy/8 transition">
+            <svg class="w-5 h-5 text-slate-500 group-hover:text-navy transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
         </div>
+        <div>
+            <p class="font-semibold text-slate-800 text-sm">Lihat Laporan</p>
+            <p class="text-xs text-slate-400 mt-0.5">Analisis dan pecahan data</p>
+        </div>
+    </a>
+
+    <a href="{{ route('admin.landing') }}"
+       class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:border-navy/30 hover:shadow-md transition group flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center group-hover:bg-navy/8 transition">
+            <svg class="w-5 h-5 text-slate-500 group-hover:text-navy transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="font-semibold text-slate-800 text-sm">Tetapan Laman</p>
+            <p class="text-xs text-slate-400 mt-0.5">Kemaskini kandungan & WA</p>
+        </div>
+    </a>
+
+</div>
+
+<!-- Recent applications -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h2 class="font-semibold text-slate-800 text-sm">Permohonan Terkini</h2>
+        <a href="{{ route('admin.permohonan') }}" class="text-xs text-navy hover:text-gold font-medium transition">Lihat semua →</a>
     </div>
-
-    <!-- SECTION 1: Senarai Prospek Masuk dengan Fungsi Tapisan (Filters) -->
-    <section id="senarai-prospek" class="bg-white rounded-xl shadow-xs border border-slate-200/80 overflow-hidden">
-        <div class="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50 space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-base font-bold text-slate-900">Senarai Permohonan Pelanggan</h2>
-            </div>
-            
-            <!-- Filter Input Fields Row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Cari Melalui Nama</label>
-                    <input type="text" id="filter-nama" onkeyup="tapisProspek()" placeholder="Taip nama prospek..." class="w-full text-xs rounded-lg border-slate-200 shadow-xs focus:border-indigo-500 focus:ring-indigo-500 p-2.5 border transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Tapis Mengikut Pekerjaan</label>
-                    <input type="text" id="filter-pekerjaan" onkeyup="tapisProspek()" placeholder="Contoh: CEO, Guru, Kerani..." class="w-full text-xs rounded-lg border-slate-200 shadow-xs focus:border-indigo-500 focus:ring-indigo-500 p-2.5 border transition">
-                </div>
-            </div>
-        </div>
-        
-        <!-- Table Box Layer -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[650px]" id="jadual-prospek">
-                <thead>
-                    <tr class="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        <th class="p-4">Nama Pelanggan</th>
-                        <th class="p-4">No. Telefon</th>
-                        <th class="p-4">Pekerjaan</th>
-                        <th class="p-4 text-center">Dokumen</th>
-                        <th class="p-4 text-right">Tindakan</th>
-                    </tr>
-                </thead>
-                <tbody class="text-xs sm:text-sm divide-y divide-slate-100 text-slate-700">
-                    <tr class="prospek-row">
-                        <td class="p-4 font-semibold text-slate-900 target-nama">Ahmad Albab</td>
-                        <td class="p-4 text-slate-600">+60 12-345 6789</td>
-                        <td class="p-4 target-kerja">CEO</td>
-                        <td class="p-4 text-center">
-                            <a href="#" class="inline-flex items-center space-x-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium px-2.5 py-1.5 rounded-md text-xs border border-rose-200/40 transition">
-                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                                <span>Muat Turun PDF</span>
-                            </a>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button onclick="bukaModal('Ahmad Albab', '35', '+60 12-345 6789', 'ahmad@pistachio.com', 'CEO', 'Makanan / Snek', 'tidak')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-xs bg-indigo-50 px-2.5 py-1.5 rounded transition">Lihat Butiran</button>
-                        </td>
-                    </tr>
-                    <tr class="prospek-row">
-                        <td class="p-4 font-semibold text-slate-900 target-nama">Siti Nurdiana</td>
-                        <td class="p-4 text-slate-600">+60 17-987 6543</td>
-                        <td class="p-4 target-kerja">Pensyarah</td>
-                        <td class="p-4 text-center">
-                            <a href="#" class="inline-flex items-center space-x-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium px-2.5 py-1.5 rounded-md text-xs border border-rose-200/40 transition">
-                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                                <span>Muat Turun PDF</span>
-                            </a>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button onclick="bukaModal('Siti Nurdiana', '29', '+60 17-987 6543', 'siti@edu.my', 'Pensyarah', 'Pendidikan', 'ya')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-xs bg-indigo-50 px-2.5 py-1.5 rounded transition">Lihat Butiran</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- SECTION 2: Pengurusan Kandungan Landing Page (Split Dynamic Modules) -->
-    <div id="pengurusan-landing" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- MODULE A: Urus Video Ads Kreatif -->
-        <div class="bg-white rounded-xl shadow-xs border border-slate-200/80 overflow-hidden">
-            <div class="p-4 sm:p-5 border-b border-slate-100 bg-slate-50/50">
-                <h3 class="font-bold text-slate-900 text-sm sm:text-base">Kemaskini Video Iklan</h3>
-                <p class="text-xs text-slate-400">Muat naik fail video promosi baru untuk dipaparkan di bahagian utama.</p>
-            </div>
-            <div class="p-5">
-                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    @csrf
-                    @method('PUT')
-                    <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 text-center bg-slate-50">
-                        <svg class="mx-auto h-8 w-8 text-slate-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                        <input type="file" name="video_ads" accept="video/*" class="text-xs text-slate-600 block w-full mx-auto file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
-                    </div>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 text-xs rounded-md shadow-xs transition">
-                        Muat Naik
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- MODULE B: Urus No Telefon WhatsApp Integrasi -->
-        <div class="bg-white rounded-xl shadow-xs border border-slate-200/80 overflow-hidden">
-            <div class="p-4 sm:p-5 border-b border-slate-100 bg-slate-50/50">
-                <h3 class="font-bold text-slate-900 text-sm sm:text-base">Nombor WhatsApp</h3>
-                <p class="text-xs text-slate-400">Tukar nombor penerimaan mesej semakan kelayakan.</p>
-            </div>
-            <div class="p-5">
-                <form action="#" method="POST" class="space-y-4">
-                    @csrf
-                    @method('PUT')
-                    <div>
-                        <label class="block text-xs font-medium text-slate-700 mb-1">No. Telefon WhatsApp Berserta Kod Negara</label>
-                        <input type="tel" name="whatsapp_phone" value="+60123456789" placeholder="Contoh: +60123456789" class="w-full rounded-md border-slate-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500 p-2 border text-xs sm:text-sm">
-                    </div>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 text-xs rounded-md shadow-xs transition">
-                        Simpan
-                    </button>
-                </form>
-            </div>
-        </div>
-        
+    <div class="p-12 text-center">
+        <svg class="w-10 h-10 text-slate-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <p class="text-slate-400 text-sm">Tiada permohonan lagi</p>
+        <p class="text-slate-300 text-xs mt-1">Permohonan yang diterima akan dipaparkan di sini</p>
     </div>
 </div>
 
-<!-- Modal Details Component -->
-<div id="modal-butiran" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-xs hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden border border-slate-200 my-auto max-h-[90vh] flex flex-col">
-        <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0">
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Maklumat Lengkap Prospek</h3>
-            <button onclick="tutupModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-light focus:outline-hidden">&times;</button>
-        </div>
-        <div class="p-4 space-y-4 text-xs sm:text-sm overflow-y-auto flex-1">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">Nama Penuh</span><p id="p-nama" class="text-slate-900 font-semibold mt-0.5"></p></div>
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">Umur</span><p id="p-umur" class="text-slate-900 mt-0.5"></p></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">No. Telefon</span><p id="p-tele" class="text-slate-900 font-medium mt-0.5"></p></div>
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">Alamat Emel</span><p id="p-emel" class="text-indigo-600 font-medium mt-0.5 break-all"></p></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-100 pt-3">
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">Pekerjaan</span><p id="p-kerja" class="text-slate-900 mt-0.5"></p></div>
-                <div><span class="block text-[10px] font-semibold text-slate-400 uppercase">Industri</span><p id="p-industri" class="text-slate-900 mt-0.5"></p></div>
-            </div>
-            <div class="border-t border-slate-100 pt-3">
-                <span class="block text-[10px] font-semibold text-slate-400 uppercase">Kakitangan Kerajaan?</span>
-                <p id="p-gov" class="mt-0.5 capitalize font-medium"></p>
-            </div>
-        </div>
-        <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end sticky bottom-0">
-            <button onclick="tutupModal()" class="w-full sm:w-auto text-center px-4 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg shadow-xs hover:bg-slate-50 transition">Tutup</button>
-        </div>
-    </div>
-</div>
-
-<!-- JavaScript Filtering Engine & Modal Handlers -->
-<script>
-    function tapisProspek() {
-        let inputNama = document.getElementById('filter-nama').value.toLowerCase();
-        let inputKerja = document.getElementById('filter-pekerjaan').value.toLowerCase();
-        let rows = document.getElementsByClassName('prospek-row');
-
-        for (let i = 0; i < rows.length; i++) {
-            let namaCol = rows[i].getElementsByClassName('target-nama')[0].innerText.toLowerCase();
-            let kerjaCol = rows[i].getElementsByClassName('target-kerja')[0].innerText.toLowerCase();
-            
-            if (namaCol.includes(inputNama) && kerjaCol.includes(inputKerja)) {
-                rows[i].style.display = "";
-            } else {
-                rows[i].style.display = "none";
-            }
-        }
-    }
-
-    function bukaModal(nama, umur, tele, emel, kerja, industri, gov) {
-        document.getElementById('p-nama').innerText = nama || '-';
-        document.getElementById('p-umur').innerText = umur ? umur + ' Tahun' : 'Tidak Dinyatakan';
-        document.getElementById('p-tele').innerText = tele || '-';
-        document.getElementById('p-emel').innerText = emel || '-';
-        document.getElementById('p-kerja').innerText = kerja || '-';
-        document.getElementById('p-industri').innerText = industri || 'Tidak Dinyatakan';
-        document.getElementById('p-gov').innerText = gov === 'ya' ? 'Ya (Kakitangan Awam)' : 'Tidak';
-        document.getElementById('modal-butiran').classList.remove('hidden');
-    }
-
-    function tutupModal() {
-        document.getElementById('modal-butiran').classList.add('hidden');
-    }
-</script>
 @endsection

@@ -3,16 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use App\Models\Prospect; // Uncomment this when you create your Prospect model
+// use App\Models\Prospect;
 
 class AdminDashboardController extends Controller
 {
     public function index()
     {
-        // For now, passing empty arrays until your backend logic/database tables are built.
-        // Once ready, you'll fetch records like: $prospects = Prospect::latest()->get();
-        return view('admin.dashboard', [
-            'prospects' => [] 
-        ]);
+        $stats = [
+            'jumlah'    => 0,
+            'pending'   => 0,
+            'approved'  => 0,
+            'rejected'  => 0,
+        ];
+        return view('admin.dashboard', compact('stats'));
+    }
+
+    public function permohonan(Request $request)
+    {
+        $prospects = collect([]); // Replace with Prospect::query()->filter($request)->latest()->get()
+        return view('admin.permohonan', compact('prospects'));
+    }
+
+    public function laporan()
+    {
+        return view('admin.laporan');
+    }
+
+    public function landing()
+    {
+        return view('admin.landing');
     }
 }
