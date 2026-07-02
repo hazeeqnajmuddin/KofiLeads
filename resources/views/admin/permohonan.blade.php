@@ -78,7 +78,7 @@
                     <td class="px-6 py-4 text-slate-600">Swasta</td>
                     <td class="px-6 py-4 text-slate-600">Syarikat ABC / Pengurus</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-menunggu inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">Menunggu</span>
+                        <span class="status-badge badge-menunggu bg-amber-100 text-amber-800 border-amber-300"><span class="dot"></span>Menunggu</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'60123456789','nama'=>'Ahmad Albab'])</td>
                 </tr>
@@ -89,7 +89,7 @@
                     <td class="px-6 py-4 text-slate-600">Awam</td>
                     <td class="px-6 py-4 text-slate-600">Kementerian Pendidikan / Pensyarah</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-diluluskan inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">Diluluskan</span>
+                        <span class="status-badge badge-diluluskan bg-emerald-100 text-emerald-800 border-emerald-300"><span class="dot"></span>Diluluskan</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'60179876543','nama'=>'Siti Nurdiana'])</td>
                 </tr>
@@ -100,7 +100,7 @@
                     <td class="px-6 py-4 text-slate-600">Swasta</td>
                     <td class="px-6 py-4 text-slate-600">Logistik Jaya Sdn Bhd / Pemandu</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-ditolak inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-300">Ditolak</span>
+                        <span class="status-badge badge-ditolak bg-red-100 text-red-800 border-red-300"><span class="dot"></span>Ditolak</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'601122334455','nama'=>'Mohd Faizal bin Hamid'])</td>
                 </tr>
@@ -111,7 +111,7 @@
                     <td class="px-6 py-4 text-slate-600">Awam</td>
                     <td class="px-6 py-4 text-slate-600">Hospital Kuala Lumpur / Jururawat</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-menunggu inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">Menunggu</span>
+                        <span class="status-badge badge-menunggu bg-amber-100 text-amber-800 border-amber-300"><span class="dot"></span>Menunggu</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'601135678901','nama'=>'Nurul Ain Zainudin'])</td>
                 </tr>
@@ -122,7 +122,7 @@
                     <td class="px-6 py-4 text-slate-600">Awam</td>
                     <td class="px-6 py-4 text-slate-600">Polis DiRaja Malaysia / Inspektor</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-diluluskan inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">Diluluskan</span>
+                        <span class="status-badge badge-diluluskan bg-emerald-100 text-emerald-800 border-emerald-300"><span class="dot"></span>Diluluskan</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'601933455566','nama'=>'Khairul Anwar Othman'])</td>
                 </tr>
@@ -133,7 +133,7 @@
                     <td class="px-6 py-4 text-slate-600">Sendiri</td>
                     <td class="px-6 py-4 text-slate-600">Perniagaan Sendiri / Peniaga</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-ditolak inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-300">Ditolak</span>
+                        <span class="status-badge badge-ditolak bg-red-100 text-red-800 border-red-300"><span class="dot"></span>Ditolak</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'601677899900','nama'=>'Roslinda Md Yusof'])</td>
                 </tr>
@@ -144,7 +144,7 @@
                     <td class="px-6 py-4 text-slate-600">Pesara</td>
                     <td class="px-6 py-4 text-slate-600">Pesara Kerajaan / Bekas Pegawai</td>
                     <td class="px-6 py-4 text-center">
-                        <span class="badge-menunggu inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">Menunggu</span>
+                        <span class="status-badge badge-menunggu bg-amber-100 text-amber-800 border-amber-300"><span class="dot"></span>Menunggu</span>
                     </td>
                     <td class="px-6 py-4 text-right">@include('admin._action_buttons', ['phone'=>'601221002233','nama'=>'Zulkifli Hassan'])</td>
                 </tr>
@@ -165,9 +165,10 @@
 </div>
 
 <script>
-const BADGE_APPROVED = 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300';
-const BADGE_REJECTED = 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-300';
-const BADGE_PENDING  = 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300';
+const BADGE_APPROVED = 'status-badge bg-emerald-100 text-emerald-800 border-emerald-300';
+const BADGE_REJECTED = 'status-badge bg-red-100 text-red-800 border-red-300';
+const BADGE_PENDING  = 'status-badge bg-amber-100 text-amber-800 border-amber-300';
+const DOT = '<span class="dot"></span>';
 
 function filterTable() {
     const nama   = document.getElementById('filter-nama').value.toLowerCase();
@@ -191,7 +192,7 @@ function filterTable() {
 function luluskan(btn) {
     const row  = btn.closest('tr');
     const cell = row.querySelector('td:nth-child(5)');
-    cell.innerHTML = `<span class="${BADGE_APPROVED}">Diluluskan</span>`;
+    cell.innerHTML = `<span class="${BADGE_APPROVED}">${DOT}Diluluskan</span>`;
     row.dataset.status = 'approved';
     filterTable();
 }
@@ -199,7 +200,7 @@ function luluskan(btn) {
 function tolak(btn) {
     const row  = btn.closest('tr');
     const cell = row.querySelector('td:nth-child(5)');
-    cell.innerHTML = `<span class="${BADGE_REJECTED}">Ditolak</span>`;
+    cell.innerHTML = `<span class="${BADGE_REJECTED}">${DOT}Ditolak</span>`;
     row.dataset.status = 'rejected';
     filterTable();
 }

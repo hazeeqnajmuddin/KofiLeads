@@ -73,6 +73,132 @@
         </div>
     </div>
 
+    <!-- Hero Content -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden lg:col-span-2">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Kandungan Hero</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Tajuk dan teks utama di bahagian atas laman</p>
+        </div>
+        <div class="p-6">
+            <form action="#" method="POST" class="space-y-4">
+                @csrf
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tajuk Utama</label>
+                        <input type="text" name="hero_title" value="Semak Kelayakan Anda"
+                               class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Teks Butang (CTA)</label>
+                        <input type="text" name="hero_cta" value="Semak Kelayakan Sekarang"
+                               class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Sub-tajuk</label>
+                    <textarea name="hero_subtitle" rows="2"
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.</textarea>
+                </div>
+                <button type="submit" class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+                    Simpan Kandungan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Eligibility Criteria -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Kriteria Kelayakan</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Gaji asas minimum bagi semakan awal (dipaparkan di FAQ)</p>
+        </div>
+        <div class="p-6">
+            <form action="#" method="POST" class="space-y-4">
+                @csrf
+                @php
+                $criteria = [
+                    ['label' => 'Kerajaan',              'name' => 'min_gaji_kerajaan', 'val' => '1500'],
+                    ['label' => 'GLC / Badan Berkanun',  'name' => 'min_gaji_glc',      'val' => '2500'],
+                    ['label' => 'Swasta',                'name' => 'min_gaji_swasta',   'val' => '3000'],
+                ];
+                @endphp
+                @foreach($criteria as $c)
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">{{ $c['label'] }} <span class="text-slate-400 font-normal">(RM)</span></label>
+                    <input type="number" name="{{ $c['name'] }}" value="{{ $c['val'] }}" min="0"
+                           class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                </div>
+                @endforeach
+                <button type="submit" class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+                    Simpan Kriteria
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Operating Hours -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Waktu Operasi</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Masa khidmat pelanggan tersedia</p>
+        </div>
+        <div class="p-6">
+            <form action="#" method="POST" class="space-y-3">
+                @csrf
+                @php
+                $days = [
+                    ['label' => 'Isnin – Jumaat', 'open' => '09:00', 'close' => '18:00', 'closed' => false],
+                    ['label' => 'Sabtu',           'open' => '10:00', 'close' => '14:00', 'closed' => false],
+                    ['label' => 'Ahad & Cuti Umum','open' => '',      'close' => '',      'closed' => true],
+                ];
+                @endphp
+                @foreach($days as $i => $day)
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-medium text-slate-600 w-32 flex-shrink-0">{{ $day['label'] }}</span>
+                    @if($day['closed'])
+                        <span class="text-xs text-red-500 font-medium">Tutup</span>
+                    @else
+                        <input type="time" name="hours[{{ $i }}][open]" value="{{ $day['open'] }}"
+                               class="text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                        <span class="text-slate-400 text-xs">hingga</span>
+                        <input type="time" name="hours[{{ $i }}][close]" value="{{ $day['close'] }}"
+                               class="text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                    @endif
+                </div>
+                @endforeach
+                <button type="submit" class="mt-2 bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+                    Simpan Waktu
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Office Address -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden lg:col-span-2">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Alamat Pejabat</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Lokasi dan pautan Google Maps untuk footer laman</p>
+        </div>
+        <div class="p-6">
+            <form action="#" method="POST" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Penuh</label>
+                    <textarea name="office_address" rows="2" placeholder="No. 12, Jalan Contoh, 40000 Shah Alam, Selangor"
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pautan Google Maps</label>
+                    <input type="url" name="maps_url" placeholder="https://maps.google.com/..."
+                           class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
+                </div>
+                <button type="submit" class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+                    Simpan Alamat
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Video Upload -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden lg:col-span-2">
         <div class="px-6 py-4 border-b border-slate-100">

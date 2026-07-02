@@ -83,7 +83,7 @@
             <div class="flex flex-col md:flex-row items-center gap-12">
 
                 {{-- Owner photo with metallic gold ring --}}
-                <div class="flex-shrink-0 flex justify-center">
+                <div class="reveal flex-shrink-0 flex justify-center">
                     <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);">
                         <div class="rounded-full p-1 bg-white">
                             <img src="{{ asset('images/a5e960547f3d1fb5b0f887a23b10d43a~tplv-tiktokx-cropcenter_1080_1080.jpeg') }}"
@@ -94,7 +94,7 @@
                 </div>
 
                 {{-- Biodata --}}
-                <div class="text-center md:text-left">
+                <div class="reveal text-center md:text-left">
                     <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">Pengasas & Ketua Eksekutif</p>
                     <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">Encik Khairul</h2>
                     <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
@@ -105,16 +105,16 @@
 
                     {{-- Credential stats --}}
                     <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto md:mx-0">
-                        <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text">10+</p>
+                        <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="10" data-suffix="+">10+</p>
                             <p class="text-xs text-slate-500 mt-1 leading-tight">Tahun Pengalaman</p>
                         </div>
-                        <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text">10k+</p>
+                        <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="10" data-suffix="k+">10k+</p>
                             <p class="text-xs text-slate-500 mt-1 leading-tight">Pelanggan Dibantu</p>
                         </div>
-                        <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text">91%</p>
+                        <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="91" data-suffix="%">91%</p>
                             <p class="text-xs text-slate-500 mt-1 leading-tight">Kadar Kelulusan</p>
                         </div>
                     </div>
@@ -127,14 +127,14 @@
     {{-- ── 2. SERVICES ──────────────────────────────────────────────────── --}}
     <section id="services" class="py-20 px-4 bg-dot-grid">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-14">
+            <div class="reveal text-center mb-14">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Apa Yang Kami Tawarkan</p>
                 <h2 class="text-3xl sm:text-4xl font-bold text-navy">Servis Kami</h2>
                 <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <div class="group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
+                <div class="reveal group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
                     </div>
@@ -142,7 +142,7 @@
                     <p class="text-slate-500 text-sm leading-relaxed">Kami membantu anda merancang kewangan peribadi dengan strategi yang tersusun untuk mencapai kebebasan kewangan.</p>
                 </div>
 
-                <div class="group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
+                <div class="reveal group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
                     </div>
@@ -150,7 +150,7 @@
                     <p class="text-slate-500 text-sm leading-relaxed">Semak kelayakan pinjaman anda dengan cepat dan mudah. Kami akan pandukan anda sepanjang proses permohonan.</p>
                 </div>
 
-                <div class="group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
+                <div class="reveal group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 7l2.55 2.4A1 1 0 0116 11H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"/></svg>
                     </div>
@@ -166,21 +166,21 @@
     <section id="stats" class="py-20 px-4 bg-navy">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-700">
-                <div class="flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">10,000+</span>
+                <div class="reveal flex flex-col items-center px-4">
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">10,000+</span>
                     <span class="text-slate-300 text-sm font-medium">Individu & Prospek Dibantu</span>
                 </div>
-                <div class="flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">4</span>
+                <div class="reveal flex flex-col items-center px-4">
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="4">4</span>
                     <span class="text-slate-300 text-sm font-medium">Sektor Dilayan</span>
                     <span class="text-slate-500 text-xs mt-1">Kerajaan · GLC · Berkanun · Swasta</span>
                 </div>
-                <div class="flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">5+</span>
+                <div class="reveal flex flex-col items-center px-4">
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="5" data-suffix="+">5+</span>
                     <span class="text-slate-300 text-sm font-medium">Tahun Pengalaman</span>
                 </div>
-                <div class="flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">0%</span>
+                <div class="reveal flex flex-col items-center px-4">
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="0" data-suffix="%">0%</span>
                     <span class="text-slate-300 text-sm font-medium">Bayaran Pendahuluan</span>
                     <span class="text-slate-500 text-xs mt-1">Bayar hanya selepas lulus</span>
                 </div>
@@ -191,14 +191,14 @@
     {{-- ── 4. TESTIMONIALS ─────────────────────────────────────────────── --}}
     <section class="py-20 px-4 bg-gold-light">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
+            <div class="reveal text-center mb-12">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Testimoni Pelanggan</p>
                 <h2 class="text-3xl font-bold text-navy">Apa Kata Mereka?</h2>
                 <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <div class="relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
+                <div class="reveal relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
                     <span class="absolute top-3 left-6 text-6xl text-gold font-serif leading-none opacity-20">"</span>
                     <p class="text-slate-700 text-sm italic leading-relaxed relative z-10 pt-4 flex-grow">
                         Alhamdulillah, pelanggan berjaya mendapatkan solusi penyatuan hutang selepas semakan kelayakan dibuat secara teratur.
@@ -212,7 +212,7 @@
                     </div>
                 </div>
 
-                <div class="relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
+                <div class="reveal relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
                     <span class="absolute top-3 left-6 text-6xl text-gold font-serif leading-none opacity-20">"</span>
                     <p class="text-slate-700 text-sm italic leading-relaxed relative z-10 pt-4 flex-grow">
                         Pelanggan lebih jelas tentang komitmen bulanan dan pilihan pembiayaan yang sesuai selepas sesi konsultasi.
@@ -226,7 +226,7 @@
                     </div>
                 </div>
 
-                <div class="relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
+                <div class="reveal relative bg-white p-8 rounded-2xl shadow-sm flex flex-col">
                     <span class="absolute top-3 left-6 text-6xl text-gold font-serif leading-none opacity-20">"</span>
                     <p class="text-slate-700 text-sm italic leading-relaxed relative z-10 pt-4 flex-grow">
                         Proses semakan dibantu daripada peringkat dokumen sehingga permohonan dihantar kepada pihak berkaitan.
@@ -247,14 +247,14 @@
     {{-- ── 5. FAQS ──────────────────────────────────────────────────────── --}}
     <section id="faqs" class="py-20 px-4 bg-dot-grid">
         <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-12">
+            <div class="reveal text-center mb-12">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Ada Soalan?</p>
                 <h2 class="text-3xl font-bold text-navy">Soalan Lazim</h2>
                 <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
             </div>
             <div class="space-y-3">
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Apakah servis utama RCS?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -264,7 +264,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Siapa yang boleh membuat semakan?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -274,7 +274,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Apakah kelayakan asas untuk semakan awal?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -289,7 +289,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Adakah perlu bayar dahulu sebelum semakan dibuat?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -299,7 +299,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Dokumen apa yang diperlukan untuk semakan awal?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -319,7 +319,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Bolehkah pelanggan yang ada CCRIS, CTOS, AKPK, SAA atau legal action membuat semakan?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -329,7 +329,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Adakah RCS menjamin kelulusan pinjaman?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -339,7 +339,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Berapa lama proses permohonan?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -349,7 +349,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
                         <span>Adakah maklumat pelanggan dirahsiakan?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -366,7 +366,7 @@
     {{-- ── 6. FORM ──────────────────────────────────────────────────────── --}}
     <section id="contact" class="py-20 px-4 bg-slate-50">
         <div class="max-w-2xl mx-auto">
-            <div class="text-center mb-10">
+            <div class="reveal text-center mb-10">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Mulakan Sekarang</p>
                 <h2 class="text-3xl font-bold text-navy mb-3">Semak Kelayakan Anda</h2>
                 <p class="text-slate-500 text-sm">Isi maklumat ringkas & upload dokumen untuk semakan awal.</p>
@@ -693,6 +693,76 @@
                 epfInput.value = '';
             }
         });
+    </script>
+
+    {{-- ── Scroll animations: reveal-on-scroll + count-up stats ────────── --}}
+    <script>
+    (function () {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ── Reveal on scroll (fade + rise + de-blur, staggered per group) ── */
+        const reveals = document.querySelectorAll('.reveal');
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+            reveals.forEach(el => el.classList.add('is-visible'));
+        } else {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    // Stagger by position among sibling .reveal elements in the same container.
+                    const siblings = el.parentElement
+                        ? Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'))
+                        : [el];
+                    const index = Math.max(0, siblings.indexOf(el));
+                    el.style.transitionDelay = Math.min(index * 90, 540) + 'ms';
+                    el.classList.add('is-visible');
+                    revealObserver.unobserve(el);
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+            reveals.forEach(el => revealObserver.observe(el));
+        }
+
+        /* ── Count-up numbers ── */
+        const counters = document.querySelectorAll('.count-up');
+        const format = (n) => n.toLocaleString('en-US');
+
+        function runCount(el) {
+            const target = parseFloat(el.dataset.target || '0');
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const settle = () => { el.textContent = prefix + format(target) + suffix; };
+
+            if (reduceMotion || target === 0 || !('requestAnimationFrame' in window)) {
+                settle();
+                return;
+            }
+
+            const duration = 1600;
+            let startTs = null;
+            function step(ts) {
+                if (startTs === null) startTs = ts;
+                const p = Math.min((ts - startTs) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+                el.textContent = prefix + format(Math.round(target * eased)) + suffix;
+                if (p < 1) requestAnimationFrame(step);
+                else settle();
+            }
+            requestAnimationFrame(step);
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            counters.forEach(runCount);
+        } else {
+            const countObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    runCount(entry.target);
+                    countObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.4 });
+            counters.forEach(el => countObserver.observe(el));
+        }
+    })();
     </script>
 
 @endsection

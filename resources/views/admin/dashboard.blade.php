@@ -101,17 +101,47 @@
 </div>
 
 <!-- Recent applications -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
         <h2 class="font-semibold text-slate-800 text-sm">Permohonan Terkini</h2>
         <a href="{{ route('admin.permohonan') }}" class="text-xs text-navy hover:text-gold font-medium transition">Lihat semua →</a>
     </div>
-    <div class="p-12 text-center">
-        <svg class="w-10 h-10 text-slate-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        <p class="text-slate-400 text-sm">Tiada permohonan lagi</p>
-        <p class="text-slate-300 text-xs mt-1">Permohonan yang diterima akan dipaparkan di sini</p>
+
+    @php
+    $statusMap = [
+        'pending'  => ['label' => 'Menunggu',   'cls' => 'bg-amber-100 text-amber-800 border-amber-300'],
+        'approved' => ['label' => 'Diluluskan', 'cls' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
+        'rejected' => ['label' => 'Ditolak',    'cls' => 'bg-red-100 text-red-800 border-red-300'],
+    ];
+    @endphp
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm min-w-[640px]">
+            <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-left">Nama</th>
+                    <th class="px-6 py-3 text-left">Sektor</th>
+                    <th class="px-6 py-3 text-left">Majikan</th>
+                    <th class="px-6 py-3 text-center">Status</th>
+                    <th class="px-6 py-3 text-right">Tarikh</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                @foreach($recent as $r)
+                <tr class="hover:bg-slate-50/70 transition">
+                    <td class="px-6 py-4 font-medium text-slate-800">{{ $r['nama'] }}</td>
+                    <td class="px-6 py-4 text-slate-600">{{ $r['sektor'] }}</td>
+                    <td class="px-6 py-4 text-slate-600">{{ $r['majikan'] }}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="status-badge {{ $statusMap[$r['status']]['cls'] }}">
+                            <span class="dot"></span>{{ $statusMap[$r['status']]['label'] }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-slate-400 text-xs whitespace-nowrap">{{ $r['tarikh'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 
