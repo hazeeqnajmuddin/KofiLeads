@@ -150,6 +150,40 @@
     flex-shrink: 0;
 }
 
+/* Responsive tables — collapse into stacked cards on phones */
+@media (max-width: 640px) {
+    .stack-table { min-width: 0 !important; }
+    .stack-table thead { display: none; }
+    .stack-table tbody, .stack-table tr, .stack-table td { display: block; width: 100%; }
+    .stack-table tr { padding: 0.75rem 1.1rem; }
+    .stack-table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        text-align: right;
+        padding: 0.35rem 0 !important;
+    }
+    .stack-table td::before {
+        content: attr(data-label);
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #94a3b8;
+        text-align: left;
+        flex-shrink: 0;
+    }
+    .stack-table td:not([data-label])::before { content: none; }
+    .stack-table td.cell-title {
+        justify-content: flex-start;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1e293b;
+        padding-bottom: 0.5rem !important;
+    }
+}
+
 /* ── Scroll reveal (fade + rise + snap-into-focus) ─────────────────── */
 .reveal {
     opacity: 0;

@@ -136,43 +136,6 @@
         </div>
     </div>
 
-    <!-- Operating Hours -->
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-100">
-            <h3 class="font-semibold text-slate-800 text-sm">Waktu Operasi</h3>
-            <p class="text-xs text-slate-400 mt-0.5">Masa khidmat pelanggan tersedia</p>
-        </div>
-        <div class="p-6">
-            <form action="#" method="POST" class="space-y-3">
-                @csrf
-                @php
-                $days = [
-                    ['label' => 'Isnin – Jumaat', 'open' => '09:00', 'close' => '18:00', 'closed' => false],
-                    ['label' => 'Sabtu',           'open' => '10:00', 'close' => '14:00', 'closed' => false],
-                    ['label' => 'Ahad & Cuti Umum','open' => '',      'close' => '',      'closed' => true],
-                ];
-                @endphp
-                @foreach($days as $i => $day)
-                <div class="flex items-center gap-3">
-                    <span class="text-xs font-medium text-slate-600 w-32 flex-shrink-0">{{ $day['label'] }}</span>
-                    @if($day['closed'])
-                        <span class="text-xs text-red-500 font-medium">Tutup</span>
-                    @else
-                        <input type="time" name="hours[{{ $i }}][open]" value="{{ $day['open'] }}"
-                               class="text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
-                        <span class="text-slate-400 text-xs">hingga</span>
-                        <input type="time" name="hours[{{ $i }}][close]" value="{{ $day['close'] }}"
-                               class="text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
-                    @endif
-                </div>
-                @endforeach
-                <button type="submit" class="mt-2 bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                    Simpan Waktu
-                </button>
-            </form>
-        </div>
-    </div>
-
     <!-- Office Address -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden lg:col-span-2">
         <div class="px-6 py-4 border-b border-slate-100">
@@ -184,12 +147,12 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Penuh</label>
-                    <textarea name="office_address" rows="2" placeholder="No. 12, Jalan Contoh, 40000 Shah Alam, Selangor"
-                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition"></textarea>
+                    <textarea name="office_address" rows="2"
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">No. 25-2, Tingkat 2, Jalan Setia Prima D U13/D, Setia Alam, 40170 Shah Alam, Selangor</textarea>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pautan Google Maps</label>
-                    <input type="url" name="maps_url" placeholder="https://maps.google.com/..."
+                    <input type="url" name="maps_url" value="https://maps.app.goo.gl/rahmahconsultancy"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
                 <button type="submit" class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">

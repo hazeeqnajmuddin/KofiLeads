@@ -165,7 +165,7 @@
     {{-- ── 3. STATS ─────────────────────────────────────────────────────── --}}
     <section id="stats" class="py-20 px-4 bg-navy">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-700">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x md:divide-slate-700">
                 <div class="reveal flex flex-col items-center px-4">
                     <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">10,000+</span>
                     <span class="text-slate-300 text-sm font-medium">Individu & Prospek Dibantu</span>

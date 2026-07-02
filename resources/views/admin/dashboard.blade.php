@@ -116,7 +116,7 @@
     @endphp
 
     <div class="overflow-x-auto">
-        <table class="w-full text-sm min-w-[640px]">
+        <table class="stack-table w-full text-sm min-w-[640px]">
             <thead>
                 <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                     <th class="px-6 py-3 text-left">Nama</th>
@@ -129,15 +129,15 @@
             <tbody class="divide-y divide-slate-100">
                 @foreach($recent as $r)
                 <tr class="hover:bg-slate-50/70 transition">
-                    <td class="px-6 py-4 font-medium text-slate-800">{{ $r['nama'] }}</td>
-                    <td class="px-6 py-4 text-slate-600">{{ $r['sektor'] }}</td>
-                    <td class="px-6 py-4 text-slate-600">{{ $r['majikan'] }}</td>
-                    <td class="px-6 py-4 text-center">
+                    <td class="px-6 py-4 font-medium text-slate-800 cell-title">{{ $r['nama'] }}</td>
+                    <td class="px-6 py-4 text-slate-600" data-label="Sektor">{{ $r['sektor'] }}</td>
+                    <td class="px-6 py-4 text-slate-600" data-label="Majikan">{{ $r['majikan'] }}</td>
+                    <td class="px-6 py-4 text-center" data-label="Status">
                         <span class="status-badge {{ $statusMap[$r['status']]['cls'] }}">
                             <span class="dot"></span>{{ $statusMap[$r['status']]['label'] }}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-right text-slate-400 text-xs whitespace-nowrap">{{ $r['tarikh'] }}</td>
+                    <td class="px-6 py-4 text-right text-slate-400 text-xs whitespace-nowrap" data-label="Tarikh">{{ $r['tarikh'] }}</td>
                 </tr>
                 @endforeach
             </tbody>
