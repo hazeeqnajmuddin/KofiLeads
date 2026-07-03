@@ -24,7 +24,7 @@ $adminLinks = [
         <!-- Left: Logo -->
         <div class="flex-shrink-0">
             <a href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('images/logo.jpeg') }}" alt="Rahmah Consultancy Services" class="h-11 sm:h-16 w-auto">
+                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services" class="h-11 sm:h-30 w-auto">
             </a>
         </div>
 

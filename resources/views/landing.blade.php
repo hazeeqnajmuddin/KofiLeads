@@ -32,7 +32,7 @@
                 <span class="gold-metallic-text">Bersama Kami</span>
             </h1>
 
-            <p class="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.
             </p>
 
@@ -70,7 +70,7 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-                    <span>5+ Tahun Pengalaman</span>
+                    <span>8+ Tahun Pengalaman</span>
                 </div>
             </div>
 
@@ -95,18 +95,18 @@
 
                 {{-- Biodata --}}
                 <div class="reveal text-center md:text-left">
-                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">Pengasas & Ketua Eksekutif</p>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">Encik Khairul</h2>
+                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">Pengarah Urusan</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">Khairul Amri Chamili</h2>
                     <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
                     <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
                     <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
-                        Dengan lebih 10 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan restrukturisasi hutang — dikenali kerana pendekatan yang telus dan berorientasikan hasil.
+                        Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.
                     </p>
 
                     {{-- Credential stats --}}
                     <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto md:mx-0">
                         <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="10" data-suffix="+">10+</p>
+                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="8" data-suffix="+">8+</p>
                             <p class="text-xs text-slate-500 mt-1 leading-tight">Tahun Pengalaman</p>
                         </div>
                         <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
@@ -154,7 +154,7 @@
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 7l2.55 2.4A1 1 0 0116 11H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-3">Pengurusan & Restrukturisasi Hutang</h3>
+                    <h3 class="text-xl font-bold text-navy mb-3">Pengurusan & Penyatuan Hutang</h3>
                     <p class="text-slate-500 text-sm leading-relaxed">Penyelesaian komprehensif untuk membantu anda menguruskan dan merestrukturkan hutang dengan lebih efektif.</p>
                 </div>
 
@@ -168,15 +168,15 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x md:divide-slate-700">
                 <div class="reveal flex flex-col items-center px-4">
                     <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">10,000+</span>
-                    <span class="text-slate-300 text-sm font-medium">Individu & Prospek Dibantu</span>
+                    <span class="text-slate-300 text-sm font-medium">Individu & Prospek Dibantu Semakan</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
                     <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="4">4</span>
-                    <span class="text-slate-300 text-sm font-medium">Sektor Dilayan</span>
+                    <span class="text-slate-300 text-sm font-medium">Sektor Fokus</span>
                     <span class="text-slate-500 text-xs mt-1">Kerajaan · GLC · Berkanun · Swasta</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="5" data-suffix="+">5+</span>
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="8" data-suffix="+">8+</span>
                     <span class="text-slate-300 text-sm font-medium">Tahun Pengalaman</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
@@ -243,6 +243,135 @@
             </div>
         </div>
     </section>
+
+    {{-- ── PANDUAN LAPORAN KREDIT ───────────────────────────────────────── --}}
+<section id="panduan-kredit" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
+
+        <div class="reveal text-center mb-14">
+            <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Semak Sendiri Rekod Anda</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-navy">Panduan Mendapatkan Laporan Kredit Individu</h2>
+            <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+            <p class="text-slate-500 text-sm mt-5 max-w-2xl mx-auto leading-relaxed">
+                CCRIS, CTOS dan Experian adalah tiga sumber utama yang digunakan bank dan institusi kewangan untuk menilai kelayakan kredit anda. Berikut adalah panduan ringkas untuk mendapatkan setiap laporan secara sah dan terus daripada penyedia rasmi.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            {{-- CCRIS --}}
+            <div class="reveal bg-slate-50 rounded-2xl border border-slate-100 p-7 flex flex-col">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-gold-light text-gold font-extrabold text-sm flex-shrink-0">BNM</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-navy leading-tight">Laporan CCRIS</h3>
+                        <p class="text-slate-400 text-xs">Bank Negara Malaysia · Percuma</p>
+                    </div>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                    CCRIS (Central Credit Reference Information System) direkodkan oleh Bank Negara Malaysia dan memaparkan sejarah pembiayaan serta rekod pembayaran anda dengan institusi kewangan berlesen.
+                </p>
+                <ol class="space-y-3 text-sm text-slate-600 flex-grow">
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>Layari portal rasmi <a href="https://eccris.bnm.gov.my" target="_blank" rel="noopener" class="text-navy font-semibold underline">eccris.bnm.gov.my</a> dan daftar akaun menggunakan MyKad, e-mel serta nombor telefon.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>Lengkapkan pengesahan identiti (e-KYC) mengikut arahan pada portal.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>Terima PIN pengesahan dan log masuk buat kali pertama, kemudian tetapkan kata laluan anda.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>Klik "Credit Report" untuk memuat turun laporan CCRIS anda.</span>
+                    </li>
+                </ol>
+                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                    Alternatif: kunjungi kiosk di cawangan AKPK atau BNM dengan membawa MyKad — laporan dicetak serta-merta secara percuma.
+                </p>
+            </div>
+
+            {{-- CTOS --}}
+            <div id="panduan-ctos" class="reveal bg-slate-50 rounded-2xl border border-slate-100 p-7 flex flex-col">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-gold-light text-gold font-extrabold text-sm flex-shrink-0">CTOS</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-navy leading-tight">Laporan CTOS</h3>
+                        <p class="text-slate-400 text-xs">Agensi Pelaporan Kredit Swasta</p>
+                    </div>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                    CTOS mengumpul maklumat tambahan seperti tindakan undang-undang, status kebankrapan, dan rekod CCRIS dalam satu laporan yang lebih menyeluruh berbanding CCRIS sahaja.
+                </p>
+                <ol class="space-y-3 text-sm text-slate-600 flex-grow">
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>Layari laman rasmi <a href="https://ctoscredit.com.my" target="_blank" rel="noopener" class="text-navy font-semibold underline">ctoscredit.com.my</a> atau muat turun aplikasi CTOS Malaysia.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>Daftar akaun percuma menggunakan nombor MyKad dan alamat e-mel yang sah.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>Sahkan identiti dengan memuat naik imej MyKad (depan & belakang) dan lengkapkan pengesahan TAC melalui telefon bimbit.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>Log masuk untuk melihat Laporan Asas MyCTOS secara percuma, atau naik taraf kepada MyCTOS Score Report untuk skor kredit terperinci.</span>
+                    </li>
+                </ol>
+                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                    Laporan Asas MyCTOS adalah percuma; laporan berskor terperinci dikenakan bayaran kecil sekali sahaja.
+                </p>
+            </div>
+
+            {{-- Experian --}}
+            <div class="reveal bg-slate-50 rounded-2xl border border-slate-100 p-7 flex flex-col">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-gold-light text-gold font-extrabold text-xs flex-shrink-0">EXP</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-navy leading-tight">Laporan Experian</h3>
+                        <p class="text-slate-400 text-xs">Dahulunya RAM Credit Information</p>
+                    </div>
+                </div>
+                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                    Experian Information Services (Malaysia) turut menyediakan Personal Credit Report yang merangkumi data CCRIS, litigasi, dan rekod institusi lain untuk gambaran kredit yang lebih lengkap.
+                </p>
+                <ol class="space-y-3 text-sm text-slate-600 flex-grow">
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>Layari laman rasmi <a href="https://www.experian.com.my" target="_blank" rel="noopener" class="text-navy font-semibold underline">experian.com.my</a> atau portal MYCREDITINFO.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>Pilih produk Personal Credit Report (PCR) dan daftar akaun dengan butiran peribadi anda.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>Lengkapkan pengesahan identiti mengikut arahan di laman tersebut.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>Muat turun laporan setelah permohonan diproses dan disahkan.</span>
+                    </li>
+                </ol>
+                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                    Terdapat pilihan laporan asas percuma untuk pendaftaran baharu, dengan laporan lebih terperinci dikenakan bayaran mengikut jenis produk.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="reveal text-center text-xs text-slate-400 mt-10 max-w-2xl mx-auto leading-relaxed">
+            Nota: Semakan sendiri ("self-check") tidak menjejaskan rekod kredit anda. Rahmah Consultancy Services tidak menjamin kelulusan pinjaman; kami membantu anda memahami laporan ini dan menyediakan dokumen sokongan yang tepat sebelum permohonan dibuat.
+        </p>
+
+    </div>
+</section>
 
     {{-- ── 5. FAQS ──────────────────────────────────────────────────────── --}}
     <section id="faqs" class="py-20 px-4 bg-dot-grid">
@@ -493,14 +622,40 @@
                         </legend>
                         <div class="space-y-4">
                             <div>
-                                <label for="slip_gaji" class="block text-xs font-semibold text-slate-600 mb-1.5">Slip Gaji 3 Bulan Terkini <span class="text-rose-500">*</span></label>
-                                <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-gold transition">
-                                    <input type="file" id="slip_gaji" name="slip_gaji[]" multiple class="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-navy file:text-white hover:file:bg-navy-dark transition" required>
-                                    <p class="text-[10px] text-slate-400 mt-1.5">Boleh muat naik lebih dari satu fail. PDF atau imej. Maks 5MB setiap fail.</p>
+                                <label class="block text-xs font-semibold text-slate-600 mb-2">Slip Gaji 3 Bulan Terkini <span class="text-rose-500">*</span></label>
+                                
+                                <div class="space-y-3">
+                                    {{-- Bulan 1 (Terkini) --}}
+                                    <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-gold transition">
+                                        <label for="slip_gaji_1" class="block text-[11px] font-medium text-slate-500 mb-1.5">Bulan Pertama (Terkini)</label>
+                                        <input type="file" id="slip_gaji_1" name="slip_gaji[]" class="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-navy file:text-white hover:file:bg-navy-dark transition" required>
+                                    </div>
+
+                                    {{-- Bulan 2 --}}
+                                    <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-gold transition">
+                                        <label for="slip_gaji_2" class="block text-[11px] font-medium text-slate-500 mb-1.5">Bulan Kedua</label>
+                                        <input type="file" id="slip_gaji_2" name="slip_gaji[]" class="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-navy file:text-white hover:file:bg-navy-dark transition" required>
+                                    </div>
+
+                                    {{-- Bulan 3 --}}
+                                    <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-gold transition">
+                                        <label for="slip_gaji_3" class="block text-[11px] font-medium text-slate-500 mb-1.5">Bulan Ketiga</label>
+                                        <input type="file" id="slip_gaji_3" name="slip_gaji[]" class="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-navy file:text-white hover:file:bg-navy-dark transition" required>
+                                    </div>
                                 </div>
+                                
+                                <p class="text-[10px] text-slate-400 mt-2">Sila muat naik slip gaji untuk 3 bulan secara berasingan. PDF atau imej. Maks 5MB setiap fail.</p>
                             </div>
                             <div>
-                                <label for="ctos_report" class="block text-xs font-semibold text-slate-600 mb-1.5">Laporan CTOS Terkini <span class="text-rose-500">*</span></label>
+                                 <label for="ctos_report" class="flex items-center justify-between gap-2 text-xs font-semibold text-slate-600 mb-1.5">
+                                    <span>Laporan CTOS Terkini <span class="text-rose-500">*</span></span>
+                                        <a href="#panduan-ctos" class="inline-flex items-center gap-1 text-[10px] font-semibold text-gold hover:text-navy transition whitespace-nowrap">
+                                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Cara dapatkan?
+                                    </a>
+                                </label>
                                 <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 hover:border-gold transition">
                                     <input type="file" id="ctos_report" name="ctos_report" class="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-navy file:text-white hover:file:bg-navy-dark transition" required>
                                     <p class="text-[10px] text-slate-400 mt-1.5">PDF atau imej. Maks 5MB.</p>
@@ -660,11 +815,11 @@
             <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                 <a href="mailto:hello@rahmahconsulting.com" class="flex items-center gap-2 hover:text-navy transition">
                     <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-                    [Email RCS]
+                    rahmahconsultant@gmail.com
                 </a>
                 <a href="tel:" class="flex items-center gap-2 hover:text-navy transition">
                     <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
-                    [No. WhatsApp RCS]
+                    +60 12-345 6789
                 </a>
             </div>
         </div>

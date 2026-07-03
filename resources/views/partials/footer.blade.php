@@ -10,7 +10,7 @@
                 </div>
                 <p class="text-sm text-slate-400 leading-relaxed mb-3">Solusi Kewangan, Masa Depan Terjamin.</p>
                 <p class="text-xs text-slate-500">
-                    hello@rahmahconsulting.com<br>
+                    rahmahconsultant@gmail.com<br>
                     +60 12-345 6789
                 </p>
             </div>
