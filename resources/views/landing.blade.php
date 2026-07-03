@@ -4,73 +4,93 @@
 
 @section('content')
 
-    {{-- ── 1. HERO ──────────────────────────────────────────────────────── --}}
+    {{-- ── 1. HERO (Two-Column with Talking Client Video) ──────────── --}}
     <section class="relative overflow-hidden min-h-[88vh] flex items-center py-28 px-4 sm:px-6 lg:px-8">
 
-        {{-- Background: Gemini image, people visible on right --}}
+        {{-- Background Image (Kept subtle behind everything) --}}
         <div class="hero-bg absolute inset-0"
-             style="background-image: url('{{ asset('images/Gemini_Generated_Image_19mvqt19mvqt19mv.png') }}'); background-size: cover; background-position: right center;">
+             style="background-image: url('{{ asset('images/Gemini_Generated_Image_19mvqt19mvqt19mv.png') }}'); background-size: cover; background-position: center;">
         </div>
 
-        {{-- Overlay: strong on left (text), lighter on right (photo shows through) --}}
+        {{-- Overlay: Darkened to make text and video pop --}}
         <div class="absolute inset-0"
-             style="background: linear-gradient(to right, rgba(15,26,69,0.93) 0%, rgba(15,26,69,0.82) 40%, rgba(15,26,69,0.62) 70%, rgba(15,26,69,0.42) 100%);"></div>
+             style="background: linear-gradient(to right, rgba(15,26,69,0.95) 0%, rgba(15,26,69,0.85) 100%);"></div>
 
         {{-- Metallic gold top-border accent --}}
-        <div class="absolute top-0 left-0 right-0 h-1"
+        <div class="absolute top-0 left-0 right-0 h-1 z-10"
              style="background: linear-gradient(90deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);"></div>
 
-        {{-- Centered text content --}}
-        <div class="relative max-w-3xl mx-auto text-center w-full">
+        {{-- Main Content Container (Grid for 2 columns on large screens) --}}
+        <div class="relative z-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#C9A840;">
-                Solusi Kewangan Terpercaya
-            </p>
+            {{-- LEFT COLUMN: Text Content --}}
+            <div class="text-center lg:text-left">
+                <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#C9A840;">
+                    Solusi Kewangan Terpercaya
+                </p>
 
-            <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Semak Kelayakan Anda<br>
-                <span class="gold-metallic-text">Bersama Kami</span>
-            </h1>
+                <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    Semak Kelayakan Anda<br>
+                    <span class="gold-metallic-text">Bersama Kami</span>
+                </h1>
 
-            <p class="text-slate-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.
-            </p>
+                <p class="text-slate-100 text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.
+                </p>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <a href="#contact" class="btn-gold-metallic font-bold px-8 py-4 text-sm tracking-wide shadow-xl">
-                    Semak Kelayakan Sekarang
-                </a>
-                <a href="#services" class="inline-block border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-xl transition text-sm">
-                    Ketahui Lebih Lanjut
-                </a>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+                    <a href="#contact" class="btn-gold-metallic font-bold px-8 py-4 text-sm tracking-wide shadow-xl">
+                        Semak Kelayakan Sekarang
+                    </a>
+                    <a href="#services" class="inline-block border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-xl transition text-sm">
+                        Ketahui Lebih Lanjut
+                    </a>
+                </div>
+
+                {{-- Service chip pills --}}
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
+                    <a href="#services" class="service-chip">Perancangan Kewangan</a>
+                    <a href="#services" class="service-chip">Semakan Pinjaman</a>
+                    <a href="#services" class="service-chip">Restrukturisasi Hutang</a>
+                </div>
+
+                {{-- Trust badges --}}
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-400 text-xs">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <span>Selamat & Terjamin</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                        <span>10,000+ Pelanggan</span>
+                    </div>
+                </div>
             </div>
 
-            {{-- Service chip pills --}}
-            <div class="flex flex-wrap items-center justify-center gap-3 mb-14">
-                <a href="#services" class="service-chip">Perancangan Kewangan</a>
-                <a href="#services" class="service-chip">Semakan Pinjaman</a>
-                <a href="#services" class="service-chip">Restrukturisasi Hutang</a>
-                <a href="#contact"  class="service-chip">Kakitangan Kerajaan</a>
-                <a href="#contact"  class="service-chip">Pinjaman Peribadi</a>
-            </div>
-
-            {{-- Trust badges --}}
-            <div class="flex flex-wrap items-center justify-center gap-6 text-slate-400 text-xs">
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    <span>Selamat & Terjamin</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    <span>Proses Pantas</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
-                    <span>10,000+ Pelanggan</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-                    <span>8+ Tahun Pengalaman</span>
+            {{-- RIGHT COLUMN: Client Video --}}
+            <div class="w-full max-w-lg mx-auto lg:max-w-none relative">
+                {{-- Decorative glow behind video --}}
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#A8882E] to-[#FFE87C] rounded-2xl blur opacity-30"></div>
+                
+                <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                    <video 
+                        class="w-full h-auto aspect-video object-cover" 
+                        autoplay 
+                        loop 
+                        muted 
+                        playsinline 
+                        controls
+                        poster="{{ asset('images/video-thumbnail.jpg') }}"
+                    >
+                        <source src="{{ asset('videos/TestVid.mp4') }}" type="video/mp4">
+                        Maaf, pelayar web anda tidak menyokong format video ini.
+                    </video>
+                    
+                    {{-- Optional: A small prompt overlay to tell users to unmute --}}
+                    <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full border border-white/20 pointer-events-none flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                        Klik untuk audio
+                    </div>
                 </div>
             </div>
 
