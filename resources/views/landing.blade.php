@@ -288,9 +288,15 @@
                         <p class="text-slate-400 text-xs">Bank Negara Malaysia · Percuma</p>
                     </div>
                 </div>
-                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                <p class="text-slate-500 text-xs leading-relaxed mb-4">
                     CCRIS (Central Credit Reference Information System) direkodkan oleh Bank Negara Malaysia dan memaparkan sejarah pembiayaan serta rekod pembayaran anda dengan institusi kewangan berlesen.
                 </p>
+                
+                {{-- YouTube Video Embed --}}
+                <div class="w-full aspect-video mb-5 rounded-lg overflow-hidden border border-slate-200 bg-slate-200 shadow-sm">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/_Sl8diqCAFw?si=9Qt8_mj1EXz30KTn&amp;controls=0" title="Panduan CCRIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
                 <ol class="space-y-3 text-sm text-slate-600 flex-grow">
                     <li class="flex gap-3">
                         <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
@@ -323,9 +329,15 @@
                         <p class="text-slate-400 text-xs">Agensi Pelaporan Kredit Swasta</p>
                     </div>
                 </div>
-                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                <p class="text-slate-500 text-xs leading-relaxed mb-4">
                     CTOS mengumpul maklumat tambahan seperti tindakan undang-undang, status kebankrapan, dan rekod CCRIS dalam satu laporan yang lebih menyeluruh berbanding CCRIS sahaja.
                 </p>
+                
+                {{-- YouTube Video Embed --}}
+                <div class="w-full aspect-video mb-5 rounded-lg overflow-hidden border border-slate-200 bg-slate-200 shadow-sm">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/muczNvx9fgg?si=y9GsZhimgBiy9-jL&amp;controls=0" title="Panduan CTOS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
                 <ol class="space-y-3 text-sm text-slate-600 flex-grow">
                     <li class="flex gap-3">
                         <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
@@ -358,9 +370,15 @@
                         <p class="text-slate-400 text-xs">Dahulunya RAM Credit Information</p>
                     </div>
                 </div>
-                <p class="text-slate-500 text-xs leading-relaxed mb-5">
+                <p class="text-slate-500 text-xs leading-relaxed mb-4">
                     Experian Information Services (Malaysia) turut menyediakan Personal Credit Report yang merangkumi data CCRIS, litigasi, dan rekod institusi lain untuk gambaran kredit yang lebih lengkap.
                 </p>
+                
+                {{-- YouTube Video Embed --}}
+                <div class="w-full aspect-video mb-5 rounded-lg overflow-hidden border border-slate-200 bg-slate-200 shadow-sm">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/ARxcq-zsywY?si=L3fM8f5pK511w6kk&amp;controls=0" title="Panduan Experian" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
                 <ol class="space-y-3 text-sm text-slate-600 flex-grow">
                     <li class="flex gap-3">
                         <span class="w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
