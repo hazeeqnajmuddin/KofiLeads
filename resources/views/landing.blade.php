@@ -51,7 +51,7 @@
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
                     <a href="#services" class="service-chip">Perancangan Kewangan</a>
                     <a href="#services" class="service-chip">Semakan Pinjaman</a>
-                    <a href="#services" class="service-chip">Restrukturisasi Hutang</a>
+                    <a href="#services" class="service-chip">Penyatuan Hutang</a>
                 </div>
 
                 {{-- Trust badges --}}
