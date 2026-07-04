@@ -435,7 +435,7 @@
 
         </div>
 
-        <p class="reveal text-center text-xs text-slate-400 mt-10 max-w-2xl mx-auto leading-relaxed">
+        <p class="reveal text-center text-xs text-slate-500 mt-10 max-w-2xl mx-auto leading-relaxed">
             Nota: Semakan sendiri ("self-check") tidak menjejaskan rekod kredit anda. Rahmah Consultancy Services tidak menjamin kelulusan pinjaman; kami membantu anda memahami laporan ini dan menyediakan dokumen sokongan yang tepat sebelum permohonan dibuat.
         </p>
 
