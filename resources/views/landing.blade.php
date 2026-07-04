@@ -117,11 +117,41 @@
                 <div class="reveal text-center md:text-left">
                     <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">Pengarah Urusan</p>
                     <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">Khairul Amri Chamili</h2>
-                    <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
+                    
+                    {{-- Social Media Icons --}}
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+                    <!-- Facebook -->
+                    <a href="https://facebook.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" 
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300 shadow-sm" 
+                    title="Facebook">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M9 8H7v3h2v9h4v-9h3l.5-3H13V6c0-.5.5-1 1-1h2V2h-3a4 4 0 0 0-4 4v2z"/>
+                        </svg>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" 
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition-all duration-300 shadow-sm" 
+                    title="Instagram">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                        </svg>
+                    </a>
+                    
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@khairulconsultant3" target="_blank" rel="noopener noreferrer" 
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300 shadow-sm" 
+                    title="TikTok">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.74 4.05 1.08.97 2.52 1.44 3.93 1.55v3.7c-1.78-.05-3.5-.66-4.88-1.84-.02 2.44.02 4.88-.01 7.32-.12 2.78-1.57 5.43-4.13 6.6a8.04 8.04 0 0 1-8.52-.77 8.08 8.08 0 0 1-3.41-6.98 8.12 8.12 0 0 1 4.2-7.25c1.47-.84 3.19-1.15 4.86-.87v3.8a4.23 4.23 0 0 0-2.73 1.4c-.95 1.07-1.28 2.6-1.1 4.02.18 1.63 1.3 3.09 2.87 3.58 1.52.5 3.28.1 4.43-.96.95-1 1.2-2.47 1.18-3.85l.02-14.14z"/>
+                        </svg>
+                    </a>
+                </div>
+                <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
                     <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
-                    <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
-                        Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.
-                    </p>
+                <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
+                    Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.
+                </p>
 
                     {{-- Credential stats --}}
                     <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto md:mx-0">
@@ -138,7 +168,8 @@
                             <p class="text-xs text-slate-500 mt-1 leading-tight">Kadar Kelulusan</p>
                         </div>
                     </div>
-                </div>
+
+                    
 
             </div>
         </div>

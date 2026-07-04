@@ -141,6 +141,13 @@
                     ['title' => 'Kad 2', 'val_name' => 'stat_2_val', 'val_data' => '10k+', 'label_name' => 'stat_2_label', 'label_data' => 'Pelanggan Dibantu'],
                     ['title' => 'Kad 3', 'val_name' => 'stat_3_val', 'val_data' => '91%', 'label_name' => 'stat_3_label', 'label_data' => 'Kadar Kelulusan'],
                 ];
+
+                // Social Media Links Reference
+                $socials = [
+                    ['label' => 'Facebook URL',  'name' => 'social_facebook',  'val' => 'https://facebook.com/username',  'placeholder' => 'https://facebook.com/...'],
+                    ['label' => 'Instagram URL', 'name' => 'social_instagram', 'val' => 'https://instagram.com/username', 'placeholder' => 'https://instagram.com/...'],
+                    ['label' => 'TikTok URL',    'name' => 'social_tiktok',    'val' => 'https://tiktok.com/@username',   'placeholder' => 'https://tiktok.com/...'],
+                ];
                 @endphp
                 
                 <div class="space-y-4">
@@ -183,6 +190,22 @@
                                 <input type="text" name="{{ $stat['label_name'] }}" value="{{ $stat['label_data'] }}" 
                                     class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                             </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- 3. Social Media Links Section -->
+                <div>
+                    <h4 class="font-semibold text-slate-800 text-sm mb-3">Pautan Media Sosial</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        @foreach($socials as $social)
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">{{ $social['label'] }}</label>
+                            <input type="url" name="{{ $social['name'] }}" value="{{ $social['val'] }}" placeholder="{{ $social['placeholder'] }}"
+                                class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                         </div>
                         @endforeach
                     </div>
