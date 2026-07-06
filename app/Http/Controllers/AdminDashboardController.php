@@ -3,51 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 // use App\Models\Prospect;
 
 class AdminDashboardController extends Controller
 {
-    // ── Auth ──────────────────────────────────────────────────────────────
-
     public function showLogin()
     {
-        if (Auth::check()) {
-            return redirect()->route('admin.dashboard');
-        }
         return view('admin.login');
     }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
-            'password' => ['required'],
-        ], [
-            'email.required'    => 'Sila masukkan alamat emel.',
-            'email.email'       => 'Format emel tidak sah.',
-            'password.required' => 'Sila masukkan kata laluan.',
-        ]);
-
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
-        return back()->withErrors([
-            'email' => 'Emel atau kata laluan tidak tepat. Sila cuba semula.',
-        ])->onlyInput('email');
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('admin.login')->with('status', 'Anda telah berjaya log keluar.');
-    }
-
-    // ── Dashboard pages ───────────────────────────────────────────────────
 
     public function index()
     {
@@ -83,7 +46,7 @@ class AdminDashboardController extends Controller
 
     public function permohonan(Request $request)
     {
-        $prospects = collect([]); // Replace with Prospect::query()->filter($request)->latest()->get()
+        $prospects = collect([]);
         return view('admin.permohonan', compact('prospects'));
     }
 
