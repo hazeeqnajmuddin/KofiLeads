@@ -26,7 +26,7 @@
             {{-- LEFT COLUMN: Text Content --}}
             <div class="text-center lg:text-left">
                 <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#C9A840;">
-                    Solusi Kewangan Terpercaya
+                    Solusi Kewangan Dipercayai
                 </p>
 
                 <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
@@ -40,7 +40,7 @@
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                     <a href="#contact" class="btn-gold-metallic font-bold px-8 py-4 text-sm tracking-wide shadow-xl">
-                        Semak Kelayakan Sekarang
+                        Buat Semakan Awal Sekarang
                     </a>
                     <a href="#services" class="inline-block border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-xl transition text-sm">
                         Ketahui Lebih Lanjut
@@ -169,7 +169,9 @@
                         </div>
                     </div>
 
-                    
+                    <p class="text-[10px] text-slate-400 mt-4 max-w-sm mx-auto md:mx-0 leading-relaxed italic">
+                        * Kelulusan tertakluk kepada profil kewangan pelanggan, rekod CCRIS/CTOS, dokumen sokongan dan penilaian akhir pihak bank/koperasi. RCS tidak menjamin sebarang kelulusan pembiayaan.
+                    </p>
 
             </div>
         </div>
@@ -745,7 +747,7 @@
                     </fieldset>
 
                     <button type="button" onclick="openConsentModal()" class="btn-gold-metallic w-full font-bold py-4 px-4 text-sm tracking-wide shadow-sm">
-                        Hantar Permohonan Sekarang
+                        Hantar Untuk Semakan Awal
                     </button>
                     <p class="text-center text-[10px] text-slate-400">
                         Dengan menghantar borang ini, anda bersetuju dengan <a href="#" class="text-navy underline">Dasar Privasi</a> kami.
@@ -827,7 +829,7 @@
                                 Batal
                             </button>
                             <button onclick="submitWithConsent()" class="flex-1 btn-gold-metallic py-2.5 px-4 text-sm font-bold rounded-xl">
-                                Hantar Permohonan
+                                Hantar Untuk Semakan Awal
                             </button>
                         </div>
 

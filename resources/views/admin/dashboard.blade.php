@@ -145,4 +145,70 @@
     </div>
 </div>
 
+
+<!-- Owner Summary -->
+<div class="mt-6">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="font-semibold text-slate-800 text-sm">Ringkasan Owner</h2>
+    </div>
+
+    <!-- Lead counts by period -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Lead Hari Ini</p>
+            <p class="text-3xl font-bold text-navy">{{ $summary['lead_hari_ini'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">permohonan diterima</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Lead Minggu Ini</p>
+            <p class="text-3xl font-bold text-navy">{{ $summary['lead_minggu_ini'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">permohonan diterima</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Lead Bulan Ini</p>
+            <p class="text-3xl font-bold text-navy">{{ $summary['lead_bulan_ini'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">permohonan diterima</p>
+        </div>
+
+    </div>
+
+    <!-- Document status + pipeline milestones -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+
+        <div class="bg-white rounded-xl border border-teal-200 shadow-sm p-5 border-l-4 border-l-teal-400">
+            <p class="text-[10px] font-semibold text-teal-600 uppercase tracking-wider mb-3">Dokumen Lengkap</p>
+            <p class="text-3xl font-bold text-teal-700">{{ $summary['dokumen_lengkap'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">dokumen penuh</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-amber-200 shadow-sm p-5 border-l-4 border-l-amber-400">
+            <p class="text-[10px] font-semibold text-amber-600 uppercase tracking-wider mb-3">Dokumen Belum Lengkap</p>
+            <p class="text-3xl font-bold text-amber-600">{{ $summary['dokumen_belum_lengkap'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">perlu tindakan</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-emerald-200 shadow-sm p-5 border-l-4 border-l-emerald-400">
+            <p class="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider mb-3">Layak</p>
+            <p class="text-3xl font-bold text-emerald-600">{{ $summary['layak'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">telah disahkan layak</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-emerald-300 shadow-sm p-5 border-l-4 border-l-emerald-600">
+            <p class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mb-3">Approved</p>
+            <p class="text-3xl font-bold text-emerald-700">{{ $summary['approved'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">bank/koperasi lulus</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-green-300 shadow-sm p-5 border-l-4 border-l-green-600">
+            <p class="text-[10px] font-semibold text-green-700 uppercase tracking-wider mb-3">Disbursed</p>
+            <p class="text-3xl font-bold text-green-700">{{ $summary['disbursed'] }}</p>
+            <p class="text-xs text-slate-400 mt-1">wang telah disalurkan</p>
+        </div>
+
+    </div>
+</div>
+
 @endsection

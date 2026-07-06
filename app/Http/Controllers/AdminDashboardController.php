@@ -25,7 +25,18 @@ class AdminDashboardController extends Controller
             ['nama' => 'Mohd Faizal bin Hamid', 'sektor' => 'Swasta', 'majikan' => 'Logistik Jaya Sdn Bhd',  'status' => 'rejected', 'tarikh' => '27 Jun 2026'],
         ];
 
-        return view('admin.dashboard', compact('stats', 'recent'));
+        $summary = [
+            'lead_hari_ini'         => 3,
+            'lead_minggu_ini'       => 18,
+            'lead_bulan_ini'        => 67,
+            'dokumen_lengkap'       => 142,
+            'dokumen_belum_lengkap' => 108,
+            'layak'                 => 89,
+            'approved'              => 140,
+            'disbursed'             => 95,
+        ];
+
+        return view('admin.dashboard', compact('stats', 'recent', 'summary'));
     }
 
     public function permohonan(Request $request)
