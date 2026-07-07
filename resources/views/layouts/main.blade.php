@@ -17,7 +17,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased text-slate-900 bg-slate-50 flex flex-col min-h-screen">
-    
+
+    {{-- Flash notifications (success / error / validation) --}}
+    @include('partials.flash')
+
     <!-- Include Header Partial -->
     @include('partials.header')
 

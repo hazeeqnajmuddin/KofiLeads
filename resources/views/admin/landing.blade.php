@@ -15,11 +15,11 @@
             <p class="text-xs text-slate-400 mt-0.5">Nombor yang menerima semua permohonan dari laman</p>
         </div>
         <div class="p-6">
-            <form action="#" method="POST" class="space-y-4">
+            <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nombor Telefon (dengan kod negara)</label>
-                    <input type="tel" name="whatsapp_number" value="+60"
+                    <input type="tel" name="whatsapp_number" value="{{ old('whatsapp_number', $settings['whatsapp_number'] ?? '+60') }}"
                            placeholder="+60123456789"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                     <p class="text-xs text-slate-400 mt-1.5">Contoh: +60123456789</p>
@@ -39,29 +39,29 @@
             <p class="text-xs text-slate-400 mt-0.5">Dipaparkan di bahagian footer laman</p>
         </div>
         <div class="p-6">
-            <form action="#" method="POST" class="space-y-4">
+            <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Emel</label>
-                    <input type="email" name="contact_email"
+                    <input type="email" name="contact_email" value="{{ old('contact_email', $settings['contact_email'] ?? '') }}"
                            placeholder="info@rahmahconsultancy.com"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Facebook URL</label>
-                    <input type="url" name="facebook_url"
+                    <input type="url" name="facebook_url" value="{{ old('facebook_url', $settings['facebook_url'] ?? '') }}"
                            placeholder="https://facebook.com/rahmahconsultancy"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">TikTok URL</label>
-                    <input type="url" name="tiktok_url"
+                    <input type="url" name="tiktok_url" value="{{ old('tiktok_url', $settings['tiktok_url'] ?? '') }}"
                            placeholder="https://tiktok.com/@rahmahconsultancy"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Instagram URL</label>
-                    <input type="url" name="instagram_url"
+                    <input type="url" name="instagram_url" value="{{ old('instagram_url', $settings['instagram_url'] ?? '') }}"
                            placeholder="https://instagram.com/rahmahconsultancy"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
@@ -80,24 +80,24 @@
             <p class="text-xs text-slate-400 mt-0.5">Tajuk dan teks utama di bahagian atas laman</p>
         </div>
         <div class="p-6">
-            <form action="#" method="POST" class="space-y-4">
+            <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tajuk Utama</label>
-                        <input type="text" name="hero_title" value="Semak Kelayakan Anda"
+                        <input type="text" name="hero_title" value="{{ old('hero_title', $settings['hero_title'] ?? 'Semak Kelayakan Anda') }}"
                                class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1.5">Teks Butang (CTA)</label>
-                        <input type="text" name="hero_cta" value="Semak Kelayakan Sekarang"
+                        <input type="text" name="hero_cta" value="{{ old('hero_cta', $settings['hero_cta'] ?? 'Buat Semakan Awal Sekarang') }}"
                                class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Sub-tajuk</label>
                     <textarea name="hero_subtitle" rows="2"
-                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.</textarea>
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">{{ old('hero_subtitle', $settings['hero_subtitle'] ?? '') }}</textarea>
                 </div>
                 <button type="submit" class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
                     Simpan Kandungan
@@ -116,37 +116,40 @@
         <!-- Added flex-grow and flex-col -->
         <div class="p-6 flex-grow flex flex-col">
             <!-- Added flex-grow and flex-col to the form -->
-            <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6 flex-grow flex flex-col">
+            <form action="{{ route('admin.landing.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6 flex-grow flex flex-col">
                 @csrf
-                
+
                 <!-- 1. Image Upload Field -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Gambar Profil</label>
+                    @if(!empty($settings['bio_image']))
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings['bio_image']) }}" alt="Gambar profil semasa" class="w-16 h-16 rounded-lg object-cover mb-2 border border-slate-200">
+                    @endif
                     <input type="file" name="bio_image" accept="image/*"
                         class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
-                    <p class="text-xs text-slate-400 mt-1">Muat naik gambar beresolusi tinggi (format .jpg, .png).</p>
+                    <p class="text-xs text-slate-400 mt-1">Muat naik gambar beresolusi tinggi (format .jpg, .png). Biar kosong untuk kekalkan gambar semasa.</p>
                 </div>
 
                 @php
-                // Biodata Info
+                // Biodata Info (repopulated from saved settings)
                 $criteria = [
-                    ['label' => 'Jawatan', 'name' => 'bio_jawatan', 'val' => 'Pengarah Urusan'],
-                    ['label' => 'Nama',    'name' => 'bio_nama',    'val' => 'Khairul Amri Chamili'],
-                    ['label' => 'Info',    'name' => 'bio_info',    'val' => 'Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.'],
+                    ['label' => 'Jawatan', 'name' => 'bio_jawatan', 'val' => $settings['bio_jawatan'] ?? 'Pengarah Urusan'],
+                    ['label' => 'Nama',    'name' => 'bio_nama',    'val' => $settings['bio_nama'] ?? 'Khairul Amri Chamili'],
+                    ['label' => 'Info',    'name' => 'bio_info',    'val' => $settings['bio_info'] ?? ''],
                 ];
 
                 // 3 Cards Data Reference
                 $stats = [
-                    ['title' => 'Kad 1', 'val_name' => 'stat_1_val', 'val_data' => '8+', 'label_name' => 'stat_1_label', 'label_data' => 'Tahun Pengalaman'],
-                    ['title' => 'Kad 2', 'val_name' => 'stat_2_val', 'val_data' => '10k+', 'label_name' => 'stat_2_label', 'label_data' => 'Pelanggan Dibantu'],
-                    ['title' => 'Kad 3', 'val_name' => 'stat_3_val', 'val_data' => '91%', 'label_name' => 'stat_3_label', 'label_data' => 'Kadar Kelulusan'],
+                    ['title' => 'Kad 1', 'val_name' => 'stat_1_val', 'val_data' => $settings['stat_1_val'] ?? '8+',   'label_name' => 'stat_1_label', 'label_data' => $settings['stat_1_label'] ?? 'Tahun Pengalaman'],
+                    ['title' => 'Kad 2', 'val_name' => 'stat_2_val', 'val_data' => $settings['stat_2_val'] ?? '10k+', 'label_name' => 'stat_2_label', 'label_data' => $settings['stat_2_label'] ?? 'Pelanggan Dibantu'],
+                    ['title' => 'Kad 3', 'val_name' => 'stat_3_val', 'val_data' => $settings['stat_3_val'] ?? '91%',  'label_name' => 'stat_3_label', 'label_data' => $settings['stat_3_label'] ?? 'Kadar Kelulusan'],
                 ];
 
                 // Social Media Links Reference
                 $socials = [
-                    ['label' => 'Facebook URL',  'name' => 'social_facebook',  'val' => 'https://facebook.com/username',  'placeholder' => 'https://facebook.com/...'],
-                    ['label' => 'Instagram URL', 'name' => 'social_instagram', 'val' => 'https://instagram.com/username', 'placeholder' => 'https://instagram.com/...'],
-                    ['label' => 'TikTok URL',    'name' => 'social_tiktok',    'val' => 'https://tiktok.com/@username',   'placeholder' => 'https://tiktok.com/...'],
+                    ['label' => 'Facebook URL',  'name' => 'social_facebook',  'val' => $settings['social_facebook'] ?? '',  'placeholder' => 'https://facebook.com/...'],
+                    ['label' => 'Instagram URL', 'name' => 'social_instagram', 'val' => $settings['social_instagram'] ?? '', 'placeholder' => 'https://instagram.com/...'],
+                    ['label' => 'TikTok URL',    'name' => 'social_tiktok',    'val' => $settings['social_tiktok'] ?? '',   'placeholder' => 'https://tiktok.com/...'],
                 ];
                 @endphp
                 
@@ -228,16 +231,16 @@
         <p class="text-xs text-slate-400 mt-0.5">Kemaskini maklumat perkhidmatan yang dipaparkan di halaman utama</p>
     </div>
     <div class="p-6">
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-6">
             @csrf
-            
+
             <!-- Servis 1 -->
             <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-4">
                 <h4 class="text-sm font-bold text-slate-700 border-b border-slate-200 pb-2">Servis 1</h4>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tajuk Servis</label>
                     <input type="text" name="service_1_title"
-                           value="Perancangan Kewangan"
+                           value="{{ $settings['service_1_title'] ?? 'Perancangan Kewangan' }}"
                            placeholder="Contoh: Perancangan Kewangan"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
@@ -245,7 +248,7 @@
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Penerangan</label>
                     <textarea name="service_1_desc" rows="3"
                               placeholder="Masukkan penerangan servis..."
-                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">Kami membantu anda merancang kewangan peribadi dengan strategi yang tersusun untuk mencapai kebebasan kewangan.</textarea>
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">{{ $settings['service_1_desc'] ?? '' }}</textarea>
                 </div>
             </div>
 
@@ -255,7 +258,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tajuk Servis</label>
                     <input type="text" name="service_2_title"
-                           value="Semakan Kelayakan Pinjaman"
+                           value="{{ $settings['service_2_title'] ?? 'Semakan Kelayakan Pinjaman' }}"
                            placeholder="Contoh: Semakan Kelayakan Pinjaman"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
@@ -263,7 +266,7 @@
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Penerangan</label>
                     <textarea name="service_2_desc" rows="3"
                               placeholder="Masukkan penerangan servis..."
-                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">Semak kelayakan pinjaman anda dengan cepat dan mudah. Kami akan pandukan anda sepanjang proses permohonan.</textarea>
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">{{ $settings['service_2_desc'] ?? '' }}</textarea>
                 </div>
             </div>
 
@@ -273,7 +276,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tajuk Servis</label>
                     <input type="text" name="service_3_title"
-                           value="Pengurusan & Penyatuan Hutang"
+                           value="{{ $settings['service_3_title'] ?? 'Pengurusan & Penyatuan Hutang' }}"
                            placeholder="Contoh: Pengurusan & Penyatuan Hutang"
                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                 </div>
@@ -281,7 +284,7 @@
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5">Penerangan</label>
                     <textarea name="service_3_desc" rows="3"
                               placeholder="Masukkan penerangan servis..."
-                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">Penyelesaian komprehensif untuk membantu anda menguruskan dan merestrukturkan hutang dengan lebih efektif.</textarea>
+                              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">{{ $settings['service_3_desc'] ?? '' }}</textarea>
                 </div>
             </div>
 
@@ -300,13 +303,13 @@
             <p class="text-xs text-slate-400 mt-0.5">Gaji asas minimum bagi semakan awal (dipaparkan di FAQ)</p>
         </div>
         <div class="p-6">
-            <form action="#" method="POST" class="space-y-4">
+            <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-4">
                 @csrf
                 @php
                 $criteria = [
-                    ['label' => 'Kerajaan',              'name' => 'min_gaji_kerajaan', 'val' => '1500'],
-                    ['label' => 'GLC / Badan Berkanun',  'name' => 'min_gaji_glc',      'val' => '2500'],
-                    ['label' => 'Swasta',                'name' => 'min_gaji_swasta',   'val' => '3000'],
+                    ['label' => 'Kerajaan',              'name' => 'min_gaji_kerajaan', 'val' => $settings['min_gaji_kerajaan'] ?? '1500'],
+                    ['label' => 'GLC / Badan Berkanun',  'name' => 'min_gaji_glc',      'val' => $settings['min_gaji_glc'] ?? '2500'],
+                    ['label' => 'Swasta',                'name' => 'min_gaji_swasta',   'val' => $settings['min_gaji_swasta'] ?? '3000'],
                 ];
                 @endphp
                 @foreach($criteria as $c)
@@ -330,8 +333,11 @@
             <p class="text-xs text-slate-400 mt-0.5">Muat naik video promosi untuk dipaparkan di laman utama</p>
         </div>
         <div class="p-6">
-            <form action="#" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('admin.landing.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
+                @if(!empty($settings['video_iklan']))
+                <p class="text-xs text-slate-500 mb-2">Video semasa: <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings['video_iklan']) }}" target="_blank" class="text-navy font-medium underline">lihat</a></p>
+                @endif
                 <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:border-navy/30 transition cursor-pointer">
                     <svg class="w-10 h-10 text-slate-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -352,5 +358,112 @@
     </div>
 
 </div>
+
+{{-- ── Unsaved-change highlighter + per-field revert (Tetapan Laman) ──────────
+     Pure vanilla JS. Highlights a field amber when its value differs from what
+     was loaded (the saved value), offers a "Pulih nilai asal" revert, and warns
+     before leaving with unsaved changes. No DB / no backend involvement. --}}
+<style>
+    .rcms-field-dirty {
+        border-color: #f59e0b !important;
+        background-color: #fffbeb !important;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+    }
+    .rcms-revert {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        font-size: 11px;
+    }
+    .rcms-revert.is-visible { display: flex; }
+    .rcms-revert-badge {
+        color: #b45309; background: #fef3c7; border: 1px solid #fcd34d;
+        border-radius: 6px; padding: 1px 8px; font-weight: 600;
+    }
+    .rcms-revert-btn {
+        color: #1B2B6B; font-weight: 600; text-decoration: underline;
+        cursor: pointer; background: none; border: none; padding: 0;
+        display: inline-flex; align-items: center; gap: 3px;
+    }
+    .rcms-revert-btn:hover { color: #C9A840; }
+</style>
+<script>
+(function () {
+    const forms = document.querySelectorAll('form[action*="/admin/landing"]');
+    let submitting = false;
+
+    forms.forEach(function (form) {
+        form.addEventListener('submit', function () { submitting = true; });
+
+        const fields = form.querySelectorAll('input, textarea, select');
+        fields.forEach(function (el) {
+            // Skip non-editable / non-text inputs
+            if (el.tagName === 'INPUT' && ['hidden', 'file', 'submit', 'button', 'checkbox', 'radio'].includes(el.type)) {
+                return;
+            }
+
+            // Baseline = value as loaded (the saved value)
+            const original = el.value;
+            el.dataset.rcmsOriginal = original;
+
+            // Build the revert control right after the field
+            const revert = document.createElement('div');
+            revert.className = 'rcms-revert';
+            revert.innerHTML =
+                '<span class="rcms-revert-badge">Belum disimpan</span>' +
+                '<button type="button" class="rcms-revert-btn">↺ Pulih nilai asal</button>';
+            el.insertAdjacentElement('afterend', revert);
+
+            const btn = revert.querySelector('.rcms-revert-btn');
+
+            function refresh() {
+                const dirty = el.value !== el.dataset.rcmsOriginal;
+                el.classList.toggle('rcms-field-dirty', dirty);
+                revert.classList.toggle('is-visible', dirty);
+            }
+
+            btn.addEventListener('click', function () {
+                el.value = el.dataset.rcmsOriginal;
+                refresh();
+                el.focus();
+            });
+
+            el.addEventListener('input', refresh);
+            el.addEventListener('change', refresh);
+        });
+    });
+
+    function hasUnsaved() {
+        return !!document.querySelector('form[action*="/admin/landing"] .rcms-field-dirty');
+    }
+
+    // In-app navigation (nav links, logo, etc.): show the themed confirm modal.
+    document.querySelectorAll('a[href]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            if (submitting || a.target === '_blank') return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#')) return;      // in-page anchor, no data loss
+            if (!hasUnsaved()) return;
+            e.preventDefault();
+            window.rcmsConfirm({
+                title: 'Perubahan Belum Disimpan',
+                message: 'Anda ada perubahan yang belum disimpan pada halaman ini. Tinggalkan tanpa menyimpan?',
+                confirmText: 'Tinggalkan',
+                cancelText: 'Kekal di sini',
+                danger: true,
+            }).then(function (ok) {
+                if (ok) { submitting = true; window.location.href = a.href; }
+            });
+        });
+    });
+
+    // Fallback for hard tab-close / refresh (native prompt — browsers can't theme this).
+    window.addEventListener('beforeunload', function (e) {
+        if (submitting) return;
+        if (hasUnsaved()) { e.preventDefault(); e.returnValue = ''; }
+    });
+})();
+</script>
 
 @endsection

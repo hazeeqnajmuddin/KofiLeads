@@ -10,6 +10,9 @@
 </head>
 <body class="bg-slate-100 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
 
+{{-- Flash notifications (success / error / validation) --}}
+@include('partials.flash')
+
 <!-- Top Nav -->
 @php
 $adminLinks = [
@@ -109,6 +112,95 @@ function toggleAdminMenu() {
         <p class="text-xs text-slate-300">Panel Pentadbir v1.0</p>
     </div>
 </footer>
+
+{{-- ── Shared themed confirm modal (admin) ───────────────────────────────────
+     Replaces native confirm()/beforeunload popups with an on-brand dialog.
+     Use via JS: window.rcmsConfirm({title, message, confirmText, cancelText, danger}) → Promise<bool>
+     Or declaratively: <form data-confirm="msg" data-confirm-danger data-confirm-title="…" data-confirm-ok="…"> --}}
+<div id="rcms-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="rcms-modal-title">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" data-rcms-dismiss></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
+        <div class="p-6">
+            <div class="flex items-start gap-4">
+                <div id="rcms-modal-icon" class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"></div>
+                <div class="flex-1 min-w-0">
+                    <h3 id="rcms-modal-title" class="text-base font-bold text-slate-800 mb-1"></h3>
+                    <p id="rcms-modal-message" class="text-sm text-slate-500 leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+        <div class="flex gap-3 px-6 pb-6">
+            <button type="button" id="rcms-modal-cancel" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition"></button>
+            <button type="button" id="rcms-modal-confirm" class="flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold text-white transition"></button>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    const modal = document.getElementById('rcms-modal');
+    const iconWrap = document.getElementById('rcms-modal-icon');
+    const titleEl = document.getElementById('rcms-modal-title');
+    const msgEl = document.getElementById('rcms-modal-message');
+    const okBtn = document.getElementById('rcms-modal-confirm');
+    const cancelBtn = document.getElementById('rcms-modal-cancel');
+    let resolver = null;
+
+    const ICON_DANGER = '<svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>';
+    const ICON_INFO = '<svg class="w-5 h-5 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 17.25h.008v.008H12v-.008z"/></svg>';
+
+    function close(result) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+        const r = resolver; resolver = null;
+        if (r) r(result);
+    }
+
+    window.rcmsConfirm = function (opts) {
+        opts = opts || {};
+        const danger = !!opts.danger;
+        titleEl.textContent = opts.title || 'Sahkan Tindakan';
+        msgEl.textContent = opts.message || 'Adakah anda pasti?';
+        okBtn.textContent = opts.confirmText || 'Ya';
+        cancelBtn.textContent = opts.cancelText || 'Batal';
+        iconWrap.className = 'w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ' + (danger ? 'bg-red-50' : 'bg-navy/10');
+        iconWrap.innerHTML = danger ? ICON_DANGER : ICON_INFO;
+        okBtn.className = 'flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold text-white transition ' + (danger ? 'bg-red-600 hover:bg-red-700' : 'bg-navy hover:bg-navy-dark');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        okBtn.focus();
+        return new Promise(function (resolve) { resolver = resolve; });
+    };
+
+    okBtn.addEventListener('click', function () { close(true); });
+    cancelBtn.addEventListener('click', function () { close(false); });
+    modal.querySelectorAll('[data-rcms-dismiss]').forEach(function (el) {
+        el.addEventListener('click', function () { close(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+        if (modal.classList.contains('hidden')) return;
+        if (e.key === 'Escape') close(false);
+        else if (e.key === 'Enter') { e.preventDefault(); close(true); }
+    });
+
+    // Declarative: any <form data-confirm="…"> is intercepted and themed.
+    document.addEventListener('submit', function (e) {
+        const form = e.target;
+        if (!(form instanceof HTMLFormElement) || !form.hasAttribute('data-confirm') || form.dataset.rcmsConfirmed) return;
+        e.preventDefault();
+        window.rcmsConfirm({
+            title: form.dataset.confirmTitle || 'Sahkan Tindakan',
+            message: form.getAttribute('data-confirm'),
+            confirmText: form.dataset.confirmOk || 'Ya, teruskan',
+            cancelText: form.dataset.confirmCancel || 'Batal',
+            danger: form.hasAttribute('data-confirm-danger'),
+        }).then(function (ok) {
+            if (ok) { form.dataset.rcmsConfirmed = '1'; form.submit(); }
+        });
+    }, true);
+})();
+</script>
 
 </body>
 </html>

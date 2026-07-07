@@ -20,216 +20,88 @@ $pipelineConfig = [
     'follow_up'             => ['label' => 'Follow Up Semula',      'cls' => 'bg-orange-100 text-orange-800 border-orange-300'],
 ];
 
-$rows = [
-    [
-        'nama'           => 'Ahmad Albab',
-        'tel'            => '+60 12-345 6789',
-        'phone'          => '60123456789',
-        'emel'           => 'ahmad.albab@email.com',
-        'daerah'         => 'Petaling Jaya',
-        'poskod'         => '47810',
-        'sektor'         => 'swasta',
-        'sektorLabel'    => 'Swasta',
-        'nama_majikan'   => 'Syarikat ABC Sdn Bhd',
-        'jawatan'        => 'Pengurus',
-        'majikan'        => 'Syarikat ABC Sdn Bhd / Pengurus',
-        'gaji_asas'      => '4500',
-        'status_kerja'   => 'Tetap',
-        'masalah'        => ['Komitmen Tinggi', 'CCRIS'],
-        'slip_gaji'      => true,
-        'ctos_report'    => true,
-        'penyata_epf'    => true,
-        'pipeline'       => 'new_lead',
-    ],
-    [
-        'nama'           => 'Siti Nurdiana',
-        'tel'            => '+60 17-987 6543',
-        'phone'          => '60179876543',
-        'emel'           => 'siti.nurdiana@edu.gov.my',
-        'daerah'         => 'Kuala Lumpur',
-        'poskod'         => '50480',
-        'sektor'         => 'awam',
-        'sektorLabel'    => 'Awam',
-        'nama_majikan'   => 'Kementerian Pendidikan Malaysia',
-        'jawatan'        => 'Pensyarah',
-        'majikan'        => 'Kementerian Pendidikan / Pensyarah',
-        'gaji_asas'      => '5200',
-        'status_kerja'   => 'Tetap',
-        'masalah'        => ['CTOS'],
-        'slip_gaji'      => true,
-        'ctos_report'    => true,
-        'penyata_epf'    => false,
-        'pipeline'       => 'approved',
-    ],
-    [
-        'nama'           => 'Mohd Faizal bin Hamid',
-        'tel'            => '+60 11-2233 4455',
-        'phone'          => '601122334455',
-        'emel'           => '',
-        'daerah'         => 'Shah Alam',
-        'poskod'         => '40150',
-        'sektor'         => 'swasta',
-        'sektorLabel'    => 'Swasta',
-        'nama_majikan'   => 'Logistik Jaya Sdn Bhd',
-        'jawatan'        => 'Pemandu',
-        'majikan'        => 'Logistik Jaya Sdn Bhd / Pemandu',
-        'gaji_asas'      => '2800',
-        'status_kerja'   => 'Kontrak',
-        'masalah'        => ['Komitmen Tinggi', 'AKPK', 'Legal Action'],
-        'slip_gaji'      => true,
-        'ctos_report'    => false,
-        'penyata_epf'    => true,
-        'pipeline'       => 'rejected',
-    ],
-    [
-        'nama'           => 'Nurul Ain Zainudin',
-        'tel'            => '+60 13-567 8901',
-        'phone'          => '601135678901',
-        'emel'           => 'nurulain@hkl.gov.my',
-        'daerah'         => 'Cheras',
-        'poskod'         => '56100',
-        'sektor'         => 'awam',
-        'sektorLabel'    => 'Awam',
-        'nama_majikan'   => 'Hospital Kuala Lumpur',
-        'jawatan'        => 'Jururawat',
-        'majikan'        => 'Hospital Kuala Lumpur / Jururawat',
-        'gaji_asas'      => '3100',
-        'status_kerja'   => 'Tetap',
-        'masalah'        => ['CCRIS', 'CTOS'],
-        'slip_gaji'      => false,
-        'ctos_report'    => false,
-        'penyata_epf'    => false,
-        'pipeline'       => 'dokumen_belum_lengkap',
-    ],
-    [
-        'nama'           => 'Khairul Anwar Othman',
-        'tel'            => '+60 19-334 5566',
-        'phone'          => '601933455566',
-        'emel'           => '',
-        'daerah'         => 'Subang Jaya',
-        'poskod'         => '47500',
-        'sektor'         => 'awam',
-        'sektorLabel'    => 'Awam',
-        'nama_majikan'   => 'Polis DiRaja Malaysia',
-        'jawatan'        => 'Inspektor',
-        'majikan'        => 'Polis DiRaja Malaysia / Inspektor',
-        'gaji_asas'      => '4200',
-        'status_kerja'   => 'Tetap',
-        'masalah'        => ['Komitmen Tinggi'],
-        'slip_gaji'      => true,
-        'ctos_report'    => true,
-        'penyata_epf'    => false,
-        'pipeline'       => 'dalam_semakan',
-    ],
-    [
-        'nama'           => 'Roslinda Md Yusof',
-        'tel'            => '+60 16-778 9900',
-        'phone'          => '601677899900',
-        'emel'           => 'roslinda.perniagaan@gmail.com',
-        'daerah'         => 'Klang',
-        'poskod'         => '41000',
-        'sektor'         => 'sendiri',
-        'sektorLabel'    => 'Sendiri',
-        'nama_majikan'   => 'Perniagaan Sendiri',
-        'jawatan'        => 'Peniaga',
-        'majikan'        => 'Perniagaan Sendiri / Peniaga',
-        'gaji_asas'      => '3800',
-        'status_kerja'   => 'Sendiri',
-        'masalah'        => ['CCRIS', 'SAA'],
-        'slip_gaji'      => true,
-        'ctos_report'    => true,
-        'penyata_epf'    => false,
-        'pipeline'       => 'tidak_layak',
-    ],
-    [
-        'nama'           => 'Zulkifli Hassan',
-        'tel'            => '+60 12-100 2233',
-        'phone'          => '601221002233',
-        'emel'           => 'zulkifli.hassan@gmail.com',
-        'daerah'         => 'Kajang',
-        'poskod'         => '43000',
-        'sektor'         => 'bersara',
-        'sektorLabel'    => 'Pesara',
-        'nama_majikan'   => 'Pesara Kerajaan',
-        'jawatan'        => 'Bekas Pegawai Tadbir',
-        'majikan'        => 'Pesara Kerajaan / Bekas Pegawai',
-        'gaji_asas'      => '2600',
-        'status_kerja'   => 'Pesara',
-        'masalah'        => ['Komitmen Tinggi', 'CTOS'],
-        'slip_gaji'      => true,
-        'ctos_report'    => false,
-        'penyata_epf'    => false,
-        'pipeline'       => 'dokumen_lengkap',
-    ],
+$sektorLabels = [
+    'kerajaan' => 'Kerajaan',
+    'glc'      => 'GLC',
+    'berkanun' => 'Badan Berkanun',
+    'swasta'   => 'Swasta',
 ];
+
+$masalahLabels = [
+    'komitmen_tinggi' => 'Komitmen Tinggi',
+    'ccris'           => 'CCRIS',
+    'ctos'            => 'CTOS',
+    'akpk'            => 'AKPK',
+    'saa'             => 'SAA',
+    'legal_action'    => 'Legal Action',
+    'lain_lain'       => 'Lain-lain',
+];
+
+$statusKerjaLabels = ['tetap' => 'Tetap', 'kontrak' => 'Kontrak'];
+$jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'penyata_epf' => 'Penyata EPF'];
 @endphp
 
 <!-- Filters + table card -->
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 
-    <!-- Card header with filters -->
+    <!-- Card header with filters (server-side GET form) -->
     <div class="px-6 py-5 border-b border-slate-100">
-        <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+        <form method="GET" action="{{ route('admin.permohonan') }}" class="flex flex-col sm:flex-row sm:items-end gap-4">
 
             <div class="flex-1">
                 <h2 class="font-semibold text-slate-800 text-base mb-0.5">Senarai Permohonan</h2>
                 <p class="text-xs text-slate-400">Klik nama atau baris untuk lihat butiran penuh. Tukar status terus dalam lajur Pipeline.</p>
             </div>
 
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap gap-3 items-end">
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari Nama</label>
-                    <input type="text" id="filter-nama" oninput="filterTable()"
+                    <input type="text" name="nama" value="{{ $filters['nama'] }}"
                            placeholder="Nama pemohon..."
                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                 </div>
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari No. Tel</label>
-                    <input type="text" id="filter-tel" oninput="filterTable()"
+                    <input type="text" name="tel" value="{{ $filters['tel'] }}"
                            placeholder="Nombor telefon..."
                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                 </div>
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status Pipeline</label>
-                    <select id="filter-status" onchange="filterTable()"
+                    <select name="status" onchange="this.form.submit()"
                             class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-52 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                         <option value="">Semua Status</option>
-                        <option value="new_lead">New Lead</option>
-                        <option value="dokumen_belum_lengkap">Dokumen Belum Lengkap</option>
-                        <option value="dokumen_lengkap">Dokumen Lengkap</option>
-                        <option value="dalam_semakan">Dalam Semakan</option>
-                        <option value="layak">Layak</option>
-                        <option value="tidak_layak">Tidak Layak</option>
-                        <option value="submit_bank">Submit Bank/Koperasi</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="disbursed">Disbursed</option>
-                        <option value="closed">Closed</option>
-                        <option value="follow_up">Follow Up Semula</option>
+                        @foreach($pipelineConfig as $val => $cfg)
+                        <option value="{{ $val }}" @selected($filters['status'] === $val)>{{ $cfg['label'] }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sektor</label>
-                    <select id="filter-sektor" onchange="filterTable()"
+                    <select name="sektor" onchange="this.form.submit()"
                             class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                         <option value="">Semua Sektor</option>
-                        <option value="awam">Sektor Awam</option>
-                        <option value="swasta">Sektor Swasta</option>
-                        <option value="sendiri">Bekerja Sendiri</option>
-                        <option value="bersara">Pesara</option>
+                        @foreach($sektorLabels as $val => $label)
+                        <option value="{{ $val }}" @selected($filters['sektor'] === $val)>{{ $label }}</option>
+                        @endforeach
                     </select>
                 </div>
 
+                <div class="flex items-end gap-2">
+                    <button type="submit" class="text-sm font-semibold bg-navy text-white px-4 py-1.5 rounded-lg hover:bg-navy-dark transition">Cari</button>
+                    <a href="{{ route('admin.permohonan') }}" class="text-sm font-medium text-slate-500 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Reset</a>
+                </div>
+
                 <div class="flex flex-col justify-end">
-                    <span id="row-count" class="text-xs text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg font-medium">0 rekod</span>
+                    <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg font-medium">{{ $leads->total() }} rekod</span>
                 </div>
 
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Table -->
@@ -247,44 +119,55 @@ $rows = [
             </thead>
             <tbody id="permohonan-body" class="divide-y divide-slate-100">
 
-                @foreach($rows as $r)
-                @php $pc = $pipelineConfig[$r['pipeline']] ?? ['label' => $r['pipeline'], 'cls' => 'bg-slate-100 text-slate-600 border-slate-300']; @endphp
+                @forelse($leads as $lead)
+                @php
+                    $pc = $pipelineConfig[$lead->pipeline_status] ?? ['label' => $lead->pipeline_status, 'cls' => 'bg-slate-100 text-slate-600 border-slate-300'];
+                    $phone = preg_replace('/\D/', '', $lead->no_telefon);
+                    $sektorLabel = $sektorLabels[$lead->sektor] ?? $lead->sektor;
+                    $masalahText = $lead->masalah->map(fn ($m) => $masalahLabels[$m->masalah] ?? $m->masalah)->implode(', ');
+                    $dokumenJson = $lead->dokumen->map(fn ($d) => [
+                        'id'    => $d->id,
+                        'label' => ($jenisLabels[$d->jenis] ?? $d->jenis) . ($d->bulan ? " (Bulan {$d->bulan})" : ''),
+                        'nama'  => $d->nama_fail,
+                    ])->values();
+                    $waText = 'Assalamualaikum ' . $lead->nama . ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.';
+                @endphp
                 <tr class="table-row cursor-pointer transition hover:bg-slate-50/80 select-none"
                     onclick="viewDetails(this)"
-                    data-nama="{{ $r['nama'] }}"
-                    data-tel="{{ preg_replace('/\D/', '', $r['tel']) }}"
-                    data-tel-display="{{ $r['tel'] }}"
-                    data-emel="{{ $r['emel'] }}"
-                    data-daerah="{{ $r['daerah'] }}"
-                    data-poskod="{{ $r['poskod'] }}"
-                    data-pipeline="{{ $r['pipeline'] }}"
-                    data-sektor="{{ $r['sektor'] }}"
-                    data-sektor-label="{{ $r['sektorLabel'] }}"
-                    data-nama-majikan="{{ $r['nama_majikan'] }}"
-                    data-jawatan="{{ $r['jawatan'] }}"
-                    data-majikan="{{ $r['majikan'] }}"
-                    data-gaji="{{ $r['gaji_asas'] }}"
-                    data-status-kerja="{{ $r['status_kerja'] }}"
-                    data-masalah="{{ implode(', ', $r['masalah']) }}"
-                    data-slip-gaji="{{ $r['slip_gaji'] ? '1' : '0' }}"
-                    data-ctos="{{ $r['ctos_report'] ? '1' : '0' }}"
-                    data-epf="{{ $r['penyata_epf'] ? '1' : '0' }}"
-                    data-phone="{{ $r['phone'] }}">
-                    <td class="px-5 py-4 font-semibold text-navy cell-title hover:underline underline-offset-2">{{ $r['nama'] }}</td>
-                    <td class="px-5 py-4 text-slate-500" data-label="No. Tel">{{ $r['tel'] }}</td>
-                    <td class="px-5 py-4 text-slate-600" data-label="Sektor">{{ $r['sektorLabel'] }}</td>
-                    <td class="px-5 py-4 text-slate-600" data-label="Majikan">{{ $r['majikan'] }}</td>
+                    data-nama="{{ $lead->nama }}"
+                    data-tel-display="{{ $lead->no_telefon }}"
+                    data-emel="{{ $lead->emel }}"
+                    data-daerah="{{ $lead->daerah }}"
+                    data-poskod="{{ $lead->poskod }}"
+                    data-pipeline-label="{{ $pc['label'] }}"
+                    data-pipeline-cls="status-badge {{ $pc['cls'] }}"
+                    data-sektor-label="{{ $sektorLabel }}"
+                    data-nama-majikan="{{ $lead->nama_majikan }}"
+                    data-jawatan="{{ $lead->jawatan }}"
+                    data-gaji="{{ $lead->gaji_asas }}"
+                    data-status-kerja="{{ $statusKerjaLabels[$lead->status_pekerjaan] ?? $lead->status_pekerjaan }}"
+                    data-masalah="{{ $masalahText }}"
+                    data-dokumen="{{ $dokumenJson->toJson() }}"
+                    data-phone="{{ $phone }}">
+                    <td class="px-5 py-4 font-semibold text-navy cell-title hover:underline underline-offset-2">{{ $lead->nama }}</td>
+                    <td class="px-5 py-4 text-slate-500" data-label="No. Tel">{{ $lead->no_telefon }}</td>
+                    <td class="px-5 py-4 text-slate-600" data-label="Sektor">{{ $sektorLabel }}</td>
+                    <td class="px-5 py-4 text-slate-600" data-label="Majikan">{{ $lead->nama_majikan }} / {{ $lead->jawatan }}</td>
                     <td class="px-5 py-4 text-center" data-label="Status Pipeline" onclick="event.stopPropagation()">
-                        <select onchange="updatePipeline(this)"
-                            class="pipeline-select text-xs font-semibold border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 cursor-pointer {{ $pc['cls'] }}">
-                            @foreach($pipelineConfig as $val => $cfg)
-                            <option value="{{ $val }}" {{ $r['pipeline'] === $val ? 'selected' : '' }}>{{ $cfg['label'] }}</option>
-                            @endforeach
-                        </select>
+                        <form method="POST" action="{{ route('admin.leads.updateStatus', $lead) }}">
+                            @csrf
+                            @method('PATCH')
+                            <select name="pipeline_status" onchange="this.form.submit()"
+                                class="pipeline-select text-xs font-semibold border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 cursor-pointer {{ $pc['cls'] }}">
+                                @foreach($pipelineConfig as $val => $cfg)
+                                <option value="{{ $val }}" @selected($lead->pipeline_status === $val)>{{ $cfg['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </form>
                     </td>
                     <td class="px-5 py-4 text-center" data-label="Tindakan" onclick="event.stopPropagation()">
                         <div class="flex items-center justify-center gap-2">
-                            <a href="https://wa.me/{{ $r['phone'] }}?text={{ urlencode('Assalamualaikum ' . $r['nama'] . ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.') }}"
+                            <a href="https://wa.me/{{ $phone }}?text={{ urlencode($waText) }}"
                                target="_blank"
                                class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg hover:bg-emerald-100 transition" title="WhatsApp">
                                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -292,37 +175,45 @@ $rows = [
                                 </svg>
                                 WA
                             </a>
-                            <button onclick="printLead(this.closest('tr').dataset)"
-                                class="inline-flex items-center gap-1.5 text-xs font-medium text-navy bg-navy/5 border border-navy/20 px-2.5 py-1.5 rounded-lg hover:bg-navy/10 transition" title="Muat turun PDF">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                                PDF
-                            </button>
-                            <button onclick="deleteLead(this)"
-                                class="inline-flex items-center gap-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 px-2.5 py-1.5 rounded-lg hover:bg-red-100 transition" title="Padam rekod">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                                Padam
-                            </button>
+                            <form method="POST" action="{{ route('admin.leads.destroy', $lead) }}"
+                                  data-confirm="Padam rekod {{ $lead->nama }}? Tindakan ini tidak boleh dibatalkan."
+                                  data-confirm-title="Padam Rekod"
+                                  data-confirm-ok="Ya, padam"
+                                  data-confirm-danger>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex items-center gap-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 px-2.5 py-1.5 rounded-lg hover:bg-red-100 transition" title="Padam rekod">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                    Padam
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="6" class="px-6 py-16 text-center">
+                        <svg class="w-10 h-10 text-slate-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <p class="text-slate-400 text-sm">Tiada rekod dijumpai</p>
+                        <p class="text-slate-300 text-xs mt-1">Cuba ubah penapis carian anda</p>
+                    </td>
+                </tr>
+                @endforelse
 
             </tbody>
         </table>
     </div>
 
-    <!-- Empty state -->
-    <div id="empty-state" class="hidden px-6 py-16 text-center">
-        <svg class="w-10 h-10 text-slate-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-        <p class="text-slate-400 text-sm">Tiada rekod dijumpai</p>
-        <p class="text-slate-300 text-xs mt-1">Cuba ubah penapis carian anda</p>
+    @if($leads->hasPages())
+    <div class="px-6 py-4 border-t border-slate-100">
+        {{ $leads->links() }}
     </div>
+    @endif
 
 </div>
 
@@ -415,20 +306,7 @@ $rows = [
                     <span class="w-4 h-4 bg-navy/10 text-navy rounded flex items-center justify-center text-[9px] font-bold flex-shrink-0">3</span>
                     Dokumen Sokongan
                 </p>
-                <div class="space-y-2.5">
-                    <div class="flex justify-between items-center text-sm py-1.5 border-b border-slate-50">
-                        <span class="text-slate-400 w-36 flex-shrink-0">Slip Gaji 3 Bulan</span>
-                        <span id="modal-slip-gaji" class="status-badge text-xs"></span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm py-1.5 border-b border-slate-50">
-                        <span class="text-slate-400 w-36 flex-shrink-0">Laporan CTOS</span>
-                        <span id="modal-ctos" class="status-badge text-xs"></span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm py-1.5">
-                        <span class="text-slate-400 w-36 flex-shrink-0">Penyata EPF</span>
-                        <span id="modal-epf" class="status-badge text-xs"></span>
-                    </div>
-                </div>
+                <div id="modal-dokumen" class="space-y-2"></div>
             </div>
 
         </div>
@@ -446,21 +324,7 @@ $rows = [
 </div>
 
 <script>
-const PIPELINE_MAP = {
-    new_lead:               { label: 'New Lead',              cls: 'status-badge bg-blue-100 text-blue-800 border-blue-200' },
-    dokumen_belum_lengkap:  { label: 'Dokumen Belum Lengkap', cls: 'status-badge bg-amber-100 text-amber-800 border-amber-300' },
-    dokumen_lengkap:        { label: 'Dokumen Lengkap',       cls: 'status-badge bg-teal-100 text-teal-800 border-teal-300' },
-    dalam_semakan:          { label: 'Dalam Semakan',         cls: 'status-badge bg-sky-100 text-sky-800 border-sky-300' },
-    layak:                  { label: 'Layak',                 cls: 'status-badge bg-emerald-100 text-emerald-800 border-emerald-300' },
-    tidak_layak:            { label: 'Tidak Layak',           cls: 'status-badge bg-red-100 text-red-800 border-red-300' },
-    submit_bank:            { label: 'Submit Bank/Koperasi',  cls: 'status-badge bg-purple-100 text-purple-800 border-purple-300' },
-    approved:               { label: 'Approved',              cls: 'status-badge bg-emerald-200 text-emerald-900 border-emerald-400' },
-    rejected:               { label: 'Rejected',              cls: 'status-badge bg-red-200 text-red-900 border-red-400' },
-    disbursed:              { label: 'Disbursed',             cls: 'status-badge bg-green-200 text-green-900 border-green-400' },
-    closed:                 { label: 'Closed',                cls: 'status-badge bg-slate-200 text-slate-700 border-slate-400' },
-    follow_up:              { label: 'Follow Up Semula',      cls: 'status-badge bg-orange-100 text-orange-800 border-orange-300' },
-};
-
+const SELECT_BASE = 'pipeline-select text-xs font-semibold border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 cursor-pointer';
 const PIPELINE_SELECT_CLS = {
     new_lead:               'bg-blue-100 text-blue-800 border-blue-200',
     dokumen_belum_lengkap:  'bg-amber-100 text-amber-800 border-amber-300',
@@ -476,64 +340,27 @@ const PIPELINE_SELECT_CLS = {
     follow_up:              'bg-orange-100 text-orange-800 border-orange-300',
 };
 
-const SELECT_BASE = 'pipeline-select text-xs font-semibold border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 cursor-pointer';
+// URL template for private document download (id swapped in at click time)
+const DOKUMEN_URL = "{{ route('admin.dokumen.download', ['dokumen' => '__ID__']) }}";
 
 function applySelectStyle(sel) {
     sel.className = SELECT_BASE + ' ' + (PIPELINE_SELECT_CLS[sel.value] || 'bg-slate-100 text-slate-600 border-slate-300');
 }
 
-function updatePipeline(sel) {
-    sel.closest('tr').dataset.pipeline = sel.value;
-    applySelectStyle(sel);
-    filterTable();
-}
-
-function filterTable() {
-    const nama   = document.getElementById('filter-nama').value.toLowerCase();
-    const tel    = document.getElementById('filter-tel').value.replace(/\D/g, '');
-    const status = document.getElementById('filter-status').value;
-    const sektor = document.getElementById('filter-sektor').value.toLowerCase();
-    const rows   = document.querySelectorAll('#permohonan-body .table-row');
-    let visible  = 0;
-
-    rows.forEach(row => {
-        const match = (row.dataset.nama || '').toLowerCase().includes(nama)
-                   && (tel    === '' || (row.dataset.tel || '').includes(tel))
-                   && (status === '' || (row.dataset.pipeline || '') === status)
-                   && (sektor === '' || (row.dataset.sektor || '').toLowerCase() === sektor);
-        row.style.display = match ? '' : 'none';
-        if (match) visible++;
-    });
-
-    document.getElementById('row-count').textContent = visible + ' rekod';
-    document.getElementById('empty-state').classList.toggle('hidden', visible > 0);
-}
-
 function set(id, text) { document.getElementById(id).textContent = text; }
 
-function docBadge(el, submitted) {
-    if (submitted) {
-        el.className = 'status-badge bg-emerald-100 text-emerald-800 border-emerald-300 text-xs';
-        el.innerHTML = '<span class="dot"></span>Dikemukakan';
-    } else {
-        el.className = 'status-badge bg-red-100 text-red-800 border-red-300 text-xs';
-        el.innerHTML = '<span class="dot"></span>Tiada';
-    }
-}
-
 function viewDetails(row) {
-    const d  = row.dataset;
-    const p  = PIPELINE_MAP[d.pipeline] || { label: d.pipeline, cls: 'status-badge bg-slate-100 text-slate-600 border-slate-300' };
+    const d = row.dataset;
     const waText = encodeURIComponent('Assalamualaikum ' + d.nama + ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.');
 
     // Header
     set('modal-nama', d.nama);
     const pipelineEl = document.getElementById('modal-pipeline');
-    pipelineEl.className = p.cls;
-    pipelineEl.innerHTML = '<span class="dot"></span>' + p.label;
+    pipelineEl.className = d.pipelineCls;
+    pipelineEl.innerHTML = '<span class="dot"></span>' + d.pipelineLabel;
 
     // Section 1
-    set('modal-tel',    d.telDisplay || d.tel);
+    set('modal-tel',    d.telDisplay || '—');
     set('modal-emel',   d.emel   || '—');
     set('modal-daerah', d.daerah || '—');
     set('modal-poskod', d.poskod || '—');
@@ -556,10 +383,26 @@ function viewDetails(row) {
         });
     }
 
-    // Section 3
-    docBadge(document.getElementById('modal-slip-gaji'), d.slipGaji === '1');
-    docBadge(document.getElementById('modal-ctos'),      d.ctos     === '1');
-    docBadge(document.getElementById('modal-epf'),       d.epf      === '1');
+    // Section 3: real documents with download links
+    const docEl = document.getElementById('modal-dokumen');
+    docEl.innerHTML = '';
+    let docs = [];
+    try { docs = JSON.parse(d.dokumen || '[]'); } catch (e) { docs = []; }
+    if (docs.length === 0) {
+        docEl.innerHTML = '<p class="text-sm text-slate-400 py-1.5">Tiada dokumen dimuat naik.</p>';
+    } else {
+        docs.forEach(doc => {
+            const a = document.createElement('a');
+            a.href = DOKUMEN_URL.replace('__ID__', doc.id);
+            a.className = 'flex items-center justify-between gap-3 text-sm py-2 px-3 rounded-lg border border-slate-100 hover:border-navy/30 hover:bg-slate-50 transition';
+            a.innerHTML =
+                '<span class="text-slate-600">' + doc.label + '</span>' +
+                '<span class="inline-flex items-center gap-1.5 text-navy font-medium text-xs flex-shrink-0">' +
+                '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>' +
+                'Muat turun</span>';
+            docEl.appendChild(a);
+        });
+    }
 
     // Footer WA
     document.getElementById('modal-wa').href = 'https://wa.me/' + d.phone + '?text=' + waText;
@@ -573,24 +416,8 @@ function closeDetailsModal() {
     document.body.style.overflow = '';
 }
 
-function printLead(d) {
-    // Placeholder: wire to real PDF route when backend is ready
-    alert('PDF untuk ' + d.nama + ' akan dijana apabila backend disambungkan.');
-}
-
-function deleteLead(btn) {
-    const row = btn.closest('tr');
-    const nama = row.dataset.nama;
-    if (!confirm('Padam rekod ' + nama + '?\n\nTindakan ini tidak boleh dibatalkan.')) return;
-    row.style.transition = 'opacity 0.2s';
-    row.style.opacity = '0';
-    setTimeout(() => { row.remove(); filterTable(); }, 200);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.pipeline-select').forEach(applySelectStyle);
-    const total = document.querySelectorAll('#permohonan-body .table-row').length;
-    document.getElementById('row-count').textContent = total + ' rekod';
 });
 
 document.addEventListener('keydown', e => {

@@ -30,17 +30,17 @@
                 </p>
 
                 <h1 class="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                    Semak Kelayakan Anda<br>
+                    {{ \App\Models\Setting::get('hero_title', 'Semak Kelayakan Anda') }}<br>
                     <span class="gold-metallic-text">Bersama Kami</span>
                 </h1>
 
                 <p class="text-slate-100 text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.
+                    {{ \App\Models\Setting::get('hero_subtitle', 'Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.') }}
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                     <a href="#contact" class="btn-gold-metallic font-bold px-8 py-4 text-sm tracking-wide shadow-xl">
-                        Buat Semakan Awal Sekarang
+                        {{ \App\Models\Setting::get('hero_cta', 'Buat Semakan Awal Sekarang') }}
                     </a>
                     <a href="#services" class="inline-block border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-xl transition text-sm">
                         Ketahui Lebih Lanjut
@@ -49,9 +49,9 @@
 
                 {{-- Service chip pills --}}
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
-                    <a href="#services" class="service-chip">Perancangan Kewangan</a>
-                    <a href="#services" class="service-chip">Semakan Pinjaman</a>
-                    <a href="#services" class="service-chip">Penyatuan Hutang</a>
+                    <a href="#services" class="service-chip">{{ \App\Models\Setting::get('service_1_title', 'Perancangan Kewangan') }}</a>
+                    <a href="#services" class="service-chip">{{ \App\Models\Setting::get('service_2_title', 'Semakan Pinjaman') }}</a>
+                    <a href="#services" class="service-chip">{{ \App\Models\Setting::get('service_3_title', 'Penyatuan Hutang') }}</a>
                 </div>
 
                 {{-- Trust badges --}}
@@ -82,7 +82,7 @@
                         controls
                         poster="{{ asset('images/video-thumbnail.jpg') }}"
                     >
-                        <source src="{{ asset('videos/TestVid.mp4') }}" type="video/mp4">
+                        <source src="{{ ($vid = \App\Models\Setting::get('video_iklan')) ? \Illuminate\Support\Facades\Storage::disk('public')->url($vid) : asset('videos/TestVid.mp4') }}" type="video/mp4">
                         Maaf, pelayar web anda tidak menyokong format video ini.
                     </video>
                     
@@ -106,7 +106,7 @@
                 <div class="reveal flex-shrink-0 flex justify-center">
                     <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);">
                         <div class="rounded-full p-1 bg-white">
-                            <img src="{{ asset('images/a5e960547f3d1fb5b0f887a23b10d43a~tplv-tiktokx-cropcenter_1080_1080.jpeg') }}"
+                            <img src="{{ ($bi = \App\Models\Setting::get('bio_image')) ? \Illuminate\Support\Facades\Storage::disk('public')->url($bi) : asset('images/a5e960547f3d1fb5b0f887a23b10d43a~tplv-tiktokx-cropcenter_1080_1080.jpeg') }}"
                                  alt="Pengasas Rahmah Consultancy"
                                  class="w-44 h-44 sm:w-52 sm:h-52 rounded-full object-cover object-top block">
                         </div>
@@ -115,14 +115,14 @@
 
                 {{-- Biodata --}}
                 <div class="reveal text-center md:text-left">
-                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">Pengarah Urusan</p>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">Khairul Amri Chamili</h2>
+                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">{{ \App\Models\Setting::get('bio_jawatan', 'Pengarah Urusan') }}</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">{{ \App\Models\Setting::get('bio_nama', 'Khairul Amri Chamili') }}</h2>
                     
                     {{-- Social Media Icons --}}
                 <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
                     <!-- Facebook -->
-                    <a href="https://facebook.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" 
-                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300 shadow-sm" 
+                    <a href="{{ \App\Models\Setting::get('social_facebook', 'https://facebook.com/YOUR_USERNAME') }}" target="_blank" rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300 shadow-sm"
                     title="Facebook">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M9 8H7v3h2v9h4v-9h3l.5-3H13V6c0-.5.5-1 1-1h2V2h-3a4 4 0 0 0-4 4v2z"/>
@@ -130,8 +130,8 @@
                     </a>
                     
                     <!-- Instagram -->
-                    <a href="https://instagram.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" 
-                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition-all duration-300 shadow-sm" 
+                    <a href="{{ \App\Models\Setting::get('social_instagram', 'https://instagram.com/YOUR_USERNAME') }}" target="_blank" rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition-all duration-300 shadow-sm"
                     title="Instagram">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
@@ -139,8 +139,8 @@
                     </a>
                     
                     <!-- TikTok -->
-                    <a href="https://www.tiktok.com/@khairulconsultant3" target="_blank" rel="noopener noreferrer" 
-                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300 shadow-sm" 
+                    <a href="{{ \App\Models\Setting::get('social_tiktok', 'https://www.tiktok.com/@khairulconsultant3') }}" target="_blank" rel="noopener noreferrer"
+                    class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300 shadow-sm"
                     title="TikTok">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.74 4.05 1.08.97 2.52 1.44 3.93 1.55v3.7c-1.78-.05-3.5-.66-4.88-1.84-.02 2.44.02 4.88-.01 7.32-.12 2.78-1.57 5.43-4.13 6.6a8.04 8.04 0 0 1-8.52-.77 8.08 8.08 0 0 1-3.41-6.98 8.12 8.12 0 0 1 4.2-7.25c1.47-.84 3.19-1.15 4.86-.87v3.8a4.23 4.23 0 0 0-2.73 1.4c-.95 1.07-1.28 2.6-1.1 4.02.18 1.63 1.3 3.09 2.87 3.58 1.52.5 3.28.1 4.43-.96.95-1 1.2-2.47 1.18-3.85l.02-14.14z"/>
@@ -150,22 +150,22 @@
                 <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
                     <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
                 <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
-                    Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.
+                    {{ \App\Models\Setting::get('bio_info', 'Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.') }}
                 </p>
 
                     {{-- Credential stats --}}
                     <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto md:mx-0">
                         <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="8" data-suffix="+">8+</p>
-                            <p class="text-xs text-slate-500 mt-1 leading-tight">Tahun Pengalaman</p>
+                            <p class="text-xl font-extrabold gold-metallic-text">{{ \App\Models\Setting::get('stat_1_val', '8+') }}</p>
+                            <p class="text-xs text-slate-500 mt-1 leading-tight">{{ \App\Models\Setting::get('stat_1_label', 'Tahun Pengalaman') }}</p>
                         </div>
                         <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="10" data-suffix="k+">10k+</p>
-                            <p class="text-xs text-slate-500 mt-1 leading-tight">Pelanggan Dibantu</p>
+                            <p class="text-xl font-extrabold gold-metallic-text">{{ \App\Models\Setting::get('stat_2_val', '10k+') }}</p>
+                            <p class="text-xs text-slate-500 mt-1 leading-tight">{{ \App\Models\Setting::get('stat_2_label', 'Pelanggan Dibantu') }}</p>
                         </div>
                         <div class="reveal bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
-                            <p class="text-xl font-extrabold gold-metallic-text count-up" data-target="91" data-suffix="%">91%</p>
-                            <p class="text-xs text-slate-500 mt-1 leading-tight">Kadar Kelulusan</p>
+                            <p class="text-xl font-extrabold gold-metallic-text">{{ \App\Models\Setting::get('stat_3_val', '91%') }}</p>
+                            <p class="text-xs text-slate-500 mt-1 leading-tight">{{ \App\Models\Setting::get('stat_3_label', 'Kadar Kelulusan') }}</p>
                         </div>
                     </div>
 
@@ -191,24 +191,24 @@
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-3">Perancangan Kewangan</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Kami membantu anda merancang kewangan peribadi dengan strategi yang tersusun untuk mencapai kebebasan kewangan.</p>
+                    <h3 class="text-xl font-bold text-navy mb-3">{{ \App\Models\Setting::get('service_1_title', 'Perancangan Kewangan') }}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">{{ \App\Models\Setting::get('service_1_desc', 'Kami membantu anda merancang kewangan peribadi dengan strategi yang tersusun untuk mencapai kebebasan kewangan.') }}</p>
                 </div>
 
                 <div class="reveal group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-3">Semakan Kelayakan Pinjaman</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Semak kelayakan pinjaman anda dengan cepat dan mudah. Kami akan pandukan anda sepanjang proses permohonan.</p>
+                    <h3 class="text-xl font-bold text-navy mb-3">{{ \App\Models\Setting::get('service_2_title', 'Semakan Kelayakan Pinjaman') }}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">{{ \App\Models\Setting::get('service_2_desc', 'Semak kelayakan pinjaman anda dengan cepat dan mudah. Kami akan pandukan anda sepanjang proses permohonan.') }}</p>
                 </div>
 
                 <div class="reveal group p-8 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-gold transition-all duration-300">
                     <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gold-light text-gold group-hover:bg-gold group-hover:text-white">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 7l2.55 2.4A1 1 0 0116 11H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-navy mb-3">Pengurusan & Penyatuan Hutang</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Penyelesaian komprehensif untuk membantu anda menguruskan dan merestrukturkan hutang dengan lebih efektif.</p>
+                    <h3 class="text-xl font-bold text-navy mb-3">{{ \App\Models\Setting::get('service_3_title', 'Pengurusan & Penyatuan Hutang') }}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">{{ \App\Models\Setting::get('service_3_desc', 'Penyelesaian komprehensif untuk membantu anda menguruskan dan merestrukturkan hutang dengan lebih efektif.') }}</p>
                 </div>
 
             </div>
@@ -220,8 +220,8 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x md:divide-slate-700">
                 <div class="reveal flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">10,000+</span>
-                    <span class="text-slate-300 text-sm font-medium">Individu & Prospek Dibantu Semakan</span>
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">{{ \App\Models\Setting::get('stat_2_val', '10,000+') }}</span>
+                    <span class="text-slate-300 text-sm font-medium">{{ \App\Models\Setting::get('stat_2_label', 'Pelanggan Dibantu') }}</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
                     <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="4">4</span>
@@ -229,8 +229,8 @@
                     <span class="text-slate-500 text-xs mt-1">Kerajaan · GLC · Berkanun · Swasta</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="8" data-suffix="+">8+</span>
-                    <span class="text-slate-300 text-sm font-medium">Tahun Pengalaman</span>
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="8" data-suffix="+">{{ \App\Models\Setting::get('stat_1_val', '8+') }}</span>
+                    <span class="text-slate-300 text-sm font-medium">{{ \App\Models\Setting::get('stat_1_label', 'Tahun Pengalaman') }}</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
                     <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="0" data-suffix="%">0%</span>
@@ -481,9 +481,9 @@
                     </button>
                     <div class="faq-answer hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed">
                         <ul class="space-y-1 mb-3">
-                            <li>• <strong>Kerajaan:</strong> Gaji asas minimum RM1,500</li>
-                            <li>• <strong>GLC / Badan Berkanun:</strong> Gaji asas minimum RM2,500</li>
-                            <li>• <strong>Swasta:</strong> Gaji asas minimum RM3,000</li>
+                            <li>• <strong>Kerajaan:</strong> Gaji asas minimum RM{{ number_format((int) \App\Models\Setting::get('min_gaji_kerajaan', 1500)) }}</li>
+                            <li>• <strong>GLC / Badan Berkanun:</strong> Gaji asas minimum RM{{ number_format((int) \App\Models\Setting::get('min_gaji_glc', 2500)) }}</li>
+                            <li>• <strong>Swasta:</strong> Gaji asas minimum RM{{ number_format((int) \App\Models\Setting::get('min_gaji_swasta', 3000)) }}</li>
                         </ul>
                         <p class="text-slate-400 text-xs italic">Kelayakan sebenar masih bergantung kepada dokumen, rekod kewangan dan polisi bank / koperasi.</p>
                     </div>
@@ -578,7 +578,7 @@
                     <p class="text-slate-400 text-xs mt-0.5">Semua maklumat adalah SULIT dan dilindungi</p>
                 </div>
 
-                <form id="borang-permohonan" action="#" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
+                <form id="borang-permohonan" action="{{ route('leads.store') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
                     @csrf
 
                     {{-- Group 1: Maklumat Peribadi --}}
@@ -590,26 +590,26 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="nama" class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Penuh <span class="text-rose-500">*</span></label>
-                                <input type="text" id="nama" name="nama" placeholder="Nama seperti dalam IC" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama seperti dalam IC" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="no_tele" class="block text-xs font-semibold text-slate-600 mb-1.5">No. Telefon / WhatsApp <span class="text-rose-500">*</span></label>
-                                    <input type="tel" id="no_tele" name="no_tele" placeholder="+60 12-345 6789" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="tel" id="no_tele" name="no_telefon" value="{{ old('no_telefon') }}" placeholder="+60 12-345 6789" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                                 <div>
                                     <label for="alamat_emel" class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Emel <span class="text-slate-400 font-normal">(Pilihan)</span></label>
-                                    <input type="email" id="alamat_emel" name="alamat_emel" placeholder="nama@emel.com" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
+                                    <input type="email" id="alamat_emel" name="emel" value="{{ old('emel') }}" placeholder="nama@emel.com" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="daerah" class="block text-xs font-semibold text-slate-600 mb-1.5">Daerah <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="daerah" name="daerah" placeholder="Contoh: Petaling Jaya" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="text" id="daerah" name="daerah" value="{{ old('daerah') }}" placeholder="Contoh: Petaling Jaya" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                                 <div>
                                     <label for="poskod" class="block text-xs font-semibold text-slate-600 mb-1.5">Poskod <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="poskod" name="poskod" placeholder="Contoh: 47810" maxlength="5" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="text" id="poskod" name="poskod" value="{{ old('poskod') }}" placeholder="Contoh: 47810" maxlength="5" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                             </div>
                         </div>
@@ -624,35 +624,35 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="sektor_pekerjaan" class="block text-xs font-semibold text-slate-600 mb-1.5">Sektor Pekerjaan <span class="text-rose-500">*</span></label>
-                                <select id="sektor_pekerjaan" name="sektor_pekerjaan" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border bg-white text-sm transition" required>
+                                <select id="sektor_pekerjaan" name="sektor" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border bg-white text-sm transition" required>
                                     <option value="">Sila pilih sektor...</option>
-                                    <option value="kerajaan">Kerajaan</option>
-                                    <option value="glc">GLC (Syarikat Berkaitan Kerajaan)</option>
-                                    <option value="berkanun">Badan Berkanun</option>
-                                    <option value="swasta">Swasta</option>
+                                    <option value="kerajaan" @selected(old('sektor') === 'kerajaan')>Kerajaan</option>
+                                    <option value="glc" @selected(old('sektor') === 'glc')>GLC (Syarikat Berkaitan Kerajaan)</option>
+                                    <option value="berkanun" @selected(old('sektor') === 'berkanun')>Badan Berkanun</option>
+                                    <option value="swasta" @selected(old('sektor') === 'swasta')>Swasta</option>
                                 </select>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="nama_majikan" class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Majikan <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="nama_majikan" name="nama_majikan" placeholder="Contoh: Kementerian Pendidikan" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="text" id="nama_majikan" name="nama_majikan" value="{{ old('nama_majikan') }}" placeholder="Contoh: Kementerian Pendidikan" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                                 <div>
                                     <label for="jawatan" class="block text-xs font-semibold text-slate-600 mb-1.5">Jawatan <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="jawatan" name="jawatan" placeholder="Contoh: Pegawai Tadbir" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="text" id="jawatan" name="jawatan" value="{{ old('jawatan') }}" placeholder="Contoh: Pegawai Tadbir" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="gaji_asas" class="block text-xs font-semibold text-slate-600 mb-1.5">Gaji Asas (RM) <span class="text-rose-500">*</span></label>
-                                    <input type="number" id="gaji_asas" name="gaji_asas" placeholder="Contoh: 3500" min="0" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="number" id="gaji_asas" name="gaji_asas" value="{{ old('gaji_asas') }}" placeholder="Contoh: 3500" min="0" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                                 <div>
                                     <label for="status_pekerjaan" class="block text-xs font-semibold text-slate-600 mb-1.5">Status Pekerjaan <span class="text-rose-500">*</span></label>
                                     <select id="status_pekerjaan" name="status_pekerjaan" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border bg-white text-sm transition" required>
                                         <option value="">Sila pilih...</option>
-                                        <option value="tetap">Tetap</option>
-                                        <option value="kontrak">Kontrak</option>
+                                        <option value="tetap" @selected(old('status_pekerjaan') === 'tetap')>Tetap</option>
+                                        <option value="kontrak" @selected(old('status_pekerjaan') === 'kontrak')>Kontrak</option>
                                     </select>
                                 </div>
                             </div>
@@ -862,17 +862,25 @@
                         return;
                     }
 
-                    // Sync marketing opt-in value into the real form before submit
+                    // Sync consent values (in the modal) into hidden inputs on the real form.
+                    // The modal checkboxes carry no `name`, so without this they never submit.
                     const marketing = document.getElementById('modal-consent-marketing').checked;
                     const form = document.getElementById('borang-permohonan') || document.querySelector('form');
-                    let hiddenMarketing = form.querySelector('input[name="consent_marketing"]');
-                    if (!hiddenMarketing) {
-                        hiddenMarketing = document.createElement('input');
-                        hiddenMarketing.type  = 'hidden';
-                        hiddenMarketing.name  = 'consent_marketing';
-                        form.appendChild(hiddenMarketing);
-                    }
-                    hiddenMarketing.value = marketing ? '1' : '0';
+
+                    const syncConsent = (name, checked) => {
+                        let hidden = form.querySelector('input[name="' + name + '"]');
+                        if (!hidden) {
+                            hidden = document.createElement('input');
+                            hidden.type = 'hidden';
+                            hidden.name = name;
+                            form.appendChild(hidden);
+                        }
+                        hidden.value = checked ? '1' : '0';
+                    };
+
+                    syncConsent('consent_pdpa', pdpa);       // mandatory — guaranteed true here
+                    syncConsent('consent_contact', contact); // mandatory — guaranteed true here
+                    syncConsent('consent_marketing', marketing);
 
                     form.submit();
                 }

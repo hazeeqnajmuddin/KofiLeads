@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-// use App\Models\Prospect;
+use App\Models\Lead;
 
 class AdminDashboardController extends Controller
 {
+    /** Sektor label map (4 canonical values). */
+    private const SEKTOR_LABELS = [
+        'kerajaan' => 'Kerajaan',
+        'glc' => 'GLC',
+        'berkanun' => 'Badan Berkanun',
+        'swasta' => 'Swasta',
+    ];
+
     public function showLogin()
     {
         return view('admin.login');
@@ -14,49 +21,63 @@ class AdminDashboardController extends Controller
 
     public function index()
     {
+        $counts = Lead::query()
+            ->selectRaw('pipeline_status, COUNT(*) as c')
+            ->groupBy('pipeline_status')
+            ->pluck('c', 'pipeline_status');
+
+        $total = (int) $counts->sum();
+        $approved = (int) ($counts['approved'] ?? 0);
+        $rejected = (int) ($counts['rejected'] ?? 0);
+
         $stats = [
-            'jumlah'    => 250,
-            'pending'   => 50,
-            'approved'  => 140,
-            'rejected'  => 60,
+            'jumlah'   => $total,
+            'pending'  => max(0, $total - $approved - $rejected),
+            'approved' => $approved,
+            'rejected' => $rejected,
         ];
 
-        $recent = [
-            ['nama' => 'Zulkifli Hassan',       'sektor' => 'Pesara', 'majikan' => 'Pesara Kerajaan',        'status' => 'pending',  'tarikh' => '2 Jul 2026'],
-            ['nama' => 'Ahmad Albab',           'sektor' => 'Swasta', 'majikan' => 'Syarikat ABC',           'status' => 'pending',  'tarikh' => '1 Jul 2026'],
-            ['nama' => 'Khairul Anwar Othman',  'sektor' => 'Awam',   'majikan' => 'Polis DiRaja Malaysia',  'status' => 'approved', 'tarikh' => '30 Jun 2026'],
-            ['nama' => 'Nurul Ain Zainudin',    'sektor' => 'Awam',   'majikan' => 'Hospital Kuala Lumpur',  'status' => 'pending',  'tarikh' => '29 Jun 2026'],
-            ['nama' => 'Siti Nurdiana',         'sektor' => 'Awam',   'majikan' => 'Kementerian Pendidikan', 'status' => 'approved', 'tarikh' => '28 Jun 2026'],
-            ['nama' => 'Mohd Faizal bin Hamid', 'sektor' => 'Swasta', 'majikan' => 'Logistik Jaya Sdn Bhd',  'status' => 'rejected', 'tarikh' => '27 Jun 2026'],
-        ];
+        $recent = Lead::query()
+            ->latest('submitted_at')
+            ->take(6)
+            ->get()
+            ->map(fn (Lead $lead) => [
+                'nama' => $lead->nama,
+                'sektor' => self::SEKTOR_LABELS[$lead->sektor] ?? $lead->sektor,
+                'majikan' => $lead->nama_majikan,
+                'status' => $this->statusBucket($lead->pipeline_status),
+                'tarikh' => $lead->submitted_at?->format('j M Y') ?? '—',
+            ])
+            ->all();
 
         $summary = [
-            'lead_hari_ini'         => 3,
-            'lead_minggu_ini'       => 18,
-            'lead_bulan_ini'        => 67,
-            'dokumen_lengkap'       => 142,
-            'dokumen_belum_lengkap' => 108,
-            'layak'                 => 89,
-            'approved'              => 140,
-            'disbursed'             => 95,
+            'lead_hari_ini'         => Lead::whereDate('submitted_at', today())->count(),
+            'lead_minggu_ini'       => Lead::where('submitted_at', '>=', now()->startOfWeek())->count(),
+            'lead_bulan_ini'        => Lead::where('submitted_at', '>=', now()->startOfMonth())->count(),
+            'dokumen_lengkap'       => (int) ($counts['dokumen_lengkap'] ?? 0),
+            'dokumen_belum_lengkap' => (int) ($counts['dokumen_belum_lengkap'] ?? 0),
+            'layak'                 => (int) ($counts['layak'] ?? 0),
+            'approved'              => $approved,
+            'disbursed'             => (int) ($counts['disbursed'] ?? 0),
         ];
 
         return view('admin.dashboard', compact('stats', 'recent', 'summary'));
     }
 
-    public function permohonan(Request $request)
-    {
-        $prospects = collect([]);
-        return view('admin.permohonan', compact('prospects'));
-    }
+    // permohonan() moved to App\Http\Controllers\Admin\LeadController@index (Phase 4)
+    // laporan()    moved to App\Http\Controllers\Admin\ReportController@index (Phase 6)
+    // landing()    moved to App\Http\Controllers\Admin\SettingController@edit (Phase 5)
 
-    public function laporan()
+    /**
+     * Collapse the 12 pipeline statuses into the 3 buckets the dashboard
+     * "Permohonan Terkini" badge understands.
+     */
+    private function statusBucket(string $status): string
     {
-        return view('admin.laporan');
-    }
-
-    public function landing()
-    {
-        return view('admin.landing');
+        return match ($status) {
+            'approved', 'disbursed' => 'approved',
+            'rejected', 'tidak_layak' => 'rejected',
+            default => 'pending',
+        };
     }
 }
