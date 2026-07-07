@@ -18,15 +18,16 @@ it('computes dashboard stats from real leads', function () {
         ->and($view['pending'])->toBe(3);
 });
 
-it('lists the most recent leads on the dashboard with bucketed status', function () {
+it('lists the most recent leads on the dashboard with the real pipeline status', function () {
     Lead::factory()->create(['nama' => 'Paling Lama', 'submitted_at' => now()->subDays(10), 'pipeline_status' => 'disbursed']);
     Lead::factory()->create(['nama' => 'Paling Baru', 'submitted_at' => now(), 'pipeline_status' => 'tidak_layak']);
 
     $recent = $this->get('/admin/dashboard')->assertOk()->viewData('recent');
 
+    // Dashboard now shows the actual pipeline status (matches the Permohonan badge), not a 3-bucket collapse.
     expect($recent[0]['nama'])->toBe('Paling Baru')
-        ->and($recent[0]['status'])->toBe('rejected')   // tidak_layak -> rejected bucket
-        ->and($recent[1]['status'])->toBe('approved');  // disbursed  -> approved bucket
+        ->and($recent[0]['status'])->toBe('tidak_layak')
+        ->and($recent[1]['status'])->toBe('disbursed');
 });
 
 it('counts leads by period in the summary', function () {

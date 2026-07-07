@@ -411,6 +411,31 @@ Prerequisite decisions (all confirmed): 4 sectors [§2a], form-field renames [§
 ### ⬜ Phase 7 — Hardening
 - [ ] Pest feature tests per flow; rate-limit `POST /leads`; policies if multiple admin roles appear.
 
+### ✅ Phase 8 — UI/UX refinements (post-backend feedback batch) — DONE
+
+Nine fixes raised after the backend build, validated with the user before implementing. Grouped by surface. Full suite green (**32 passed**) after the batch.
+
+**Landing page — `resources/views/landing.blade.php`**
+- [x] **"Lain-lain" (Others) free-text, persisted.** New nullable `lead_masalah.keterangan` column (migration `2026_07_08_000001_add_keterangan_to_lead_masalah_table`, max 100). A text box (`masalah_lain`, `maxlength=100` + live char counter) appears only when the "Lain-lain" checkbox is ticked (vanilla JS toggle, mirrors the EPF toggle). `StoreLeadRequest` validates it `required_if` lain_lain is selected; `LeadSubmissionController` writes the text onto the `lain_lain` row only. Surfaced back to admins in the Permohonan detail modal as `Lain-lain: <text>`. Covered by 2 new Pest tests.
+- [x] **Document file-size warning.** Client-side `change` handler on every form file input warns inline and clears the field if a file exceeds 5 MB (mirrors the server `max:5120`).
+- [x] **Consent pop-up warning fixed.** Reported bug: clicking submit in the consent modal without ticking the two mandatory boxes gave no feedback. `submitWithConsent()` now highlights each unticked box red (`.consent-missing`), shows a prominent banner (was a small inline `<p>`), and scrolls it into view; the highlight/banner clear as soon as both boxes are ticked. (Client-side only — the server already rejects missing consents via the `accepted` rule.)
+- [x] **Statistics kept in sync.** The dark STATS section now reads the **same** `stat_2_val` / `stat_1_val` settings as the owner-profile stats and prints them verbatim (dropped the hardcoded count-up `data-target="10000"`/`"8"` that ignored the settings), so editing a stat in Tetapan Laman updates both sections together.
+
+**Admin — Permohonan — `resources/views/admin/permohonan.blade.php` + `Admin\LeadController`**
+- [x] **Merged search.** The separate `nama` + `tel` inputs became one `q` box; `LeadController@index` matches it against name **OR** normalized phone in a single grouped `where`.
+- [x] **PDF button (UI only).** A PDF-styled `<button type="button">` sits beside the WhatsApp button in the Tindakan column, deliberately with **no handler** (per request).
+- [x] **Label rename.** "Status Pipeline" → "Status" (filter label, table header, `data-label`). Report page left unchanged.
+
+**Admin — Dashboard — `resources/views/admin/dashboard.blade.php` + `AdminDashboardController`**
+- [x] **Recent table status matches Permohonan.** `AdminDashboardController@index` now passes each lead's **real** `pipeline_status` (removed the 3-bucket `statusBucket()` collapse); the view uses the same 12-status `pipelineConfig` badge as Permohonan. Top KPI cards left as-is. `DashboardReportTest` updated to assert the raw status.
+
+**Admin — Tetapan Laman video — `resources/views/admin/landing.blade.php`**
+- [x] **Filename display + drag-drop.** The `video_iklan` drop-zone now shows the picked file name + size, and the previously-decorative drag-and-drop is wired.
+- [x] **Client-side 100 MB warning** on selection (mirrors server `max:102400`).
+- [x] **Upload failure #1 — PHP limits (fixed).** The video "could not be uploaded" because the active `php.ini` (`/opt/homebrew/etc/php/8.4/php.ini`, used by `php artisan serve`) shipped `upload_max_filesize = 2M` / `post_max_size = 8M`, so **any file over 2 MB was dropped by PHP before Laravel validated it** — `$request->hasFile()` was false and the form silently no-oped. **Fixed:** both raised to `128M` and the server restarted (verified `php -i` reports `128M`). If the site is ever served through XAMPP/Apache instead, apply the same to `/Applications/XAMPP/xamppfiles/etc/php.ini`.
+- [x] **Playback failure #2 — `.mov` container (mitigated).** The hero `<video>` hardcoded `type="video/mp4"` for whatever file was set, so a `.mov` upload showed a black player (QuickTime `.mov` only plays in Safari, never Chrome/Firefox). The `<source>` `type` is now derived from the file extension (`mp4`→`video/mp4`, `webm`→`video/webm`, `mov`→`video/quicktime`). **Note:** correct typing still can't make Chrome play `.mov` — for a public site upload **MP4 (H.264)** or WebM.
+- [x] **Playback failure #3 — `APP_URL`/tunnel routing (root cause of the black hero video; fixed).** After a valid MP4 was uploaded the hero video was *still* black. Root cause: `.env` `APP_URL` was a **localtunnel** URL (`https://…​.loca.lt`), and the `public` disk derives its URL from `APP_URL` (`config('filesystems.disks.public.url')` = `APP_URL/storage`). So **every uploaded media file** (`video_iklan`, owner `bio_image`) resolved to an absolute `loca.lt/storage/…` URL, while the tunnel was returning `503 Tunnel Unavailable`. Hero/background **images still loaded** because they use `asset()`, which follows the actual request host (localhost) rather than the hard-coded disk URL — so images came from localhost, media from the dead tunnel. Confirmed the file itself served fine locally (`http://127.0.0.1:8000/storage/settings/…mp4` → `200 video/mp4`, `Content-Length` matches). **Fixed by the user:** changed `APP_URL` in `.env` to the local host, so `Storage::disk('public')->url()` builds same-origin URLs and the video plays. **Takeaway:** keep `APP_URL` matching how the site is actually reached; if a tunnel is needed for sharing, prefer a root-relative public-disk `url` (`/storage`) so uploaded media follows the request host like `asset()` does.
+
 ### Cross-cutting (build alongside Phases 1–2 & 4–5)
 - [x] Shared `partials/flash.blade.php` (success / error / validation, vanilla JS — no Alpine) included in both layouts [§8].
 - [ ] Confirm-before on all destructive actions; notify-after on all writes [§8]. *(notify-after done for public intake; delete-confirm + status/settings notices land in Phases 4–5)*

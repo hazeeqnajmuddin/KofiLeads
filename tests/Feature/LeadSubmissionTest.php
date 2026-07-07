@@ -96,6 +96,32 @@ it('rejects a submission without the mandatory PDPA consents', function () {
     expect(Lead::count())->toBe(0);
 });
 
+it('stores the free-text detail on the lain_lain issue row', function () {
+    Storage::fake('local');
+
+    $payload = validLeadPayload([
+        'masalah' => ['ccris', 'lain_lain'],
+        'masalah_lain' => 'Sedang dalam proses penjadualan semula',
+    ]);
+
+    $this->post('/leads', $payload)->assertRedirect('/');
+
+    $lain = LeadMasalah::where('masalah', 'lain_lain')->first();
+    expect($lain->keterangan)->toBe('Sedang dalam proses penjadualan semula');
+    // Non-lain_lain rows carry no keterangan.
+    expect(LeadMasalah::where('masalah', 'ccris')->first()->keterangan)->toBeNull();
+});
+
+it('requires the free-text detail when lain_lain is ticked', function () {
+    Storage::fake('local');
+
+    $payload = validLeadPayload(['masalah' => ['lain_lain']]);
+    unset($payload['masalah_lain']);
+
+    $this->post('/leads', $payload)->assertSessionHasErrors('masalah_lain');
+    expect(Lead::count())->toBe(0);
+});
+
 it('requires exactly three slip gaji files', function () {
     Storage::fake('local');
 

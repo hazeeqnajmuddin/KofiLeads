@@ -338,17 +338,63 @@
                 @if(!empty($settings['video_iklan']))
                 <p class="text-xs text-slate-500 mb-2">Video semasa: <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings['video_iklan']) }}" target="_blank" class="text-navy font-medium underline">lihat</a></p>
                 @endif
-                <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:border-navy/30 transition cursor-pointer">
+                <div id="video-dropzone" class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:border-navy/30 transition cursor-pointer">
                     <svg class="w-10 h-10 text-slate-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
                     <p class="text-sm text-slate-500 mb-1">Seret fail video ke sini atau</p>
                     <label class="inline-block cursor-pointer text-navy hover:text-gold font-medium text-sm transition">
                         pilih fail
-                        <input type="file" name="video_iklan" accept="video/*" class="hidden">
+                        <input type="file" id="video_iklan" name="video_iklan" accept="video/*" class="hidden">
                     </label>
+                    {{-- Selected file name appears here --}}
+                    <p id="video-filename" class="hidden text-sm font-medium text-navy mt-3 break-all"></p>
+                    <p id="video-size-warning" class="hidden text-xs text-rose-500 font-semibold mt-2"></p>
                     <p class="text-xs text-slate-400 mt-2">MP4, MOV — Saiz maksimum 100MB</p>
                 </div>
+                <script>
+                (function () {
+                    var MAX = 100 * 1024 * 1024; // 100 MB (matches server rule max:102400)
+                    var input = document.getElementById('video_iklan');
+                    var zone  = document.getElementById('video-dropzone');
+                    var name  = document.getElementById('video-filename');
+                    var warn  = document.getElementById('video-size-warning');
+
+                    function show() {
+                        var file = input.files && input.files[0];
+                        if (!file) { name.classList.add('hidden'); warn.classList.add('hidden'); return; }
+                        name.textContent = '📹 ' + file.name + ' (' + (file.size / 1048576).toFixed(1) + ' MB)';
+                        name.classList.remove('hidden');
+                        if (file.size > MAX) {
+                            warn.textContent = 'Fail melebihi 100MB. Sila pilih fail yang lebih kecil.';
+                            warn.classList.remove('hidden');
+                            input.value = '';
+                            name.classList.add('hidden');
+                        } else {
+                            warn.classList.add('hidden');
+                        }
+                    }
+
+                    input.addEventListener('change', show);
+
+                    // Wire the drag-and-drop the decorative zone always implied.
+                    ['dragover', 'dragenter'].forEach(function (ev) {
+                        zone.addEventListener(ev, function (e) { e.preventDefault(); zone.classList.add('border-navy'); });
+                    });
+                    ['dragleave', 'drop'].forEach(function (ev) {
+                        zone.addEventListener(ev, function (e) { e.preventDefault(); zone.classList.remove('border-navy'); });
+                    });
+                    zone.addEventListener('drop', function (e) {
+                        if (e.dataTransfer && e.dataTransfer.files.length) {
+                            input.files = e.dataTransfer.files;
+                            show();
+                        }
+                    });
+                    zone.addEventListener('click', function (e) {
+                        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && e.target.tagName !== 'A') input.click();
+                    });
+                })();
+                </script>
                 <button type="submit"
                         class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
                     Muat Naik Video

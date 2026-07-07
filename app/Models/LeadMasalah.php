@@ -14,6 +14,7 @@ class LeadMasalah extends Model
     protected $fillable = [
         'lead_id',
         'masalah',
+        'keterangan',
         'created_at',
     ];
 

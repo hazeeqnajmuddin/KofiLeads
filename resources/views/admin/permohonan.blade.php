@@ -56,21 +56,14 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
             <div class="flex flex-wrap gap-3 items-end">
 
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari Nama</label>
-                    <input type="text" name="nama" value="{{ $filters['nama'] }}"
-                           placeholder="Nama pemohon..."
-                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari Nama / No. Tel</label>
+                    <input type="text" name="q" value="{{ $filters['q'] }}"
+                           placeholder="Nama atau nombor telefon..."
+                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-64 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari No. Tel</label>
-                    <input type="text" name="tel" value="{{ $filters['tel'] }}"
-                           placeholder="Nombor telefon..."
-                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
-                </div>
-
-                <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status Pipeline</label>
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status</label>
                     <select name="status" onchange="this.form.submit()"
                             class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-52 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                         <option value="">Semua Status</option>
@@ -113,7 +106,7 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                     <th class="px-5 py-3 text-left">No. Tel</th>
                     <th class="px-5 py-3 text-left">Sektor</th>
                     <th class="px-5 py-3 text-left">Majikan / Jawatan</th>
-                    <th class="px-5 py-3 text-center">Status Pipeline</th>
+                    <th class="px-5 py-3 text-center">Status</th>
                     <th class="px-5 py-3 text-center">Tindakan</th>
                 </tr>
             </thead>
@@ -124,7 +117,10 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                     $pc = $pipelineConfig[$lead->pipeline_status] ?? ['label' => $lead->pipeline_status, 'cls' => 'bg-slate-100 text-slate-600 border-slate-300'];
                     $phone = preg_replace('/\D/', '', $lead->no_telefon);
                     $sektorLabel = $sektorLabels[$lead->sektor] ?? $lead->sektor;
-                    $masalahText = $lead->masalah->map(fn ($m) => $masalahLabels[$m->masalah] ?? $m->masalah)->implode(', ');
+                    $masalahText = $lead->masalah->map(function ($m) use ($masalahLabels) {
+                        $label = $masalahLabels[$m->masalah] ?? $m->masalah;
+                        return $m->masalah === 'lain_lain' && $m->keterangan ? "{$label}: {$m->keterangan}" : $label;
+                    })->implode(', ');
                     $dokumenJson = $lead->dokumen->map(fn ($d) => [
                         'id'    => $d->id,
                         'label' => ($jenisLabels[$d->jenis] ?? $d->jenis) . ($d->bulan ? " (Bulan {$d->bulan})" : ''),
@@ -153,7 +149,7 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                     <td class="px-5 py-4 text-slate-500" data-label="No. Tel">{{ $lead->no_telefon }}</td>
                     <td class="px-5 py-4 text-slate-600" data-label="Sektor">{{ $sektorLabel }}</td>
                     <td class="px-5 py-4 text-slate-600" data-label="Majikan">{{ $lead->nama_majikan }} / {{ $lead->jawatan }}</td>
-                    <td class="px-5 py-4 text-center" data-label="Status Pipeline" onclick="event.stopPropagation()">
+                    <td class="px-5 py-4 text-center" data-label="Status" onclick="event.stopPropagation()">
                         <form method="POST" action="{{ route('admin.leads.updateStatus', $lead) }}">
                             @csrf
                             @method('PATCH')
@@ -175,6 +171,15 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                                 </svg>
                                 WA
                             </a>
+                            {{-- PDF export button — UI only, no handler wired yet --}}
+                            <button type="button"
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded-lg hover:bg-rose-100 transition" title="Muat turun PDF">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-6 4h6"/>
+                                </svg>
+                                PDF
+                            </button>
                             <form method="POST" action="{{ route('admin.leads.destroy', $lead) }}"
                                   data-confirm="Padam rekod {{ $lead->nama }}? Tindakan ini tidak boleh dibatalkan."
                                   data-confirm-title="Padam Rekod"

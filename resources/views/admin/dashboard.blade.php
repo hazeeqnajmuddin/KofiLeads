@@ -108,10 +108,20 @@
     </div>
 
     @php
-    $statusMap = [
-        'pending'  => ['label' => 'Menunggu',   'cls' => 'bg-amber-100 text-amber-800 border-amber-300'],
-        'approved' => ['label' => 'Diluluskan', 'cls' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
-        'rejected' => ['label' => 'Ditolak',    'cls' => 'bg-red-100 text-red-800 border-red-300'],
+    // Same 12-status pipeline config as the Permohonan page, so status badges match.
+    $pipelineConfig = [
+        'new_lead'              => ['label' => 'New Lead',              'cls' => 'bg-blue-100 text-blue-800 border-blue-200'],
+        'dokumen_belum_lengkap' => ['label' => 'Dokumen Belum Lengkap', 'cls' => 'bg-amber-100 text-amber-800 border-amber-300'],
+        'dokumen_lengkap'       => ['label' => 'Dokumen Lengkap',       'cls' => 'bg-teal-100 text-teal-800 border-teal-300'],
+        'dalam_semakan'         => ['label' => 'Dalam Semakan',         'cls' => 'bg-sky-100 text-sky-800 border-sky-300'],
+        'layak'                 => ['label' => 'Layak',                 'cls' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
+        'tidak_layak'           => ['label' => 'Tidak Layak',           'cls' => 'bg-red-100 text-red-800 border-red-300'],
+        'submit_bank'           => ['label' => 'Submit Bank/Koperasi',  'cls' => 'bg-purple-100 text-purple-800 border-purple-300'],
+        'approved'              => ['label' => 'Approved',              'cls' => 'bg-emerald-200 text-emerald-900 border-emerald-400'],
+        'rejected'              => ['label' => 'Rejected',              'cls' => 'bg-red-200 text-red-900 border-red-400'],
+        'disbursed'             => ['label' => 'Disbursed',             'cls' => 'bg-green-200 text-green-900 border-green-400'],
+        'closed'                => ['label' => 'Closed',                'cls' => 'bg-slate-200 text-slate-700 border-slate-400'],
+        'follow_up'             => ['label' => 'Follow Up Semula',      'cls' => 'bg-orange-100 text-orange-800 border-orange-300'],
     ];
     @endphp
 
@@ -133,8 +143,9 @@
                     <td class="px-6 py-4 text-slate-600" data-label="Sektor">{{ $r['sektor'] }}</td>
                     <td class="px-6 py-4 text-slate-600" data-label="Majikan">{{ $r['majikan'] }}</td>
                     <td class="px-6 py-4 text-center" data-label="Status">
-                        <span class="status-badge {{ $statusMap[$r['status']]['cls'] }}">
-                            <span class="dot"></span>{{ $statusMap[$r['status']]['label'] }}
+                        @php $pc = $pipelineConfig[$r['status']] ?? ['label' => $r['status'], 'cls' => 'bg-slate-100 text-slate-600 border-slate-300']; @endphp
+                        <span class="status-badge {{ $pc['cls'] }}">
+                            <span class="dot"></span>{{ $pc['label'] }}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-right text-slate-400 text-xs whitespace-nowrap" data-label="Tarikh">{{ $r['tarikh'] }}</td>

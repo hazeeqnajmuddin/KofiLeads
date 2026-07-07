@@ -82,7 +82,17 @@
                         controls
                         poster="{{ asset('images/video-thumbnail.jpg') }}"
                     >
-                        <source src="{{ ($vid = \App\Models\Setting::get('video_iklan')) ? \Illuminate\Support\Facades\Storage::disk('public')->url($vid) : asset('videos/TestVid.mp4') }}" type="video/mp4">
+                        @php
+                            $vid = \App\Models\Setting::get('video_iklan');
+                            $videoSrc = $vid ? \Illuminate\Support\Facades\Storage::disk('public')->url($vid) : asset('videos/TestVid.mp4');
+                            // Match the <source> type to the real file so the browser knows the container.
+                            $videoMime = match (strtolower(pathinfo($vid ?: 'x.mp4', PATHINFO_EXTENSION))) {
+                                'webm' => 'video/webm',
+                                'mov'  => 'video/quicktime',
+                                default => 'video/mp4',
+                            };
+                        @endphp
+                        <source src="{{ $videoSrc }}" type="{{ $videoMime }}">
                         Maaf, pelayar web anda tidak menyokong format video ini.
                     </video>
                     
@@ -219,8 +229,11 @@
     <section id="stats" class="py-20 px-4 bg-navy">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:divide-x md:divide-slate-700">
+                {{-- Reads the SAME settings as the owner-profile stats above, so editing
+                     a stat in Tetapan Laman updates both sections together. Value is
+                     printed verbatim (no count-up) to stay in sync with the profile. --}}
                 <div class="reveal flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="10000" data-suffix="+">{{ \App\Models\Setting::get('stat_2_val', '10,000+') }}</span>
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">{{ \App\Models\Setting::get('stat_2_val', '10k+') }}</span>
                     <span class="text-slate-300 text-sm font-medium">{{ \App\Models\Setting::get('stat_2_label', 'Pelanggan Dibantu') }}</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
@@ -229,7 +242,7 @@
                     <span class="text-slate-500 text-xs mt-1">Kerajaan · GLC · Berkanun · Swasta</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
-                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2 count-up" data-target="8" data-suffix="+">{{ \App\Models\Setting::get('stat_1_val', '8+') }}</span>
+                    <span class="text-4xl sm:text-5xl font-extrabold gold-metallic-text mb-2">{{ \App\Models\Setting::get('stat_1_val', '8+') }}</span>
                     <span class="text-slate-300 text-sm font-medium">{{ \App\Models\Setting::get('stat_1_label', 'Tahun Pengalaman') }}</span>
                 </div>
                 <div class="reveal flex flex-col items-center px-4">
@@ -678,8 +691,18 @@
                                         <input type="checkbox" name="masalah[]" value="legal_action" class="accent-navy flex-shrink-0"> Legal Action
                                     </label>
                                     <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 hover:border-gold cursor-pointer text-sm text-slate-600 transition col-span-2 has-[:checked]:border-gold has-[:checked]:bg-gold-light">
-                                        <input type="checkbox" name="masalah[]" value="lain_lain" class="accent-navy flex-shrink-0"> Lain-lain
+                                        <input type="checkbox" id="masalah_lain_check" name="masalah[]" value="lain_lain" class="accent-navy flex-shrink-0"> Lain-lain
                                     </label>
+                                </div>
+
+                                {{-- Others free-text: shown only when "Lain-lain" is ticked --}}
+                                <div id="masalah_lain_wrap" class="hidden mt-3">
+                                    <label for="masalah_lain" class="block text-xs font-semibold text-slate-600 mb-1.5">Nyatakan masalah anda <span class="text-rose-500">*</span></label>
+                                    <input type="text" id="masalah_lain" name="masalah_lain" value="{{ old('masalah_lain') }}" maxlength="100"
+                                           placeholder="Contoh: sedang dalam proses penjadualan semula pinjaman"
+                                           class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
+                                    <p class="text-[10px] text-slate-400 mt-1 text-right"><span id="masalah_lain_count">0</span>/100 aksara</p>
+                                    @error('masalah_lain')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
                                 </div>
                             </div>
                         </div>
@@ -789,14 +812,14 @@
                             <div class="space-y-3">
                                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Wajib</p>
 
-                                <label class="flex items-start gap-3 cursor-pointer group">
+                                <label id="label-consent-pdpa" class="flex items-start gap-3 cursor-pointer group rounded-lg p-1 -m-1 transition">
                                     <input type="checkbox" id="modal-consent-pdpa" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
                                     <span class="text-xs text-slate-600 leading-relaxed group-hover:text-slate-800 transition">
                                         Saya telah membaca, memahami dan bersetuju dengan <a href="#" class="text-navy underline font-medium">Notis Perlindungan Data Peribadi</a>.
                                     </span>
                                 </label>
 
-                                <label class="flex items-start gap-3 cursor-pointer group">
+                                <label id="label-consent-contact" class="flex items-start gap-3 cursor-pointer group rounded-lg p-1 -m-1 transition">
                                     <input type="checkbox" id="modal-consent-contact" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
                                     <span class="text-xs text-slate-600 leading-relaxed group-hover:text-slate-800 transition">
                                         Saya bersetuju untuk dihubungi melalui WhatsApp/telefon/emel bagi tujuan semakan dan susulan kes.
@@ -816,10 +839,13 @@
                                 </label>
                             </div>
 
-                            {{-- Inline error --}}
-                            <p id="consent-error" class="hidden text-xs text-rose-500 font-medium">
-                                Sila tandakan kedua-dua kotak wajib sebelum menghantar.
-                            </p>
+                            {{-- Validation error banner --}}
+                            <div id="consent-error" class="hidden flex items-center gap-2 rounded-lg bg-rose-50 border border-rose-200 px-3 py-2.5">
+                                <svg class="w-4 h-4 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-xs text-rose-600 font-semibold">Sila tandakan kedua-dua kotak <span class="uppercase">wajib</span> sebelum menghantar.</p>
+                            </div>
 
                         </div>
 
@@ -857,8 +883,14 @@
                     const pdpa    = document.getElementById('modal-consent-pdpa').checked;
                     const contact = document.getElementById('modal-consent-contact').checked;
 
+                    // Highlight any unticked mandatory box in red.
+                    document.getElementById('label-consent-pdpa').classList.toggle('consent-missing', !pdpa);
+                    document.getElementById('label-consent-contact').classList.toggle('consent-missing', !contact);
+
                     if (!pdpa || !contact) {
-                        document.getElementById('consent-error').classList.remove('hidden');
+                        const err = document.getElementById('consent-error');
+                        err.classList.remove('hidden');
+                        err.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         return;
                     }
 
@@ -885,10 +917,28 @@
                     form.submit();
                 }
 
+                // Clear the red highlight + banner as soon as a box is ticked.
+                ['modal-consent-pdpa', 'modal-consent-contact'].forEach(function (id) {
+                    document.getElementById(id).addEventListener('change', function () {
+                        document.getElementById('label-' + id.replace('modal-', '')).classList.remove('consent-missing');
+                        if (document.getElementById('modal-consent-pdpa').checked &&
+                            document.getElementById('modal-consent-contact').checked) {
+                            document.getElementById('consent-error').classList.add('hidden');
+                        }
+                    });
+                });
+
                 document.addEventListener('keydown', e => {
                     if (e.key === 'Escape') closeConsentModal();
                 });
                 </script>
+
+                <style>
+                    .consent-missing {
+                        background-color: #fff1f2; /* rose-50 */
+                        box-shadow: 0 0 0 1px #fda4af; /* rose-300 ring */
+                    }
+                </style>
             </div>
 
             <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
@@ -927,6 +977,53 @@
                 epfInput.value = '';
             }
         });
+
+        // Show the "Lain-lain" free-text box only when that checkbox is ticked.
+        (function () {
+            var check = document.getElementById('masalah_lain_check');
+            var wrap  = document.getElementById('masalah_lain_wrap');
+            var input = document.getElementById('masalah_lain');
+            var count = document.getElementById('masalah_lain_count');
+            if (!check) return;
+
+            function toggle() {
+                if (check.checked) {
+                    wrap.classList.remove('hidden');
+                    input.required = true;
+                } else {
+                    wrap.classList.add('hidden');
+                    input.required = false;
+                    input.value = '';
+                    count.textContent = '0';
+                }
+            }
+            input.addEventListener('input', function () { count.textContent = input.value.length; });
+            check.addEventListener('change', toggle);
+            // Restore state on validation redirect (old input present).
+            if (input.value) { count.textContent = input.value.length; }
+            if (check.checked) { toggle(); }
+        })();
+
+        // Client-side file-size warning (server enforces 5 MB — mirror it here).
+        (function () {
+            var MAX = 5 * 1024 * 1024; // 5 MB
+            document.querySelectorAll('#borang-permohonan input[type="file"]').forEach(function (input) {
+                var warn = document.createElement('p');
+                warn.className = 'hidden text-[11px] text-rose-500 font-medium mt-1';
+                input.insertAdjacentElement('afterend', warn);
+
+                input.addEventListener('change', function () {
+                    var tooBig = Array.from(input.files || []).find(function (f) { return f.size > MAX; });
+                    if (tooBig) {
+                        warn.textContent = 'Fail "' + tooBig.name + '" melebihi 5MB. Sila muat naik fail yang lebih kecil.';
+                        warn.classList.remove('hidden');
+                        input.value = '';
+                    } else {
+                        warn.classList.add('hidden');
+                    }
+                });
+            });
+        })();
     </script>
 
     {{-- ── Scroll animations: reveal-on-scroll + count-up stats ────────── --}}

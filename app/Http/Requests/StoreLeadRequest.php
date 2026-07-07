@@ -42,6 +42,11 @@ class StoreLeadRequest extends FormRequest
             'masalah.*' => [Rule::in([
                 'komitmen_tinggi', 'ccris', 'ctos', 'akpk', 'saa', 'legal_action', 'lain_lain',
             ])],
+            // Free-text detail for "Lain-lain" — required only when that box is ticked.
+            'masalah_lain' => [
+                Rule::requiredIf(fn () => in_array('lain_lain', (array) $this->input('masalah', []), true)),
+                'nullable', 'string', 'max:100',
+            ],
 
             // Documents
             'slip_gaji' => ['required', 'array', 'size:3'],
@@ -70,6 +75,8 @@ class StoreLeadRequest extends FormRequest
             'consent_contact.accepted' => 'Persetujuan untuk dihubungi diperlukan.',
             'slip_gaji.size' => 'Sila muat naik slip gaji untuk 3 bulan.',
             'penyata_epf.required' => 'Penyata EPF diperlukan untuk sektor swasta.',
+            'masalah_lain.required' => 'Sila nyatakan masalah anda apabila memilih "Lain-lain".',
+            'masalah_lain.max' => 'Keterangan masalah tidak boleh melebihi 100 aksara.',
         ];
     }
 }

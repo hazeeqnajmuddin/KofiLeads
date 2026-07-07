@@ -31,8 +31,8 @@ class AdminDashboardController extends Controller
         $rejected = (int) ($counts['rejected'] ?? 0);
 
         $stats = [
-            'jumlah'   => $total,
-            'pending'  => max(0, $total - $approved - $rejected),
+            'jumlah' => $total,
+            'pending' => max(0, $total - $approved - $rejected),
             'approved' => $approved,
             'rejected' => $rejected,
         ];
@@ -45,20 +45,21 @@ class AdminDashboardController extends Controller
                 'nama' => $lead->nama,
                 'sektor' => self::SEKTOR_LABELS[$lead->sektor] ?? $lead->sektor,
                 'majikan' => $lead->nama_majikan,
-                'status' => $this->statusBucket($lead->pipeline_status),
+                // Real pipeline status so the dashboard badge matches the Permohonan page.
+                'status' => $lead->pipeline_status,
                 'tarikh' => $lead->submitted_at?->format('j M Y') ?? '—',
             ])
             ->all();
 
         $summary = [
-            'lead_hari_ini'         => Lead::whereDate('submitted_at', today())->count(),
-            'lead_minggu_ini'       => Lead::where('submitted_at', '>=', now()->startOfWeek())->count(),
-            'lead_bulan_ini'        => Lead::where('submitted_at', '>=', now()->startOfMonth())->count(),
-            'dokumen_lengkap'       => (int) ($counts['dokumen_lengkap'] ?? 0),
+            'lead_hari_ini' => Lead::whereDate('submitted_at', today())->count(),
+            'lead_minggu_ini' => Lead::where('submitted_at', '>=', now()->startOfWeek())->count(),
+            'lead_bulan_ini' => Lead::where('submitted_at', '>=', now()->startOfMonth())->count(),
+            'dokumen_lengkap' => (int) ($counts['dokumen_lengkap'] ?? 0),
             'dokumen_belum_lengkap' => (int) ($counts['dokumen_belum_lengkap'] ?? 0),
-            'layak'                 => (int) ($counts['layak'] ?? 0),
-            'approved'              => $approved,
-            'disbursed'             => (int) ($counts['disbursed'] ?? 0),
+            'layak' => (int) ($counts['layak'] ?? 0),
+            'approved' => $approved,
+            'disbursed' => (int) ($counts['disbursed'] ?? 0),
         ];
 
         return view('admin.dashboard', compact('stats', 'recent', 'summary'));
@@ -67,17 +68,4 @@ class AdminDashboardController extends Controller
     // permohonan() moved to App\Http\Controllers\Admin\LeadController@index (Phase 4)
     // laporan()    moved to App\Http\Controllers\Admin\ReportController@index (Phase 6)
     // landing()    moved to App\Http\Controllers\Admin\SettingController@edit (Phase 5)
-
-    /**
-     * Collapse the 12 pipeline statuses into the 3 buckets the dashboard
-     * "Permohonan Terkini" badge understands.
-     */
-    private function statusBucket(string $status): string
-    {
-        return match ($status) {
-            'approved', 'disbursed' => 'approved',
-            'rejected', 'tidak_layak' => 'rejected',
-            default => 'pending',
-        };
-    }
 }

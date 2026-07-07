@@ -40,11 +40,13 @@ class LeadSubmissionController extends Controller
                 'submitted_at' => now(),
             ]);
 
-            // Issues (checkbox multi-select) → one row each
+            // Issues (checkbox multi-select) → one row each. The "lain_lain"
+            // row carries the free-text detail the user typed.
             foreach ($data['masalah'] as $masalah) {
                 LeadMasalah::create([
                     'lead_id' => $lead->id,
                     'masalah' => $masalah,
+                    'keterangan' => $masalah === 'lain_lain' ? ($data['masalah_lain'] ?? null) : null,
                     'created_at' => now(),
                 ]);
             }

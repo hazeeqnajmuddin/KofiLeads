@@ -20,18 +20,23 @@ class LeadController extends Controller
     public function index(Request $request): View
     {
         $filters = [
-            'nama' => trim((string) $request->query('nama', '')),
-            'tel' => trim((string) $request->query('tel', '')),
+            'q' => trim((string) $request->query('q', '')),
             'status' => (string) $request->query('status', ''),
             'sektor' => (string) $request->query('sektor', ''),
         ];
 
         $leads = Lead::query()
             ->with(['masalah', 'dokumen'])
-            ->when($filters['nama'] !== '', fn ($q) => $q->where('nama', 'like', "%{$filters['nama']}%"))
-            ->when($filters['tel'] !== '', function ($q) use ($filters) {
-                $digits = preg_replace('/\D/', '', $filters['tel']);
-                $q->whereRaw("REPLACE(REPLACE(REPLACE(no_telefon, ' ', ''), '-', ''), '+', '') LIKE ?", ["%{$digits}%"]);
+            // Single search box: match against name OR normalized phone number.
+            ->when($filters['q'] !== '', function ($query) use ($filters) {
+                $term = $filters['q'];
+                $digits = preg_replace('/\D/', '', $term);
+                $query->where(function ($sub) use ($term, $digits) {
+                    $sub->where('nama', 'like', "%{$term}%");
+                    if ($digits !== '') {
+                        $sub->orWhereRaw("REPLACE(REPLACE(REPLACE(no_telefon, ' ', ''), '-', ''), '+', '') LIKE ?", ["%{$digits}%"]);
+                    }
+                });
             })
             ->when(in_array($filters['status'], Lead::PIPELINE_STATUSES, true), fn ($q) => $q->where('pipeline_status', $filters['status']))
             ->when(in_array($filters['sektor'], Lead::SEKTOR, true), fn ($q) => $q->where('sektor', $filters['sektor']))
