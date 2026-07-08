@@ -16,17 +16,6 @@
 
         <div class="flex flex-wrap gap-3 items-end">
             <div class="flex flex-col gap-1">
-                <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Tempoh</label>
-                <select name="tempoh" onchange="this.form.submit()"
-                        class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
-                    <option value="all" @selected($filters['tempoh'] === 'all')>Semua masa</option>
-                    <option value="year" @selected($filters['tempoh'] === 'year')>Tahun ini</option>
-                    <option value="q" @selected($filters['tempoh'] === 'q')>3 bulan lepas</option>
-                    <option value="month" @selected($filters['tempoh'] === 'month')>Bulan ini</option>
-                </select>
-            </div>
-
-            <div class="flex flex-col gap-1">
                 <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sektor</label>
                 <select name="sektor" onchange="this.form.submit()"
                         class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
@@ -91,6 +80,13 @@
     </div>
 </div>
 
+<!-- Monthly trend -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-5">
+    <h3 class="font-semibold text-slate-800 text-sm mb-1">Trend Bulanan</h3>
+    <p class="text-xs text-slate-400 mb-6">Jumlah permohonan diterima setiap bulan</p>
+    <div id="monthly-bars" class="h-36 flex items-end gap-2"></div>
+</div>
+
 <!-- Breakdown by sector + status -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
 
@@ -107,13 +103,6 @@
         <div id="status-bars" class="space-y-4"></div>
     </div>
 
-</div>
-
-<!-- Monthly trend -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-    <h3 class="font-semibold text-slate-800 text-sm mb-1">Trend Bulanan</h3>
-    <p class="text-xs text-slate-400 mb-6">Jumlah permohonan diterima setiap bulan</p>
-    <div id="monthly-bars" class="h-36 flex items-end gap-2"></div>
 </div>
 
 <script>

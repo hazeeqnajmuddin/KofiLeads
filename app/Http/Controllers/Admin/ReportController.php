@@ -11,12 +11,6 @@ use Illuminate\View\View;
 
 class ReportController extends Controller
 {
-    private const TEMPOH_LABELS = [
-        'year' => 'Tahun ini',
-        'q' => '3 bulan lepas',
-        'month' => 'Bulan ini',
-    ];
-
     private const SEKTOR_LABELS = [
         'kerajaan' => 'Kerajaan',
         'glc' => 'GLC',
@@ -33,21 +27,15 @@ class ReportController extends Controller
     public function index(Request $request): View
     {
         $filters = [
-            'tempoh' => (string) $request->query('tempoh', 'all'),
             'sektor' => (string) $request->query('sektor', 'all'),
             'status' => (string) $request->query('status', 'all'),
         ];
 
-        $tempohActive = array_key_exists($filters['tempoh'], self::TEMPOH_LABELS);
         $sektorActive = in_array($filters['sektor'], Lead::SEKTOR, true);
         $statusActive = in_array($filters['status'], Lead::PIPELINE_STATUSES, true);
 
         // Each active filter becomes one OR clause on the base query.
         $orClauses = [];
-        if ($tempohActive) {
-            $start = $this->tempohStart($filters['tempoh']);
-            $orClauses[] = fn (Builder $q) => $q->where('submitted_at', '>=', $start);
-        }
         if ($sektorActive) {
             $orClauses[] = fn (Builder $q) => $q->where('sektor', $filters['sektor']);
         }
@@ -64,7 +52,7 @@ class ReportController extends Controller
             });
         }
 
-        $report = $this->buildReport($base, $filters, $tempohActive, $sektorActive, $statusActive);
+        $report = $this->buildReport($base, $filters, $sektorActive, $statusActive);
 
         return view('admin.laporan', compact('report', 'filters'));
     }
@@ -72,7 +60,7 @@ class ReportController extends Controller
     /**
      * Aggregate the filtered query into the shape the laporan JS expects.
      */
-    private function buildReport(Builder $base, array $filters, bool $tempohActive, bool $sektorActive, bool $statusActive): array
+    private function buildReport(Builder $base, array $filters, bool $sektorActive, bool $statusActive): array
     {
         $sectorCounts = (clone $base)->selectRaw('sektor, COUNT(*) as c')->groupBy('sektor')->pluck('c', 'sektor');
         $pipelineCounts = (clone $base)->selectRaw('pipeline_status, COUNT(*) as c')->groupBy('pipeline_status')->pluck('c', 'pipeline_status');
@@ -100,7 +88,7 @@ class ReportController extends Controller
         $rate = $processed ? (int) round($pipeline['approved'] / $processed * 100) : 0;
 
         return [
-            'label' => $this->rangeLabel($filters, $tempohActive, $sektorActive, $statusActive),
+            'label' => $this->rangeLabel($filters, $sektorActive, $statusActive),
             'total' => $total,
             'rate' => $rate,
             'sectors' => $sectors,
@@ -109,24 +97,12 @@ class ReportController extends Controller
         ];
     }
 
-    private function tempohStart(string $tempoh): Carbon
-    {
-        return match ($tempoh) {
-            'year' => now()->startOfYear(),
-            'q' => now()->subMonthsNoOverflow(2)->startOfMonth(),
-            'month' => now()->startOfMonth(),
-        };
-    }
-
     /**
      * Human summary of the active filters (joined with "ATAU" since they OR).
      */
-    private function rangeLabel(array $filters, bool $tempohActive, bool $sektorActive, bool $statusActive): string
+    private function rangeLabel(array $filters, bool $sektorActive, bool $statusActive): string
     {
         $parts = [];
-        if ($tempohActive) {
-            $parts[] = self::TEMPOH_LABELS[$filters['tempoh']];
-        }
         if ($sektorActive) {
             $parts[] = self::SEKTOR_LABELS[$filters['sektor']];
         }
