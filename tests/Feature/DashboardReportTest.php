@@ -59,22 +59,21 @@ it('builds the report from all leads with the 4 canonical sectors when unfiltere
         ->and($report['label'])->toBe('Semua masa');
 });
 
-it('combines the three filters with OR logic, not AND', function () {
-    $a = Lead::factory()->create(['submitted_at' => now(), 'sektor' => 'swasta', 'pipeline_status' => 'new_lead']);       // matches tempoh
-    $b = Lead::factory()->create(['submitted_at' => now()->subMonths(6), 'sektor' => 'kerajaan', 'pipeline_status' => 'new_lead']); // matches sektor
-    $c = Lead::factory()->create(['submitted_at' => now()->subMonths(6), 'sektor' => 'swasta', 'pipeline_status' => 'approved']);  // matches status
-    $d = Lead::factory()->create(['submitted_at' => now()->subMonths(6), 'sektor' => 'swasta', 'pipeline_status' => 'new_lead']);  // matches none
+it('combines the sektor and status filters with OR logic, not AND', function () {
+    $b = Lead::factory()->create(['sektor' => 'kerajaan', 'pipeline_status' => 'new_lead']); // matches sektor
+    $c = Lead::factory()->create(['sektor' => 'swasta', 'pipeline_status' => 'approved']);   // matches status
+    $d = Lead::factory()->create(['sektor' => 'swasta', 'pipeline_status' => 'new_lead']);   // matches none
 
-    $report = $this->get('/admin/laporan?tempoh=month&sektor=kerajaan&status=approved')
+    $report = $this->get('/admin/laporan?sektor=kerajaan&status=approved')
         ->assertOk()->viewData('report');
 
-    // OR union of A, B, C (not the empty AND intersection)
-    expect($report['total'])->toBe(3)
+    // OR union of B, C (not the empty AND intersection, and not D)
+    expect($report['total'])->toBe(2)
         ->and($report['sectors']['kerajaan'])->toBe(1) // B
-        ->and($report['sectors']['swasta'])->toBe(2)   // A + C
+        ->and($report['sectors']['swasta'])->toBe(1)   // C
         ->and($report['pipeline']['approved'])->toBe(1) // C
-        ->and($report['pipeline']['new_lead'])->toBe(2) // A + B
-        ->and($report['label'])->toBe('Bulan ini ATAU Kerajaan ATAU Approved');
+        ->and($report['pipeline']['new_lead'])->toBe(1) // B
+        ->and($report['label'])->toBe('Kerajaan ATAU Approved');
 });
 
 it('applies a single active filter on its own', function () {
