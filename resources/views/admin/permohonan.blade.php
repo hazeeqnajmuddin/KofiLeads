@@ -171,15 +171,25 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                                 </svg>
                                 WA
                             </a>
-                            {{-- PDF export button — UI only, no handler wired yet --}}
-                            <button type="button"
-                                class="inline-flex items-center gap-1.5 text-xs font-medium text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded-lg hover:bg-rose-100 transition" title="Muat turun PDF">
+                            {{-- Merged PDF of the lead's documents — opens inline in a new tab (Phase 9) --}}
+                            @if($lead->dokumen->isNotEmpty())
+                            <a href="{{ route('admin.leads.pdf', $lead) }}" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1.5 rounded-lg hover:bg-rose-100 transition" title="Lihat / muat turun PDF gabungan">
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-6 4h6"/>
                                 </svg>
                                 PDF
-                            </button>
+                            </a>
+                            @else
+                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg cursor-not-allowed" title="Tiada dokumen">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-6 4h6"/>
+                                </svg>
+                                PDF
+                            </span>
+                            @endif
                             <form method="POST" action="{{ route('admin.leads.destroy', $lead) }}"
                                   data-confirm="Padam rekod {{ $lead->nama }}? Tindakan ini tidak boleh dibatalkan."
                                   data-confirm-title="Padam Rekod"

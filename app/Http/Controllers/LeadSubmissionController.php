@@ -6,12 +6,16 @@ use App\Http\Requests\StoreLeadRequest;
 use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
+use App\Services\DocumentMergeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class LeadSubmissionController extends Controller
 {
+    public function __construct(private DocumentMergeService $merger) {}
+
     /**
      * Store a public lead submission from the landing-page form:
      * the lead + its selected issues + uploaded documents, all in one
@@ -21,7 +25,7 @@ class LeadSubmissionController extends Controller
     {
         $data = $request->validated();
 
-        DB::transaction(function () use ($request, $data) {
+        $lead = DB::transaction(function () use ($request, $data) {
             $lead = Lead::create([
                 'nama' => $data['nama'],
                 'no_telefon' => $data['no_telefon'],
@@ -63,9 +67,22 @@ class LeadSubmissionController extends Controller
             if ($request->hasFile('penyata_epf')) {
                 $this->storeDokumen($lead, $request->file('penyata_epf'), 'penyata_epf');
             }
+
+            return $lead;
         });
 
-        // Production hand-off (deferred — see RCMS_Architecture.md §2d):
+        // Merge the uploaded documents into one PDF (Phase 9, Slice 1). Runs
+        // AFTER commit so a merge failure can never roll back a valid lead —
+        // it's logged and left re-mergeable on demand from the admin panel.
+        try {
+            if ($path = $this->merger->merge($lead->load('dokumen'))) {
+                $lead->update(['merged_path' => $path, 'merged_at' => now()]);
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Merge failed for lead {$lead->id}: {$e->getMessage()}");
+        }
+
+        // Production hand-off (deferred — see RCMS_Architecture.md §2d & §10h):
         //   $whatsapp = preg_replace('/\D/', '', Setting::get('whatsapp_number'));
         //   return redirect()->away("https://wa.me/{$whatsapp}");
 

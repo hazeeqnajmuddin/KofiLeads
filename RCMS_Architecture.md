@@ -436,6 +436,149 @@ Nine fixes raised after the backend build, validated with the user before implem
 - [x] **Playback failure #2 — `.mov` container (mitigated).** The hero `<video>` hardcoded `type="video/mp4"` for whatever file was set, so a `.mov` upload showed a black player (QuickTime `.mov` only plays in Safari, never Chrome/Firefox). The `<source>` `type` is now derived from the file extension (`mp4`→`video/mp4`, `webm`→`video/webm`, `mov`→`video/quicktime`). **Note:** correct typing still can't make Chrome play `.mov` — for a public site upload **MP4 (H.264)** or WebM.
 - [x] **Playback failure #3 — `APP_URL`/tunnel routing (root cause of the black hero video; fixed).** After a valid MP4 was uploaded the hero video was *still* black. Root cause: `.env` `APP_URL` was a **localtunnel** URL (`https://…​.loca.lt`), and the `public` disk derives its URL from `APP_URL` (`config('filesystems.disks.public.url')` = `APP_URL/storage`). So **every uploaded media file** (`video_iklan`, owner `bio_image`) resolved to an absolute `loca.lt/storage/…` URL, while the tunnel was returning `503 Tunnel Unavailable`. Hero/background **images still loaded** because they use `asset()`, which follows the actual request host (localhost) rather than the hard-coded disk URL — so images came from localhost, media from the dead tunnel. Confirmed the file itself served fine locally (`http://127.0.0.1:8000/storage/settings/…mp4` → `200 video/mp4`, `Content-Length` matches). **Fixed by the user:** changed `APP_URL` in `.env` to the local host, so `Storage::disk('public')->url()` builds same-origin URLs and the video plays. **Takeaway:** keep `APP_URL` matching how the site is actually reached; if a tunnel is needed for sharing, prefer a root-relative public-disk `url` (`/storage`) so uploaded media follows the request host like `asset()` does.
 
+### 🟡 Phase 9 — Document merge + WhatsApp handoff (see [§10](#10-phase-9--document-merge--whatsapp-handoff))
+
+**Slice 1 — merge + view on Permohonan — ✅ DONE**
+- [x] `setasign/fpdf` added (Composer) for image → PDF; Ghostscript (installed) concatenates.
+- [x] `DocumentMergeService` — orders docs (slip gaji 1-3 → CTOS → EPF), wraps images to PDF (FPDF), concatenates via Ghostscript (`Symfony\Process`, array args, `gs` path auto-resolved / `GHOSTSCRIPT_PATH` override), outputs `merged/{lead_id}.pdf` on the **private** disk. Idempotent; returns null if no docs.
+- [x] `leads.merged_path` + `leads.merged_at` migration (+ `Lead` fillable/cast). Applied to dev MySQL.
+- [x] Synchronous merge in `LeadSubmissionController` **after** the DB commit, in try/catch (failure logged, never blocks the lead).
+- [x] `Admin\MergedDocumentController@show` (`GET /admin/permohonan/{lead}/pdf`) streams the merged PDF **inline** (opens in a new tab, downloadable there) from the private disk; generates on demand + caches if missing; 404 when the lead has no documents.
+- [x] Permohonan PDF button wired to the route (`target="_blank"`); shown disabled/grey when the lead has no documents.
+- [x] Pest: 4 tests (`tests/Feature/DocumentMergeTest.php`) — merges PDF+image into a valid PDF, null on no docs, inline route generates-on-demand, 404 on empty. Skipped automatically if `gs` absent. Full suite green (36 passed).
+
+**Slice 2 — WhatsApp handoff — ⬜ PLANNED**
+- [ ] `MergedDocumentController` public variant behind a `temporarySignedRoute` (expiring, tamper-proof link) for external sharing.
+- [ ] Replace the deferred `redirect()->away($whatsappUrl)` hook with a real `wa.me` redirect carrying the lead info + signed merged-PDF link.
+- [ ] Editable message template (`settings.whatsapp_template`) with low-code drag-and-drop placeholders in Tetapan Laman ([§10i](#10i-editable-message-template-with-low-code-placeholders-confirmed)).
+- [ ] Pest tests: signed link streams / rejects tampered+expired; redirect URL well-formed.
+
 ### Cross-cutting (build alongside Phases 1–2 & 4–5)
 - [x] Shared `partials/flash.blade.php` (success / error / validation, vanilla JS — no Alpine) included in both layouts [§8].
 - [ ] Confirm-before on all destructive actions; notify-after on all writes [§8]. *(notify-after done for public intake; delete-confirm + status/settings notices land in Phases 4–5)*
+
+---
+
+## 10. Phase 9 — Document merge + WhatsApp handoff
+
+**Status: Slice 1 (merge + Permohonan view) ✅ BUILT; Slice 2 (WhatsApp handoff) ⬜ planned.** Decisions below are confirmed with the user; this section is the build spec. §10d–10g + the Permohonan button are implemented; §10h–10i (wa.me redirect, signed link, editable template) remain Slice 2.
+
+### 10a. Goal & flow
+
+Extend the public submission so that, right after a lead is saved, their uploaded documents are consolidated into a single PDF and the user is handed off to the consultancy's WhatsApp with their details pre-filled and a link to that merged PDF.
+
+```
+User submits form (already: lead + docs saved to DB / private disk — Phase 2)
+  → [NEW] merge that lead's uploaded files into ONE PDF (synchronous, after commit)
+  → [NEW] store merged PDF on the PRIVATE disk (merged/{lead_id}.pdf)
+  → [NEW] redirect to wa.me/<consultancy#> with:
+        • pre-filled text  = the lead's info
+        • a signed, expiring link = the merged PDF
+  → consultancy receives the chat, taps the link, downloads the combined PDF
+```
+
+This replaces the `redirect()->away($whatsappUrl)` hook deferred back in [§2d](#2d-confirmed-submission-workflow).
+
+### 10b. Confirmed decisions
+
+| # | Decision | Choice |
+|---|---|---|
+| 1 | Merge engine | **PHP + CLI**, no separate Python service |
+| 2 | When to merge | **Synchronous**, after the DB commit |
+| 3 | Merged output | **Documents only** — no auto-generated cover sheet |
+| 4 | WhatsApp delivery | **`wa.me` deep link** (Cloud API deferred — revisit later) |
+| 5 | Hosting | **None yet** — local-only testing on the Mac for now |
+
+### 10c. Verified local environment (checked 2026-07-13)
+
+No new system binary is required — the merge toolchain is already present:
+
+| Tool | Status | Role |
+|---|---|---|
+| Ghostscript `gs` 10.06.0 (`/opt/homebrew/bin/gs`) | ✅ installed | primary PDF concatenation (handles any PDF version) |
+| `pdfunite` (poppler) | ✅ installed | fallback PDF concatenation |
+| ImageMagick | ❌ not installed | **not needed** — see below |
+| FPDF (Composer) | to add | image (JPG/PNG) → PDF, in pure PHP |
+| Homebrew | ✅ available | only if a binary is ever needed |
+| `APP_URL` | ✅ `http://127.0.0.1:8000` | signed links inherit this; correct for on-Mac testing |
+
+**Why no ImageMagick / no Python:** image uploads are turned into single-page PDFs by **FPDF** (a Composer package that embeds JPG/PNG natively — and since we author the page, it sidesteps the free-FPDI "PDF ≤ 1.4 only" limitation entirely). The already-uploaded PDFs plus these image-PDFs are then concatenated by **Ghostscript**, which is robust across modern PDF versions. That keeps the whole pipeline in PHP + one installed binary.
+
+### 10d. Merge engine — `DocumentMergeService`
+
+- Input: a `Lead` with its `dokumen` rows (all on the **private** disk).
+- Order: `slip_gaji` bulan 1 → 2 → 3, then `laporan_ctos`, then `penyata_epf` (if present).
+- For each file: if it's already a PDF, use as-is; if JPG/PNG, wrap into a one-page PDF via FPDF.
+- Concatenate all parts with Ghostscript (`gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=…`), invoked via `Symfony\Component\Process\Process` (never string-interpolated shell — pass args as an array).
+- Output: `storage/app/private/merged/{lead_id}.pdf`. Stays on the **private** disk (PDPA); never `public/`.
+- Idempotent: re-running regenerates/overwrites the lead's merged file (supports admin "re-merge" after a re-upload).
+- **Engine choice — Ghostscript (confirmed), robustness over portability.** A pure-PHP Composer merger (`setasign/fpdi`) was considered because it travels with the project (`composer install`, no system binary) — but the free version only reliably handles PDFs ≤ 1.4, and CTOS/EPF exports are often 1.5–1.7. Ghostscript handles any PDF version, so it's the pick. **Trade-off accepted:** every deployment host must have `gs` installed (already present on this Mac at `/opt/homebrew/bin/gs`; on a new machine it's a one-time `brew install ghostscript` / `apt install ghostscript`).
+
+### 10e. Data model
+
+Add to `leads` (one migration): `merged_path` (nullable string) and `merged_at` (nullable timestamp). Chosen over adding a `dokumen.jenis` enum value so the merged artefact is a first-class property of the lead, not confused with an uploaded source document.
+
+### 10f. Submission hook
+
+In `LeadSubmissionController@store`, run the merge **after** the existing `DB::transaction` commits (so a merge failure can never roll back a valid lead), wrapped in try/catch:
+- Success → set `merged_path` / `merged_at`, build the WhatsApp URL with the signed link, `redirect()->away($waUrl)`.
+- Failure → log it, still redirect to WhatsApp **without** the file link (or with a "documents received, will follow up" note), and leave the lead re-mergeable from admin. The user is never blocked.
+
+Files are capped (≤ 5 MB each, ≤ 5 files ≈ ≤ 25 MB) so a synchronous Ghostscript merge is a few seconds — acceptable inline. If it later proves slow under load, move to a queued job + a "generating…" fallback on the link route (queue already runs via `composer dev`).
+
+### 10g. Signed link — `MergedDocumentController@show`
+
+- Route generated with `URL::temporarySignedRoute('dokumen.merged', now()->addDays(3), ['lead' => $lead->id])`.
+- Controller validates the signature + expiry (`signed` middleware), then streams `merged/{lead_id}.pdf` from the **private** disk (404 if missing).
+- This is the PDPA-safe middle ground: openable from a chat link, but expiring and tamper-proof — not a permanent public URL. Kept even though local testing wouldn't strictly need it, so the code is production-correct.
+
+### 10h. WhatsApp handoff (`wa.me`)
+
+- Target number: `settings.whatsapp_number` (already seeded), digits only.
+- Message: built from an **editable template** (decision below), URL-encoded — lead fields + the signed merged-PDF link.
+- `redirect()->away("https://wa.me/{$digits}?text={$encoded}")`.
+- `wa.me` carries **text only** — hence the merged PDF must be the *link*, which is exactly the signed URL. (Sending the file *as an attachment* would require the WhatsApp Cloud API — deferred per decision 4.)
+
+### 10i. Editable message template with low-code placeholders (confirmed)
+
+The message copy is **not hardcoded** — it lives in a `settings` row (`whatsapp_template`) editable from **Tetapan Laman**, matching the existing settings-driven pattern (hero copy etc.).
+
+**Placeholders** — a fixed allow-list of tokens the controller substitutes at submit time:
+
+`{nama}` · `{no_telefon}` · `{emel}` · `{daerah}` · `{poskod}` · `{sektor}` · `{nama_majikan}` · `{jawatan}` · `{gaji_asas}` · `{status_pekerjaan}` · `{masalah}` (incl. the `lain_lain` keterangan) · `{link}` (signed merged-PDF URL)
+
+**Default template** (seeded):
+```
+Assalamualaikum, saya {nama} ingin membuat semakan kelayakan.
+No. Telefon: {no_telefon}
+Sektor: {sektor}
+Majikan: {nama_majikan} ({jawatan})
+Gaji Asas: RM{gaji_asas}
+Masalah: {masalah}
+Dokumen (gabungan): {link}
+```
+
+**Low-code editor UI (drag-and-drop, no framework):**
+- The template is edited in a plain `<textarea>` (settings key `whatsapp_template`).
+- Above it: a row of **placeholder chips**, one per allowed token, each `draggable="true"`.
+- **Drag:** on `dragstart`, `dataTransfer.setData('text/plain', '{token}')`. A `<textarea>` natively accepts a text drop and inserts it **at the drop position** — no JS needed on the drop side. (A tiny `drop`/`dragover` handler can refine caret placement, but the native behaviour already works.)
+- **Click fallback (a11y):** clicking a chip inserts its token at the current cursor position via `setRangeText`, so it's usable without dragging.
+- **Live preview:** a read-only panel renders the template with **sample lead data** so the admin sees the result as they edit.
+- **Safety:** server keeps the template as-is but only ever substitutes known tokens; any unknown `{foo}` is left literal (or stripped) — a typo can't break the redirect. Validate/label the field in `UpdateSettingsRequest` (`whatsapp_template` added to `EDITABLE_KEYS`, `max` length bound).
+
+### 10j. Local-only testing on the Mac (no public domain)
+
+This works fully on one MacBook because the browser, WhatsApp, and the Laravel server are the **same machine**, so a `127.0.0.1` link resolves locally:
+
+- Requires **WhatsApp Desktop or WhatsApp Web** logged in on the Mac (that's what `wa.me` hands off to).
+- Keep `APP_URL=http://127.0.0.1:8000` so the signed link points at the local server.
+- **Nuance:** links in an unsent WhatsApp *draft* aren't clickable — send the pre-filled message to yourself/a test contact first, then tap it (or copy the URL from the draft into the browser).
+- **Boundary:** the `127.0.0.1` link is dead if opened on any *other* device (a phone, the real consultancy WhatsApp on mobile). Going live later needs `APP_URL` = a real public domain; the code doesn't change, only the env.
+
+### 10k. Risks / best-practice callouts
+
+- **PDPA:** merged file stays on the private disk; exposed only via short-lived signed URLs. Consider a shorter expiry and/or admin-only regeneration for production.
+- **Public domain required for real use:** phone recipients can't open localhost links (this is the same class of issue as the earlier `APP_URL`/tunnel video bug — [§Phase 8](#-phase-8--uiux-refinements-post-backend-feedback-batch--done)).
+- **Process safety:** invoke `gs` via `Symfony\Process` with array args; validate exit code; clean up temp parts.
+- **Failure isolation:** merge runs after commit and never blocks lead capture.
+- **Cloud API upgrade path:** if the consultancy later wants the PDF delivered *in* the chat automatically (no user tap, real attachment), switch handoff to the WhatsApp Cloud API (Meta business verification, WhatsApp Business Account, approved templates) — the merge/storage layer stays as-is.

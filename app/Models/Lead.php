@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
-    /** @use HasFactory<\Database\Factories\LeadFactory> */
+    /** @use HasFactory<LeadFactory> */
     use HasFactory, SoftDeletes;
 
     /** Canonical pipeline statuses, in workflow order (must match the migration enum). */
@@ -49,6 +50,8 @@ class Lead extends Model
         'consent_marketing',
         'assigned_to',
         'submitted_at',
+        'merged_path',
+        'merged_at',
     ];
 
     protected function casts(): array
@@ -59,6 +62,7 @@ class Lead extends Model
             'consent_contact' => 'boolean',
             'consent_marketing' => 'boolean',
             'submitted_at' => 'datetime',
+            'merged_at' => 'datetime',
         ];
     }
 
