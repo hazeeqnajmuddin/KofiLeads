@@ -13,10 +13,6 @@ $pipelineConfig = [
     'layak'                 => ['label' => 'Layak',                 'cls' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
     'tidak_layak'           => ['label' => 'Tidak Layak',           'cls' => 'bg-red-100 text-red-800 border-red-300'],
     'submit_bank'           => ['label' => 'Submit Bank/Koperasi',  'cls' => 'bg-purple-100 text-purple-800 border-purple-300'],
-    'approved'              => ['label' => 'Approved',              'cls' => 'bg-emerald-200 text-emerald-900 border-emerald-400'],
-    'rejected'              => ['label' => 'Rejected',              'cls' => 'bg-red-200 text-red-900 border-red-400'],
-    'disbursed'             => ['label' => 'Disbursed',             'cls' => 'bg-green-200 text-green-900 border-green-400'],
-    'closed'                => ['label' => 'Closed',                'cls' => 'bg-slate-200 text-slate-700 border-slate-400'],
     'follow_up'             => ['label' => 'Follow Up Semula',      'cls' => 'bg-orange-100 text-orange-800 border-orange-300'],
 ];
 
@@ -338,10 +334,6 @@ const PIPELINE_SELECT_CLS = {
     layak:                  'bg-emerald-100 text-emerald-800 border-emerald-300',
     tidak_layak:            'bg-red-100 text-red-800 border-red-300',
     submit_bank:            'bg-purple-100 text-purple-800 border-purple-300',
-    approved:               'bg-emerald-200 text-emerald-900 border-emerald-400',
-    rejected:               'bg-red-200 text-red-900 border-red-400',
-    disbursed:              'bg-green-200 text-green-900 border-green-400',
-    closed:                 'bg-slate-200 text-slate-700 border-slate-400',
     follow_up:              'bg-orange-100 text-orange-800 border-orange-300',
 };
 

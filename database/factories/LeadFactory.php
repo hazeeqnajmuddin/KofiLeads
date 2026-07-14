@@ -29,7 +29,7 @@ class LeadFactory extends Factory
             'status_pekerjaan' => fake()->randomElement(['tetap', 'kontrak']),
             'pipeline_status' => fake()->randomElement([
                 'new_lead', 'dokumen_belum_lengkap', 'dokumen_lengkap',
-                'dalam_semakan', 'layak', 'approved', 'rejected', 'disbursed',
+                'dalam_semakan', 'layak', 'tidak_layak', 'submit_bank', 'follow_up',
             ]),
             'consent_pdpa' => true,
             'consent_contact' => true,

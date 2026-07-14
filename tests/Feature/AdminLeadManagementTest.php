@@ -25,7 +25,7 @@ it('lists real leads on the permohonan page', function () {
 });
 
 it('filters leads by sektor and status', function () {
-    Lead::factory()->create(['nama' => 'Kakitangan Kerajaan', 'sektor' => 'kerajaan', 'pipeline_status' => 'approved']);
+    Lead::factory()->create(['nama' => 'Kakitangan Kerajaan', 'sektor' => 'kerajaan', 'pipeline_status' => 'layak']);
     Lead::factory()->create(['nama' => 'Pekerja Swasta', 'sektor' => 'swasta', 'pipeline_status' => 'new_lead']);
 
     $this->get('/admin/permohonan?sektor=kerajaan')

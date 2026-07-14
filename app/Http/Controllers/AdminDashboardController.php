@@ -27,14 +27,14 @@ class AdminDashboardController extends Controller
             ->pluck('c', 'pipeline_status');
 
         $total = (int) $counts->sum();
-        $approved = (int) ($counts['approved'] ?? 0);
-        $rejected = (int) ($counts['rejected'] ?? 0);
+        $layak = (int) ($counts['layak'] ?? 0);
+        $tidakLayak = (int) ($counts['tidak_layak'] ?? 0);
 
         $stats = [
             'jumlah' => $total,
-            'pending' => max(0, $total - $approved - $rejected),
-            'approved' => $approved,
-            'rejected' => $rejected,
+            'pending' => max(0, $total - $layak - $tidakLayak),
+            'layak' => $layak,
+            'tidak_layak' => $tidakLayak,
         ];
 
         $recent = Lead::query()
@@ -57,9 +57,7 @@ class AdminDashboardController extends Controller
             'lead_bulan_ini' => Lead::where('submitted_at', '>=', now()->startOfMonth())->count(),
             'dokumen_lengkap' => (int) ($counts['dokumen_lengkap'] ?? 0),
             'dokumen_belum_lengkap' => (int) ($counts['dokumen_belum_lengkap'] ?? 0),
-            'layak' => (int) ($counts['layak'] ?? 0),
-            'approved' => $approved,
-            'disbursed' => (int) ($counts['disbursed'] ?? 0),
+            'layak' => $layak,
         ];
 
         return view('admin.dashboard', compact('stats', 'recent', 'summary'));

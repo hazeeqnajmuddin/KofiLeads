@@ -60,7 +60,11 @@ class LeadController extends Controller
         }
 
         DB::transaction(function () use ($lead, $old, $new, $request) {
-            $lead->update(['pipeline_status' => $new]);
+            $statusUpdate = ['pipeline_status' => $new];
+            if ($new !== 'new_lead') {
+                $statusUpdate[$new . '_at'] = now();
+            }
+            $lead->update($statusUpdate);
 
             PipelineLog::create([
                 'lead_id' => $lead->id,

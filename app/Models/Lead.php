@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
-    /** @use HasFactory<\Database\Factories\LeadFactory> */
+    /** @use HasFactory<LeadFactory> */
     use HasFactory, SoftDeletes;
 
     /** Canonical pipeline statuses, in workflow order (must match the migration enum). */
@@ -22,10 +23,6 @@ class Lead extends Model
         'layak',
         'tidak_layak',
         'submit_bank',
-        'approved',
-        'rejected',
-        'disbursed',
-        'closed',
         'follow_up',
     ];
 
@@ -45,10 +42,22 @@ class Lead extends Model
         'status_pekerjaan',
         'pipeline_status',
         'consent_pdpa',
+        'consent_pdpa_at',
         'consent_contact',
+        'consent_contact_at',
         'consent_marketing',
+        'consent_marketing_at',
         'assigned_to',
         'submitted_at',
+        'dokumen_belum_lengkap_at',
+        'dokumen_lengkap_at',
+        'dalam_semakan_at',
+        'layak_at',
+        'tidak_layak_at',
+        'submit_bank_at',
+        'follow_up_at',
+        'merged_path',
+        'merged_at',
     ];
 
     protected function casts(): array
@@ -56,9 +65,20 @@ class Lead extends Model
         return [
             'gaji_asas' => 'decimal:2',
             'consent_pdpa' => 'boolean',
+            'consent_pdpa_at' => 'datetime',
             'consent_contact' => 'boolean',
+            'consent_contact_at' => 'datetime',
             'consent_marketing' => 'boolean',
+            'consent_marketing_at' => 'datetime',
             'submitted_at' => 'datetime',
+            'dokumen_belum_lengkap_at' => 'datetime',
+            'dokumen_lengkap_at' => 'datetime',
+            'dalam_semakan_at' => 'datetime',
+            'layak_at' => 'datetime',
+            'tidak_layak_at' => 'datetime',
+            'submit_bank_at' => 'datetime',
+            'follow_up_at' => 'datetime',
+            'merged_at' => 'datetime',
         ];
     }
 

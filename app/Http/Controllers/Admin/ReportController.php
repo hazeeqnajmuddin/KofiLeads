@@ -13,57 +13,114 @@ class ReportController extends Controller
 {
     private const SEKTOR_LABELS = [
         'kerajaan' => 'Kerajaan',
-        'glc' => 'GLC',
+        'glc'      => 'GLC',
         'berkanun' => 'Badan Berkanun',
-        'swasta' => 'Swasta',
+        'swasta'   => 'Swasta',
     ];
 
     /**
-     * Laporan page. The three filters (tempoh / sektor / status) combine with
-     * OR logic: a lead is included if it matches ANY chosen filter. A filter
-     * left on "Semua …" is inactive (not part of the OR); when none are chosen,
-     * all leads are shown. Every panel recomputes off the filtered set.
+     * Laporan page.
+     *
+     * Sektor + status combine with OR logic. Date filter behaviour:
+     *   - With a status selected: filters by the status-specific date column
+     *     (e.g. dalam_semakan_at for "dalam_semakan"), so filtering Feb +
+     *     Dalam Semakan shows every lead that ENTERED Dalam Semakan in Feb,
+     *     even if they have since moved to a different status.
+     *   - Without a status selected: filters by leads.created_at (submission
+     *     date), answering "how many leads came in during this period".
+     *   - new_lead always uses created_at (no dedicated _at column).
+     *
+     * Trend Bulanan is always submission-date based and has its own year
+     * selector, independent of the date filter.
      */
     public function index(Request $request): View
     {
+        $currentYear = now()->year;
+
         $filters = [
-            'sektor' => (string) $request->query('sektor', 'all'),
-            'status' => (string) $request->query('status', 'all'),
+            'sektor'    => (string) $request->query('sektor', 'all'),
+            'status'    => (string) $request->query('status', 'all'),
+            'date_mode' => (string) $request->query('date_mode', 'all'),
+            'date_from' => (string) $request->query('date_from', ''),
+            'date_to'   => (string) $request->query('date_to', ''),
+            'tahun'     => (int)    $request->query('tahun', $currentYear),
         ];
 
         $sektorActive = in_array($filters['sektor'], Lead::SEKTOR, true);
         $statusActive = in_array($filters['status'], Lead::PIPELINE_STATUSES, true);
+        $dateRange    = $this->resolveDateRange($filters);
 
-        // Each active filter becomes one OR clause on the base query.
-        $orClauses = [];
-        if ($sektorActive) {
-            $orClauses[] = fn (Builder $q) => $q->where('sektor', $filters['sektor']);
-        }
-        if ($statusActive) {
-            $orClauses[] = fn (Builder $q) => $q->where('pipeline_status', $filters['status']);
-        }
-
-        $base = Lead::query();
-        if ($orClauses !== []) {
-            $base->where(function (Builder $outer) use ($orClauses) {
-                foreach ($orClauses as $clause) {
-                    $outer->orWhere($clause);
+        // Main query: OR filters on sektor + status (current pipeline_status).
+        $main = Lead::query();
+        if ($sektorActive || $statusActive) {
+            $main->where(function (Builder $outer) use ($sektorActive, $statusActive, $filters) {
+                if ($sektorActive) {
+                    $outer->orWhere('sektor', $filters['sektor']);
+                }
+                if ($statusActive) {
+                    $outer->orWhere('pipeline_status', $filters['status']);
                 }
             });
         }
 
-        $report = $this->buildReport($base, $filters, $sektorActive, $statusActive);
+        // Date scope (AND on top of OR filters).
+        if ($dateRange) {
+            $dateCol = ($statusActive && $filters['status'] !== 'new_lead')
+                ? $filters['status'] . '_at'
+                : 'created_at';
+            $main->whereBetween($dateCol, $dateRange);
+        }
 
-        return view('admin.laporan', compact('report', 'filters'));
+        // Trend query: same OR filters but NO date scope — uses created_at + tahun.
+        $trend = Lead::query();
+        if ($sektorActive || $statusActive) {
+            $trend->where(function (Builder $outer) use ($sektorActive, $statusActive, $filters) {
+                if ($sektorActive) {
+                    $outer->orWhere('sektor', $filters['sektor']);
+                }
+                if ($statusActive) {
+                    $outer->orWhere('pipeline_status', $filters['status']);
+                }
+            });
+        }
+
+        // Available years for the Trend Bulanan year selector.
+        $availableYears = Lead::query()
+            ->pluck('created_at')
+            ->map(fn ($d) => (int) Carbon::parse($d)->year)
+            ->unique()
+            ->sortDesc()
+            ->values()
+            ->all();
+        if (empty($availableYears)) {
+            $availableYears = [$currentYear];
+        }
+        if (! in_array($filters['tahun'], $availableYears, true)) {
+            $filters['tahun'] = $availableYears[0];
+        }
+
+        $report = $this->buildReport($main, $trend, $filters, $sektorActive, $statusActive);
+
+        return view('admin.laporan', compact('report', 'filters', 'availableYears'));
     }
 
-    /**
-     * Aggregate the filtered query into the shape the laporan JS expects.
-     */
-    private function buildReport(Builder $base, array $filters, bool $sektorActive, bool $statusActive): array
+    private function resolveDateRange(array $filters): ?array
     {
-        $sectorCounts = (clone $base)->selectRaw('sektor, COUNT(*) as c')->groupBy('sektor')->pluck('c', 'sektor');
-        $pipelineCounts = (clone $base)->selectRaw('pipeline_status, COUNT(*) as c')->groupBy('pipeline_status')->pluck('c', 'pipeline_status');
+        return match ($filters['date_mode']) {
+            'today'  => [now()->startOfDay(), now()->endOfDay()],
+            'minggu' => [now()->startOfWeek(), now()->endOfWeek()],
+            'bulan'  => [now()->startOfMonth(), now()->endOfMonth()],
+            'custom' => ($filters['date_from'] && $filters['date_to'])
+                ? [Carbon::parse($filters['date_from'])->startOfDay(), Carbon::parse($filters['date_to'])->endOfDay()]
+                : null,
+            default => null,
+        };
+    }
+
+    private function buildReport(Builder $main, Builder $trend, array $filters, bool $sektorActive, bool $statusActive): array
+    {
+        $sectorCounts   = (clone $main)->selectRaw('sektor, COUNT(*) as c')->groupBy('sektor')->pluck('c', 'sektor');
+        $pipelineCounts = (clone $main)->selectRaw('pipeline_status, COUNT(*) as c')->groupBy('pipeline_status')->pluck('c', 'pipeline_status');
 
         $sectors = [];
         foreach (Lead::SEKTOR as $key) {
@@ -76,40 +133,53 @@ class ReportController extends Controller
         }
 
         $monthly = array_fill(0, 12, 0);
-        (clone $base)
-            ->whereYear('submitted_at', now()->year)
-            ->pluck('submitted_at')
+        (clone $trend)
+            ->whereYear('created_at', $filters['tahun'])
+            ->pluck('created_at')
             ->each(function (Carbon $date) use (&$monthly) {
                 $monthly[$date->month - 1]++;
             });
 
-        $total = (int) (clone $base)->count();
-        $processed = $pipeline['approved'] + $pipeline['rejected'];
-        $rate = $processed ? (int) round($pipeline['approved'] / $processed * 100) : 0;
+        $total     = (int) (clone $main)->count();
+        $processed = $pipeline['layak'] + $pipeline['tidak_layak'];
+        $rate      = $processed ? (int) round($pipeline['layak'] / $processed * 100) : 0;
 
         return [
-            'label' => $this->rangeLabel($filters, $sektorActive, $statusActive),
-            'total' => $total,
-            'rate' => $rate,
-            'sectors' => $sectors,
+            'label'    => $this->rangeLabel($filters, $sektorActive, $statusActive),
+            'total'    => $total,
+            'rate'     => $rate,
+            'sectors'  => $sectors,
             'pipeline' => $pipeline,
-            'monthly' => $monthly,
+            'monthly'  => $monthly,
         ];
     }
 
-    /**
-     * Human summary of the active filters (joined with "ATAU" since they OR).
-     */
     private function rangeLabel(array $filters, bool $sektorActive, bool $statusActive): string
     {
-        $parts = [];
+        $orParts = [];
         if ($sektorActive) {
-            $parts[] = self::SEKTOR_LABELS[$filters['sektor']];
+            $orParts[] = self::SEKTOR_LABELS[$filters['sektor']];
         }
         if ($statusActive) {
-            $parts[] = ucwords(str_replace('_', ' ', $filters['status']));
+            $orParts[] = ucwords(str_replace('_', ' ', $filters['status']));
         }
 
-        return $parts === [] ? 'Semua masa' : implode(' ATAU ', $parts);
+        $dateLabel = match ($filters['date_mode']) {
+            'today'  => 'Hari Ini',
+            'minggu' => 'Minggu Ini',
+            'bulan'  => 'Bulan Ini',
+            'custom' => $filters['date_from'] && $filters['date_to']
+                ? $filters['date_from'].' – '.$filters['date_to']
+                : '',
+            default => '',
+        };
+
+        $base = $orParts === [] ? '' : implode(' ATAU ', $orParts);
+
+        if ($dateLabel) {
+            return $base ? "$base · $dateLabel" : $dateLabel;
+        }
+
+        return $base ?: 'Semua masa';
     }
 }

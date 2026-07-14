@@ -37,10 +37,6 @@ return new class extends Migration
                 'layak',
                 'tidak_layak',
                 'submit_bank',
-                'approved',
-                'rejected',
-                'disbursed',
-                'closed',
                 'follow_up',
             ])->default('new_lead');
 
