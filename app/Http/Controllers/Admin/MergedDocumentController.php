@@ -5,20 +5,41 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Services\DocumentMergeService;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MergedDocumentController extends Controller
 {
     /**
-     * Show a lead's merged PDF inline (opens in a new tab; downloadable from there).
-     *
-     * If the merged file doesn't exist yet (e.g. seeded demo leads, or a merge
-     * that failed at submission), it is generated on demand and cached on the
-     * lead. Streams from the PRIVATE disk. Not auth-gated yet (no-auth phase,
-     * same as the rest of /admin/*).
+     * Admin view of a lead's merged PDF (inside the open /admin/* area).
      */
     public function show(Lead $lead, DocumentMergeService $merger): StreamedResponse
+    {
+        return $this->stream($lead, $merger);
+    }
+
+    /**
+     * Public, signed view of the merged PDF — the link carried into WhatsApp.
+     * Validated manually (instead of the `signed` middleware) so an expired or
+     * tampered link shows a friendly page rather than a bare 403.
+     */
+    public function signed(Request $request, Lead $lead, DocumentMergeService $merger): StreamedResponse|Responsable|Response
+    {
+        if (! $request->hasValidSignature()) {
+            return response()->view('errors.link-expired', [], 403);
+        }
+
+        return $this->stream($lead, $merger);
+    }
+
+    /**
+     * Stream the merged PDF inline, generating it on demand if missing.
+     */
+    private function stream(Lead $lead, DocumentMergeService $merger): StreamedResponse
     {
         $path = $lead->merged_path;
 
@@ -34,9 +55,17 @@ class MergedDocumentController extends Controller
 
         return Storage::disk('local')->response(
             $path,
-            "permohonan-{$lead->id}.pdf",
+            $this->downloadName($lead),
             ['Content-Type' => 'application/pdf'],
             'inline',
         );
+    }
+
+    /**
+     * User-facing PDF filename, built from the lead (sanitized).
+     */
+    private function downloadName(Lead $lead): string
+    {
+        return 'permohonan-'.Str::slug($lead->nama).'-'.$lead->id.'.pdf';
     }
 }

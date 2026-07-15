@@ -15,6 +15,10 @@ Route::get('/', function () {
 
 // Public lead intake (landing page form). No auth — this is the public submission.
 Route::post('/leads', [LeadSubmissionController::class, 'store'])->name('leads.store');
+Route::get('/terima-kasih', [LeadSubmissionController::class, 'thankYou'])->name('leads.thankyou');
+
+// Signed, expiring link to a lead's merged PDF — carried into the WhatsApp message (Phase 9, Slice 2).
+Route::get('/dokumen/gabungan/{lead}', [MergedDocumentController::class, 'signed'])->name('merged.signed');
 
 // Admin panel. NOTE: no auth middleware yet — Phase 3 (auth) is deferred.
 Route::prefix('admin')->name('admin.')->group(function () {

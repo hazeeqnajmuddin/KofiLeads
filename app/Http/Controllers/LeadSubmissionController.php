@@ -7,14 +7,20 @@ use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
 use App\Services\DocumentMergeService;
+use App\Services\WhatsappMessageBuilder;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class LeadSubmissionController extends Controller
 {
-    public function __construct(private DocumentMergeService $merger) {}
+    public function __construct(
+        private DocumentMergeService $merger,
+        private WhatsappMessageBuilder $whatsapp,
+    ) {}
 
     /**
      * Store a public lead submission from the landing-page form:
@@ -82,12 +88,32 @@ class LeadSubmissionController extends Controller
             Log::warning("Merge failed for lead {$lead->id}: {$e->getMessage()}");
         }
 
-        // Production hand-off (deferred — see RCMS_Architecture.md §2d & §10h):
-        //   $whatsapp = preg_replace('/\D/', '', Setting::get('whatsapp_number'));
-        //   return redirect()->away("https://wa.me/{$whatsapp}");
+        // Build the WhatsApp hand-off (Phase 9, Slice 2): a signed, expiring link
+        // to the merged PDF + the lead's details, from the editable template.
+        $link = $lead->merged_path
+            ? URL::temporarySignedRoute('merged.signed', now()->addDays(3), ['lead' => $lead->id])
+            : null;
 
-        return redirect('/')
-            ->with('success', 'Permohonan anda berjaya dihantar. Maklumat dan dokumen telah diterima — pihak kami akan menghubungi anda tidak lama lagi.');
+        $waUrl = $this->whatsapp->url($lead->load('masalah'), $link);
+
+        // Show the "Terima Kasih" page, which offers the "Teruskan ke WhatsApp" button.
+        return redirect()->route('leads.thankyou')
+            ->with('lead_submitted', true)
+            ->with('wa_url', $waUrl);
+    }
+
+    /**
+     * Post-submission interstitial: confirms receipt and offers the WhatsApp
+     * hand-off button. Only reachable right after a submission (flash marker);
+     * a direct visit falls back to the landing page.
+     */
+    public function thankYou(): View|RedirectResponse
+    {
+        if (! session('lead_submitted')) {
+            return redirect('/');
+        }
+
+        return view('terima-kasih', ['waUrl' => session('wa_url')]);
     }
 
     /**

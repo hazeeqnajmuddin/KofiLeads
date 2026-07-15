@@ -36,13 +36,13 @@ function validLeadPayload(array $overrides = []): array
     ], $overrides);
 }
 
-it('stores a lead with issues and documents, then flashes success', function () {
+it('stores a lead with issues and documents, then redirects to the thank-you page', function () {
     Storage::fake('local');
 
     $response = $this->post('/leads', validLeadPayload());
 
-    $response->assertRedirect('/');
-    $response->assertSessionHas('success');
+    $response->assertRedirect(route('leads.thankyou'));
+    $response->assertSessionHas('lead_submitted', true);
 
     // Lead row
     expect(Lead::count())->toBe(1);
@@ -79,7 +79,7 @@ it('does not require EPF for non-swasta sectors', function () {
     $payload = validLeadPayload(['sektor' => 'kerajaan']);
     unset($payload['penyata_epf']);
 
-    $this->post('/leads', $payload)->assertRedirect('/');
+    $this->post('/leads', $payload)->assertRedirect(route('leads.thankyou'));
 
     expect(Lead::count())->toBe(1);
     expect(Dokumen::where('jenis', 'penyata_epf')->count())->toBe(0);
@@ -104,7 +104,7 @@ it('stores the free-text detail on the lain_lain issue row', function () {
         'masalah_lain' => 'Sedang dalam proses penjadualan semula',
     ]);
 
-    $this->post('/leads', $payload)->assertRedirect('/');
+    $this->post('/leads', $payload)->assertRedirect(route('leads.thankyou'));
 
     $lain = LeadMasalah::where('masalah', 'lain_lain')->first();
     expect($lain->keterangan)->toBe('Sedang dalam proses penjadualan semula');

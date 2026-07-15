@@ -447,11 +447,15 @@ Nine fixes raised after the backend build, validated with the user before implem
 - [x] Permohonan PDF button wired to the route (`target="_blank"`); shown disabled/grey when the lead has no documents.
 - [x] Pest: 4 tests (`tests/Feature/DocumentMergeTest.php`) — merges PDF+image into a valid PDF, null on no docs, inline route generates-on-demand, 404 on empty. Skipped automatically if `gs` absent. Full suite green (36 passed).
 
-**Slice 2 — WhatsApp handoff — ⬜ PLANNED**
-- [ ] `MergedDocumentController` public variant behind a `temporarySignedRoute` (expiring, tamper-proof link) for external sharing.
-- [ ] Replace the deferred `redirect()->away($whatsappUrl)` hook with a real `wa.me` redirect carrying the lead info + signed merged-PDF link.
-- [ ] Editable message template (`settings.whatsapp_template`) with low-code drag-and-drop placeholders in Tetapan Laman ([§10i](#10i-editable-message-template-with-low-code-placeholders-confirmed)).
-- [ ] Pest tests: signed link streams / rejects tampered+expired; redirect URL well-formed.
+**Slice 2 — WhatsApp handoff — ✅ DONE**
+- [x] Public **signed** route `GET /dokumen/gabungan/{lead}` → `MergedDocumentController@signed`; validates the signature manually so an expired/tampered link shows a friendly `errors.link-expired` page (403) instead of a bare abort. Streams the same merged PDF inline.
+- [x] Link built with `URL::temporarySignedRoute('merged.signed', now()->addDays(3), …)` (expiry revisit-later; 3 days for now).
+- [x] `WhatsappMessageBuilder` — renders `settings.whatsapp_template`, substitutes a **whitelist** of `{tokens}` (lead fields + `{link}`; `{masalah}` includes the `lain_lain` keterangan; sektor/status shown as labels), leaves unknown tokens literal, returns the `wa.me/<number>?text=…` URL (or null if no number set).
+- [x] Submission now redirects to a **Terima Kasih** interstitial (`/terima-kasih`, flash-guarded) with a "Teruskan ke WhatsApp" button carrying the pre-filled message — replaces the old redirect-to-`/` and the deferred `redirect()->away()` hook.
+- [x] Editable template with **low-code drag-and-drop** placeholder chips + click-to-insert + live preview in Tetapan Laman ("Mesej WhatsApp" card); `whatsapp_template` added to `UpdateSettingsRequest::EDITABLE_KEYS` (+ validation) and seeded (`WhatsappMessageBuilder::DEFAULT_TEMPLATE`).
+- [x] Merged-PDF **download name** built from the lead (`permohonan-{nama-slug}-{id}.pdf`), shared by the admin + signed routes.
+- [x] Pest: 7 tests (`tests/Feature/WhatsappHandoffTest.php`) — token render/whitelist, keterangan in `{masalah}`, wa.me URL (+null when no number), signed link streams / rejects tampered, thank-you page flash-guard, template saves. Full suite green (**42 passed**).
+- **Local test reminder** ([§10j](#10j-local-only-testing-on-the-mac-no-public-domain)): the signed link is a `127.0.0.1` URL — clickable only on this Mac; needs a public `APP_URL` for phone recipients.
 
 ### Cross-cutting (build alongside Phases 1–2 & 4–5)
 - [x] Shared `partials/flash.blade.php` (success / error / validation, vanilla JS — no Alpine) included in both layouts [§8].
@@ -461,7 +465,7 @@ Nine fixes raised after the backend build, validated with the user before implem
 
 ## 10. Phase 9 — Document merge + WhatsApp handoff
 
-**Status: Slice 1 (merge + Permohonan view) ✅ BUILT; Slice 2 (WhatsApp handoff) ⬜ planned.** Decisions below are confirmed with the user; this section is the build spec. §10d–10g + the Permohonan button are implemented; §10h–10i (wa.me redirect, signed link, editable template) remain Slice 2.
+**Status: Slice 1 (merge + Permohonan view) ✅ BUILT; Slice 2 (WhatsApp handoff) ✅ BUILT.** Decisions below are confirmed with the user; this section is the build spec. All of §10d–10i are implemented (merge, signed link, editable template, Terima Kasih interstitial); the only deferred item is switching to the WhatsApp **Cloud API** if attachment-in-chat is ever wanted ([§10k](#10k-risks--best-practice-callouts)).
 
 ### 10a. Goal & flow
 
