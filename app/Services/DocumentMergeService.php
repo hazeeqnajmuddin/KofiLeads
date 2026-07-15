@@ -112,14 +112,20 @@ class DocumentMergeService
      */
     private function concatenate(array $pdfPaths, string $outputPath): void
     {
+        // Ghostscript on Windows misparses backslashes in -sOutputFile= and input paths.
+        $slash = fn (string $p) => str_replace('\\', '/', $p);
+
         $process = new Process(array_merge([
             $this->ghostscript(),
             '-q', '-dNOPAUSE', '-dBATCH', '-dSAFER',
             '-sDEVICE=pdfwrite',
-            '-sOutputFile='.$outputPath,
-        ], $pdfPaths));
+            '-sOutputFile='.$slash($outputPath),
+        ], array_map($slash, $pdfPaths)));
 
         $process->setTimeout(120);
+        // On Windows, PHP subprocesses may not inherit TEMP/TMP, which Ghostscript
+        // requires to create its own working files.
+        $process->setEnv(['TEMP' => sys_get_temp_dir(), 'TMP' => sys_get_temp_dir()]);
         $process->run();
 
         if (! $process->isSuccessful() || ! is_file($outputPath)) {

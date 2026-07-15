@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\DokumenController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\MergedDocumentController;
 
 Route::get('/', function () {
     return view('landing');
@@ -34,4 +35,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/permohonan/{lead}',   [LeadController::class, 'updateStatus'])->name('leads.updateStatus');
     Route::delete('/permohonan/{lead}',  [LeadController::class, 'destroy'])->name('leads.destroy');
     Route::get('/dokumen/{dokumen}/download', [DokumenController::class, 'download'])->name('dokumen.download');
+    Route::get('/permohonan/{lead}/pdf', [MergedDocumentController::class, 'show'])->name('leads.pdf');
 });
