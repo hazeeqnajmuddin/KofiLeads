@@ -32,6 +32,93 @@
         </div>
     </div>
 
+    <!-- WhatsApp Message Template -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden lg:col-span-2">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Mesej WhatsApp</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Mesej yang dibawa ke WhatsApp selepas pemohon menghantar borang. Seret atau klik pemegang tempat untuk memasukkannya.</p>
+        </div>
+        <div class="p-6">
+            <form action="{{ route('admin.landing.update') }}" method="POST" class="space-y-4">
+                @csrf
+
+                {{-- Draggable placeholder chips (drop into the textarea, or click to insert at cursor) --}}
+                <div>
+                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Pemegang Tempat</label>
+                    <div id="wa-tokens" class="flex flex-wrap gap-1.5">
+                        @foreach(['nama','no_telefon','emel','daerah','poskod','sektor','nama_majikan','jawatan','gaji_asas','status_pekerjaan','masalah','link'] as $token)
+                        <button type="button" draggable="true" data-token="{{ '{'.$token.'}' }}"
+                                class="wa-chip cursor-grab active:cursor-grabbing text-[11px] font-medium text-navy bg-navy/5 border border-navy/15 px-2 py-1 rounded-md hover:bg-navy/10 transition select-none">
+                            {{ '{'.$token.'}' }}
+                        </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Templat Mesej</label>
+                    <textarea name="whatsapp_template" id="wa_template" rows="8"
+                              class="w-full text-sm font-mono border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition leading-relaxed"
+                              placeholder="Tulis mesej templat di sini...">{{ old('whatsapp_template', $settings['whatsapp_template'] ?? \App\Services\WhatsappMessageBuilder::DEFAULT_TEMPLATE) }}</textarea>
+                </div>
+
+                {{-- Live preview with sample data --}}
+                <div>
+                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Pratonton</label>
+                    <pre id="wa_preview" class="text-xs text-slate-600 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2.5 whitespace-pre-wrap break-words font-sans leading-relaxed min-h-[3rem]"></pre>
+                </div>
+
+                <button type="submit"
+                        class="bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+                    Simpan Templat
+                </button>
+            </form>
+        </div>
+        <script>
+        (function () {
+            const ta = document.getElementById('wa_template');
+            const preview = document.getElementById('wa_preview');
+            const SAMPLE = {
+                '{nama}': 'Ali bin Ahmad', '{no_telefon}': '+60 12-345 6789', '{emel}': 'ali@email.com',
+                '{daerah}': 'Petaling Jaya', '{poskod}': '47810', '{sektor}': 'Swasta',
+                '{nama_majikan}': 'Syarikat ABC Sdn Bhd', '{jawatan}': 'Pengurus', '{gaji_asas}': '4,500.00',
+                '{status_pekerjaan}': 'Tetap', '{masalah}': 'CCRIS, CTOS',
+                '{link}': 'https://…/dokumen/gabungan/12?signature=…',
+            };
+
+            function renderPreview() {
+                let out = ta.value;
+                for (const [token, val] of Object.entries(SAMPLE)) {
+                    out = out.split(token).join(val);
+                }
+                preview.textContent = out;
+            }
+
+            // Insert token at the cursor position (click fallback + a11y).
+            function insertAtCursor(text) {
+                const start = ta.selectionStart, end = ta.selectionEnd;
+                ta.value = ta.value.slice(0, start) + text + ta.value.slice(end);
+                ta.selectionStart = ta.selectionEnd = start + text.length;
+                ta.focus();
+                renderPreview();
+                ta.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+
+            document.querySelectorAll('.wa-chip').forEach(function (chip) {
+                const token = chip.dataset.token;
+                chip.addEventListener('click', () => insertAtCursor(token));
+                chip.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', token));
+            });
+
+            // A plain <textarea> natively inserts dropped text at the drop point;
+            // just refresh the preview afterwards.
+            ta.addEventListener('drop', () => setTimeout(renderPreview, 0));
+            ta.addEventListener('input', renderPreview);
+            renderPreview();
+        })();
+        </script>
+    </div>
+
     <!-- Contact Details -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100">

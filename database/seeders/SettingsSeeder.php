@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Setting;
+use App\Services\WhatsappMessageBuilder;
 use Illuminate\Database\Seeder;
 
 class SettingsSeeder extends Seeder
@@ -16,6 +17,7 @@ class SettingsSeeder extends Seeder
     {
         $defaults = [
             'whatsapp_number' => '+60 12-345 6789',
+            'whatsapp_template' => WhatsappMessageBuilder::DEFAULT_TEMPLATE,
             'hero_title' => 'Semak Kelayakan Anda',
             'hero_subtitle' => 'Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.',
             'hero_cta' => 'Buat Semakan Awal Sekarang',

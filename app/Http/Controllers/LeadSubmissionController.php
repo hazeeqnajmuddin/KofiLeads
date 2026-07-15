@@ -8,6 +8,8 @@ use App\Models\Lead;
 use App\Models\LeadMasalah;
 use App\Models\Setting;
 use App\Services\DocumentMergeService;
+use App\Services\WhatsappMessageBuilder;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +18,10 @@ use Illuminate\Support\Facades\URL;
 
 class LeadSubmissionController extends Controller
 {
-    public function __construct(private DocumentMergeService $merger) {}
+    public function __construct(
+        private DocumentMergeService $merger,
+        private WhatsappMessageBuilder $whatsapp,
+    ) {}
 
     /**
      * Store a public lead submission from the landing-page form:
@@ -87,42 +92,32 @@ class LeadSubmissionController extends Controller
             Log::warning("Merge failed for lead {$lead->id}: {$e->getMessage()}");
         }
 
-        $lead->loadMissing('masalah');
+        // Build the WhatsApp hand-off (Phase 9, Slice 2): a signed, expiring link
+        // to the merged PDF + the lead's details, from the editable template.
+        $link = $lead->merged_path
+            ? URL::temporarySignedRoute('merged.signed', now()->addDays(3), ['lead' => $lead->id])
+            : null;
 
-        $masalahLabels = [
-            'komitmen_tinggi' => 'Komitmen Tinggi',
-            'ccris'           => 'CCRIS',
-            'ctos'            => 'CTOS',
-            'akpk'            => 'AKPK',
-            'saa'             => 'SAA',
-            'legal_action'    => 'Tindakan Undang-undang',
-            'lain_lain'       => 'Lain-lain',
-        ];
+        $waUrl = $this->whatsapp->url($lead->load('masalah'), $link);
 
-        $sektorLabels = [
-            'kerajaan' => 'Kerajaan',
-            'glc'      => 'GLC',
-            'berkanun' => 'Badan Berkanun',
-            'swasta'   => 'Swasta',
-        ];
+        // Show the "Terima Kasih" page, which offers the "Teruskan ke WhatsApp" button.
+        return redirect()->route('leads.thankyou')
+            ->with('lead_submitted', true)
+            ->with('wa_url', $waUrl);
+    }
 
-        $masalahList = $lead->masalah
-            ->map(fn ($m) => $masalahLabels[$m->masalah] ?? $m->masalah)
-            ->implode(', ') ?: '—';
+    /**
+     * Post-submission interstitial: confirms receipt and offers the WhatsApp
+     * hand-off button. Only reachable right after a submission (flash marker);
+     * a direct visit falls back to the landing page.
+     */
+    public function thankYou(): View|RedirectResponse
+    {
+        if (! session('lead_submitted')) {
+            return redirect('/');
+        }
 
-        $pdfUrl = URL::temporarySignedRoute('admin.leads.pdf', now()->addDays(7), ['lead' => $lead->id]);
-
-        $message = "Assalamualaikum, saya {$lead->nama} ingin membuat semakan kelayakan.\n"
-            . 'No. Telefon: ' . preg_replace('/\D/', '', $lead->no_telefon) . "\n"
-            . 'Sektor: ' . ($sektorLabels[$lead->sektor] ?? $lead->sektor) . "\n"
-            . "Majikan: {$lead->nama_majikan}\n"
-            . 'Gaji Asas: RM' . number_format((float) $lead->gaji_asas, 2) . "\n"
-            . "Masalah: {$masalahList}\n"
-            . "Dokumen (gabungan): {$pdfUrl}";
-
-        $whatsappNumber = preg_replace('/\D/', '', Setting::get('whatsapp_number', '60123456789'));
-
-        return redirect()->away('https://wa.me/' . $whatsappNumber . '?text=' . urlencode($message));
+        return view('terima-kasih', ['waUrl' => session('wa_url')]);
     }
 
     /**
