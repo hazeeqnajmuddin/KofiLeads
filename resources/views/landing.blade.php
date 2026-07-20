@@ -179,7 +179,7 @@
                         </div>
                     </div>
 
-                    <p class="text-[10px] text-slate-400 mt-4 max-w-sm mx-auto md:mx-0 leading-relaxed italic">
+                    <p class="text-xs text-slate-400 mt-4 max-w-sm mx-auto md:mx-0 leading-relaxed italic">
                         * Kelulusan tertakluk kepada profil kewangan pelanggan, rekod CCRIS/CTOS, dokumen sokongan dan penilaian akhir pihak bank/koperasi. RCS tidak menjamin sebarang kelulusan pembiayaan.
                     </p>
 
@@ -361,7 +361,7 @@
                         <span>Klik "Credit Report" untuk memuat turun laporan CCRIS anda.</span>
                     </li>
                 </ol>
-                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                <p class="text-xs text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
                     Alternatif: kunjungi kiosk di cawangan AKPK atau BNM dengan membawa MyKad — laporan dicetak serta-merta secara percuma.
                 </p>
             </div>
@@ -402,7 +402,7 @@
                         <span>Log masuk untuk melihat Laporan Asas MyCTOS secara percuma, atau naik taraf kepada MyCTOS Score Report untuk skor kredit terperinci.</span>
                     </li>
                 </ol>
-                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                <p class="text-xs text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
                     Laporan Asas MyCTOS adalah percuma; laporan berskor terperinci dikenakan bayaran kecil sekali sahaja.
                 </p>
             </div>
@@ -443,7 +443,7 @@
                         <span>Muat turun laporan setelah permohonan diproses dan disahkan.</span>
                     </li>
                 </ol>
-                <p class="text-[11px] text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
+                <p class="text-xs text-slate-400 italic mt-5 pt-4 border-t border-slate-200">
                     Terdapat pilihan laporan asas percuma untuk pendaftaran baharu, dengan laporan lebih terperinci dikenakan bayaran mengikut jenis produk.
                 </p>
             </div>
@@ -608,7 +608,17 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label for="no_tele" class="block text-xs font-semibold text-slate-600 mb-1.5">No. Telefon / WhatsApp <span class="text-rose-500">*</span></label>
-                                    <input type="tel" id="no_tele" name="no_telefon" value="{{ old('no_telefon') }}" placeholder="+60 12-345 6789" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <div class="flex">
+                                        <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm select-none">+60</span>
+                                        <input type="tel" id="no_tele" name="no_telefon"
+                                               value="{{ preg_replace('/^\+?60/', '', old('no_telefon', '')) }}"
+                                               placeholder="123456789"
+                                               inputmode="numeric"
+                                               maxlength="11"
+                                               class="flex-1 rounded-r-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition"
+                                               required
+                                               oninput="this.value=this.value.replace(/\D/g,'')">
+                                    </div>
                                 </div>
                                 <div>
                                     <label for="alamat_emel" class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Emel <span class="text-slate-400 font-normal">(Pilihan)</span></label>
@@ -941,14 +951,19 @@
                 </style>
             </div>
 
+            @php
+                $footerEmail = \App\Models\Setting::get('contact_email', 'rahmahconsultant@gmail.com');
+                $footerPhone = \App\Models\Setting::get('whatsapp_number', '+60 12-345 6789');
+                $footerTel   = 'tel:' . preg_replace('/\D/', '', $footerPhone);
+            @endphp
             <div class="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-                <a href="mailto:hello@rahmahconsulting.com" class="flex items-center gap-2 hover:text-navy transition">
+                <a href="mailto:{{ $footerEmail }}" class="flex items-center gap-2 hover:text-navy transition">
                     <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-                    rahmahconsultant@gmail.com
+                    {{ $footerEmail }}
                 </a>
-                <a href="tel:" class="flex items-center gap-2 hover:text-navy transition">
+                <a href="{{ $footerTel }}" class="flex items-center gap-2 hover:text-navy transition">
                     <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
-                    +60 12-345 6789
+                    {{ $footerPhone }}
                 </a>
             </div>
         </div>

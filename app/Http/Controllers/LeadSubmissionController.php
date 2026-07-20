@@ -45,8 +45,11 @@ class LeadSubmissionController extends Controller
                 'status_pekerjaan' => $data['status_pekerjaan'],
                 'pipeline_status' => 'new_lead',
                 'consent_pdpa' => $request->boolean('consent_pdpa'),
+                'consent_pdpa_at' => $request->boolean('consent_pdpa') ? now() : null,
                 'consent_contact' => $request->boolean('consent_contact'),
+                'consent_contact_at' => $request->boolean('consent_contact') ? now() : null,
                 'consent_marketing' => $request->boolean('consent_marketing'),
+                'consent_marketing_at' => $request->boolean('consent_marketing') ? now() : null,
                 'submitted_at' => now(),
             ]);
 

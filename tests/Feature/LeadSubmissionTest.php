@@ -48,7 +48,7 @@ it('stores a lead with issues and documents, then redirects to the thank-you pag
     expect(Lead::count())->toBe(1);
     $lead = Lead::first();
     expect($lead->nama)->toBe('Ujian Pemohon')
-        ->and($lead->no_telefon)->toBe('+60 12-345 6789')
+        ->and($lead->no_telefon)->toBe('+60123456789') // normalized by StoreLeadRequest (+60 prefix, digits only)
         ->and($lead->emel)->toBe('ujian@email.com')
         ->and($lead->sektor)->toBe('swasta')
         ->and($lead->pipeline_status)->toBe('new_lead')

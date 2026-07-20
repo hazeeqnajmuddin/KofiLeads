@@ -6,52 +6,81 @@
 
 @section('admin_content')
 
-<!-- Filter toolbar (server-side GET form; filters combine with OR logic) -->
+<!-- Filter toolbar -->
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm px-5 py-4 mb-5">
-    <form method="GET" action="{{ route('admin.laporan') }}" class="flex flex-col sm:flex-row sm:items-end gap-4">
-        <div class="flex-1">
-            <h2 class="font-semibold text-slate-800 text-sm mb-0.5">Penapis Laporan</h2>
-            <p class="text-xs text-slate-400">Pilih penapis untuk menyaring data.</p>
+    <form method="GET" action="{{ route('admin.laporan') }}" id="filter-form" class="flex flex-col gap-3">
+        <input type="hidden" name="tahun" id="tahun-input" value="{{ $filters['tahun'] }}">
+
+        <!-- Controls row -->
+        <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+            <div class="flex-1">
+                <h2 class="font-semibold text-slate-800 text-sm mb-0.5">Penapis Laporan</h2>
+                <p class="text-xs text-slate-400">Sektor dan status gabung dengan logik ATAU. Tarikh tapis mengikut tarikh status terakhir.</p>
+            </div>
+
+            <div class="flex flex-wrap gap-3 items-end">
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sektor</label>
+                    <select name="sektor" onchange="this.form.submit()"
+                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value="all" @selected($filters['sektor'] === 'all')>Semua sektor</option>
+                        <option value="kerajaan" @selected($filters['sektor'] === 'kerajaan')>Kerajaan</option>
+                        <option value="glc" @selected($filters['sektor'] === 'glc')>GLC</option>
+                        <option value="berkanun" @selected($filters['sektor'] === 'berkanun')>Badan Berkanun</option>
+                        <option value="swasta" @selected($filters['sektor'] === 'swasta')>Swasta</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status Pipeline</label>
+                    <select name="status" onchange="this.form.submit()"
+                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-52 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value="all" @selected($filters['status'] === 'all')>Semua status</option>
+                        <option value="new_lead" @selected($filters['status'] === 'new_lead')>New Lead</option>
+                        <option value="dokumen_belum_lengkap" @selected($filters['status'] === 'dokumen_belum_lengkap')>Dokumen Belum Lengkap</option>
+                        <option value="dokumen_lengkap" @selected($filters['status'] === 'dokumen_lengkap')>Dokumen Lengkap</option>
+                        <option value="dalam_semakan" @selected($filters['status'] === 'dalam_semakan')>Dalam Semakan</option>
+                        <option value="layak" @selected($filters['status'] === 'layak')>Layak</option>
+                        <option value="tidak_layak" @selected($filters['status'] === 'tidak_layak')>Tidak Layak</option>
+                        <option value="submit_bank" @selected($filters['status'] === 'submit_bank')>Submit Bank/Koperasi</option>
+                        <option value="follow_up" @selected($filters['status'] === 'follow_up')>Follow Up Semula</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Tarikh Status</label>
+                    <select id="date-mode-select" name="date_mode"
+                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-44 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value="all"    @selected($filters['date_mode'] === 'all')>Semua masa</option>
+                        <option value="today"  @selected($filters['date_mode'] === 'today')>Hari ini</option>
+                        <option value="minggu" @selected($filters['date_mode'] === 'minggu')>Minggu ini</option>
+                        <option value="bulan"  @selected($filters['date_mode'] === 'bulan')>Bulan ini</option>
+                        <option value="custom" @selected($filters['date_mode'] === 'custom')>Tarikh tertentu</option>
+                    </select>
+                </div>
+
+                <a href="{{ route('admin.laporan') }}" class="text-sm font-medium text-slate-500 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Reset</a>
+
+                <div class="flex flex-col justify-end">
+                    <span class="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg font-medium whitespace-nowrap">{{ $report['label'] }}</span>
+                </div>
+            </div>
         </div>
 
-        <div class="flex flex-wrap gap-3 items-end">
+        <!-- Custom date range row (shown only when Tarikh tertentu selected) -->
+        <div id="custom-date-range" class="{{ $filters['date_mode'] !== 'custom' ? 'hidden' : '' }} flex flex-wrap gap-3 items-end border-t border-slate-100 pt-3">
             <div class="flex flex-col gap-1">
-                <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sektor</label>
-                <select name="sektor" onchange="this.form.submit()"
-                        class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
-                    <option value="all" @selected($filters['sektor'] === 'all')>Semua sektor</option>
-                    <option value="kerajaan" @selected($filters['sektor'] === 'kerajaan')>Kerajaan</option>
-                    <option value="glc" @selected($filters['sektor'] === 'glc')>GLC</option>
-                    <option value="berkanun" @selected($filters['sektor'] === 'berkanun')>Badan Berkanun</option>
-                    <option value="swasta" @selected($filters['sektor'] === 'swasta')>Swasta</option>
-                </select>
+                <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Dari</label>
+                <input type="date" name="date_from" value="{{ $filters['date_from'] }}"
+                       class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
             </div>
-
             <div class="flex flex-col gap-1">
-                <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status Pipeline</label>
-                <select name="status" onchange="this.form.submit()"
-                        class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-52 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
-                    <option value="all" @selected($filters['status'] === 'all')>Semua status</option>
-                    <option value="new_lead" @selected($filters['status'] === 'new_lead')>New Lead</option>
-                    <option value="dokumen_belum_lengkap" @selected($filters['status'] === 'dokumen_belum_lengkap')>Dokumen Belum Lengkap</option>
-                    <option value="dokumen_lengkap" @selected($filters['status'] === 'dokumen_lengkap')>Dokumen Lengkap</option>
-                    <option value="dalam_semakan" @selected($filters['status'] === 'dalam_semakan')>Dalam Semakan</option>
-                    <option value="layak" @selected($filters['status'] === 'layak')>Layak</option>
-                    <option value="tidak_layak" @selected($filters['status'] === 'tidak_layak')>Tidak Layak</option>
-                    <option value="submit_bank" @selected($filters['status'] === 'submit_bank')>Submit Bank/Koperasi</option>
-                    <option value="approved" @selected($filters['status'] === 'approved')>Approved</option>
-                    <option value="rejected" @selected($filters['status'] === 'rejected')>Rejected</option>
-                    <option value="disbursed" @selected($filters['status'] === 'disbursed')>Disbursed</option>
-                    <option value="closed" @selected($filters['status'] === 'closed')>Closed</option>
-                    <option value="follow_up" @selected($filters['status'] === 'follow_up')>Follow Up Semula</option>
-                </select>
+                <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Hingga</label>
+                <input type="date" name="date_to" value="{{ $filters['date_to'] }}"
+                       class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
             </div>
-
-            <a href="{{ route('admin.laporan') }}" class="text-sm font-medium text-slate-500 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Reset</a>
-
-            <div class="flex flex-col justify-end">
-                <span id="report-range" class="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg font-medium whitespace-nowrap">{{ $report['label'] }}</span>
-            </div>
+            <button type="submit"
+                    class="text-sm font-semibold text-white bg-navy px-4 py-1.5 rounded-lg hover:bg-navy/90 transition">Guna</button>
         </div>
     </form>
 </div>
@@ -82,9 +111,19 @@
 
 <!-- Monthly trend -->
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-5">
-    <h3 class="font-semibold text-slate-800 text-sm mb-1">Trend Bulanan</h3>
-    <p class="text-xs text-slate-400 mb-6">Jumlah permohonan diterima setiap bulan</p>
-    <div id="monthly-bars" class="h-36 flex items-end gap-2"></div>
+    <div class="flex items-start justify-between mb-1">
+        <div>
+            <h3 class="font-semibold text-slate-800 text-sm">Trend Bulanan</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Jumlah permohonan diterima setiap bulan (berdasarkan tarikh hantar)</p>
+        </div>
+        <select id="tahun-select"
+                class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+            @foreach($availableYears as $year)
+                <option value="{{ $year }}" @selected($filters['tahun'] === $year)>{{ $year }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div id="monthly-bars" class="h-36 flex items-end gap-2 mt-6"></div>
 </div>
 
 <!-- Breakdown by sector + status -->
@@ -106,7 +145,6 @@
 </div>
 
 <script>
-// Single server-computed dataset for the current filter combination (OR logic).
 const REPORT = @json($report);
 
 const SECTORS = [
@@ -123,10 +161,6 @@ const PIPELINE_STATUSES = [
     { key: 'layak',                 name: 'Layak',                color: 'bg-emerald-400' },
     { key: 'tidak_layak',           name: 'Tidak Layak',          color: 'bg-red-400' },
     { key: 'submit_bank',           name: 'Submit Bank/Koperasi', color: 'bg-purple-500' },
-    { key: 'approved',              name: 'Approved',             color: 'bg-emerald-600' },
-    { key: 'rejected',              name: 'Rejected',             color: 'bg-red-600' },
-    { key: 'disbursed',             name: 'Disbursed',            color: 'bg-green-600' },
-    { key: 'closed',                name: 'Closed',               color: 'bg-slate-500' },
     { key: 'follow_up',             name: 'Follow Up Semula',     color: 'bg-orange-400' },
 ];
 const MONTHS = ['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov','Dis'];
@@ -134,8 +168,8 @@ const MONTHS = ['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov
 const pct = (n, total) => total ? Math.round(n / total * 100) : 0;
 const fmt = (n) => n.toLocaleString('en-US');
 
-function barRow(name, count, percent, color, dimmed) {
-    return `<div class="${dimmed ? 'opacity-25' : ''} transition-opacity duration-300">
+function barRow(name, count, percent, color) {
+    return `<div>
         <div class="flex justify-between text-xs text-slate-600 mb-1.5">
             <span class="font-medium">${name}</span>
             <span class="text-slate-400">${fmt(count)} (${percent}%)</span>
@@ -149,23 +183,19 @@ function barRow(name, count, percent, color, dimmed) {
 function renderReport() {
     const d = REPORT;
 
-    // Summary cards
     document.getElementById('sum-total').textContent    = fmt(d.total);
     document.getElementById('sum-rate').textContent     = d.rate + '%';
     document.getElementById('sum-kerajaan').textContent = fmt(d.sectors.kerajaan);
     document.getElementById('sum-swasta').textContent   = fmt(d.sectors.swasta);
 
-    // Sector breakdown (real filtered counts)
     document.getElementById('sector-bars').innerHTML = SECTORS
-        .map(s => barRow(s.name, d.sectors[s.key], pct(d.sectors[s.key], d.total), s.color, false))
+        .map(s => barRow(s.name, d.sectors[s.key], pct(d.sectors[s.key], d.total), s.color))
         .join('');
 
-    // Pipeline status breakdown (real filtered counts)
     document.getElementById('status-bars').innerHTML = PIPELINE_STATUSES
-        .map(s => barRow(s.name, d.pipeline[s.key], pct(d.pipeline[s.key], d.total), s.color, false))
+        .map(s => barRow(s.name, d.pipeline[s.key], pct(d.pipeline[s.key], d.total), s.color))
         .join('');
 
-    // Monthly trend
     const max = Math.max(...d.monthly, 1);
     document.getElementById('monthly-bars').innerHTML = d.monthly.map((v, i) => {
         const h = v === 0 ? 4 : Math.round(v / max * 118) + 8;
@@ -178,7 +208,26 @@ function renderReport() {
     }).join('');
 }
 
-document.addEventListener('DOMContentLoaded', renderReport);
+document.addEventListener('DOMContentLoaded', function () {
+    renderReport();
+
+    const dateModeSelect = document.getElementById('date-mode-select');
+    const customRange    = document.getElementById('custom-date-range');
+
+    dateModeSelect.addEventListener('change', function () {
+        if (this.value === 'custom') {
+            customRange.classList.remove('hidden');
+        } else {
+            customRange.classList.add('hidden');
+            this.form.submit();
+        }
+    });
+
+    document.getElementById('tahun-select').addEventListener('change', function () {
+        document.getElementById('tahun-input').value = this.value;
+        document.getElementById('filter-form').submit();
+    });
+});
 </script>
 
 @endsection

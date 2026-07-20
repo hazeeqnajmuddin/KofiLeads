@@ -16,6 +16,17 @@ class StoreLeadRequest extends FormRequest
     }
 
     /**
+     * Prepend +60 to the phone number and strip non-digits from the user's input.
+     */
+    protected function prepareForValidation(): void
+    {
+        $digits = preg_replace('/\D/', '', $this->no_telefon ?? '');
+        // Drop leading 60 if user typed it themselves
+        $digits = preg_replace('/^60/', '', $digits);
+        $this->merge(['no_telefon' => '+60'.$digits]);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function rules(): array
@@ -25,7 +36,7 @@ class StoreLeadRequest extends FormRequest
         return [
             // Personal
             'nama' => ['required', 'string', 'max:255'],
-            'no_telefon' => ['required', 'string', 'max:20'],
+            'no_telefon' => ['required', 'string', 'regex:/^\+60\d{7,11}$/'],
             'emel' => ['nullable', 'email', 'max:255'],
             'daerah' => ['required', 'string', 'max:100'],
             'poskod' => ['required', 'string', 'max:5'],
@@ -71,6 +82,7 @@ class StoreLeadRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'no_telefon.regex' => 'Nombor telefon tidak sah. Sila masukkan 7–11 digit sahaja.',
             'consent_pdpa.accepted' => 'Persetujuan Notis Perlindungan Data Peribadi diperlukan.',
             'consent_contact.accepted' => 'Persetujuan untuk dihubungi diperlukan.',
             'slip_gaji.size' => 'Sila muat naik slip gaji untuk 3 bulan.',

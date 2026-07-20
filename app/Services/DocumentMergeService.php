@@ -137,13 +137,33 @@ class DocumentMergeService
             return $env;
         }
 
-        foreach (['/opt/homebrew/bin/gs', '/usr/local/bin/gs', '/usr/bin/gs'] as $candidate) {
+        $candidates = [
+            '/opt/homebrew/bin/gs',
+            '/usr/local/bin/gs',
+            '/usr/bin/gs',
+        ];
+
+        // Windows: scan common Ghostscript install dirs for gswin64c.exe / gswin32c.exe
+        if (PHP_OS_FAMILY === 'Windows') {
+            foreach (['C:/Program Files/gs', 'C:/Program Files (x86)/gs'] as $base) {
+                if (is_dir($base)) {
+                    foreach (array_reverse(glob($base.'/gs*/bin/gswin64c.exe') ?: []) as $w) {
+                        $candidates[] = $w;
+                    }
+                    foreach (array_reverse(glob($base.'/gs*/bin/gswin32c.exe') ?: []) as $w) {
+                        $candidates[] = $w;
+                    }
+                }
+            }
+        }
+
+        foreach ($candidates as $candidate) {
             if (is_executable($candidate)) {
                 return $candidate;
             }
         }
 
-        return 'gs';
+        return PHP_OS_FAMILY === 'Windows' ? 'gswin64c' : 'gs';
     }
 
     /**

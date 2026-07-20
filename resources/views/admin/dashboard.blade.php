@@ -38,7 +38,7 @@
                 <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
         </div>
-        <p class="text-3xl font-bold text-emerald-600">{{ $stats['approved'] }}</p>
+        <p class="text-3xl font-bold text-emerald-600">{{ $stats['layak'] }}</p>
         <p class="text-xs text-slate-400 mt-1">Berjaya diproses</p>
     </div>
 
@@ -49,7 +49,7 @@
                 <svg class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
         </div>
-        <p class="text-3xl font-bold text-red-600">{{ $stats['rejected'] }}</p>
+        <p class="text-3xl font-bold text-red-600">{{ $stats['tidak_layak'] }}</p>
         <p class="text-xs text-slate-400 mt-1">Tidak layak</p>
     </div>
 
@@ -117,10 +117,6 @@
         'layak'                 => ['label' => 'Layak',                 'cls' => 'bg-emerald-100 text-emerald-800 border-emerald-300'],
         'tidak_layak'           => ['label' => 'Tidak Layak',           'cls' => 'bg-red-100 text-red-800 border-red-300'],
         'submit_bank'           => ['label' => 'Submit Bank/Koperasi',  'cls' => 'bg-purple-100 text-purple-800 border-purple-300'],
-        'approved'              => ['label' => 'Approved',              'cls' => 'bg-emerald-200 text-emerald-900 border-emerald-400'],
-        'rejected'              => ['label' => 'Rejected',              'cls' => 'bg-red-200 text-red-900 border-red-400'],
-        'disbursed'             => ['label' => 'Disbursed',             'cls' => 'bg-green-200 text-green-900 border-green-400'],
-        'closed'                => ['label' => 'Closed',                'cls' => 'bg-slate-200 text-slate-700 border-slate-400'],
         'follow_up'             => ['label' => 'Follow Up Semula',      'cls' => 'bg-orange-100 text-orange-800 border-orange-300'],
     ];
     @endphp
@@ -207,17 +203,6 @@
             <p class="text-xs text-slate-400 mt-1">telah disahkan layak</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-emerald-300 shadow-sm p-5 border-l-4 border-l-emerald-600">
-            <p class="text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mb-3">Approved</p>
-            <p class="text-3xl font-bold text-emerald-700">{{ $summary['approved'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">bank/koperasi lulus</p>
-        </div>
-
-        <div class="bg-white rounded-xl border border-green-300 shadow-sm p-5 border-l-4 border-l-green-600">
-            <p class="text-[10px] font-semibold text-green-700 uppercase tracking-wider mb-3">Disbursed</p>
-            <p class="text-3xl font-bold text-green-700">{{ $summary['disbursed'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">wang telah disalurkan</p>
-        </div>
 
     </div>
 </div>
