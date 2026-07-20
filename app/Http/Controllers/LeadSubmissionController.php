@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLeadRequest;
 use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
+use App\Models\LeadPlatform;
 use App\Services\DocumentMergeService;
 use App\Services\WhatsappMessageBuilder;
 use Illuminate\Contracts\View\View;
@@ -43,6 +44,9 @@ class LeadSubmissionController extends Controller
                 'jawatan' => $data['jawatan'],
                 'gaji_asas' => $data['gaji_asas'],
                 'status_pekerjaan' => $data['status_pekerjaan'],
+                'kod_rujukan' => $data['kod_rujukan'] ?? null,
+                'apply_pinjaman_3bulan' => $request->boolean('apply_pinjaman_3bulan'),
+                'bank_koperasi_nama' => $request->boolean('apply_pinjaman_3bulan') ? ($data['bank_koperasi_nama'] ?? null) : null,
                 'pipeline_status' => 'new_lead',
                 'consent_pdpa' => $request->boolean('consent_pdpa'),
                 'consent_pdpa_at' => $request->boolean('consent_pdpa') ? now() : null,
@@ -60,6 +64,17 @@ class LeadSubmissionController extends Controller
                     'lead_id' => $lead->id,
                     'masalah' => $masalah,
                     'keterangan' => $masalah === 'lain_lain' ? ($data['masalah_lain'] ?? null) : null,
+                    'created_at' => now(),
+                ]);
+            }
+
+            // Social-media platforms (checkbox multi-select) → one row each.
+            // The "lain_lain" row carries the free-text detail.
+            foreach ($data['platform'] as $platform) {
+                LeadPlatform::create([
+                    'lead_id' => $lead->id,
+                    'platform' => $platform,
+                    'keterangan' => $platform === 'lain_lain' ? ($data['platform_lain'] ?? null) : null,
                     'created_at' => now(),
                 ]);
             }

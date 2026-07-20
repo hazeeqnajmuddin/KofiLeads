@@ -635,6 +635,39 @@
                                     <input type="text" id="poskod" name="poskod" value="{{ old('poskod') }}" placeholder="Contoh: 47810" maxlength="5" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                             </div>
+
+                            {{-- Reference code (optional) — code announced by the live host --}}
+                            <div>
+                                <label for="kod_rujukan" class="block text-xs font-semibold text-slate-600 mb-1.5">Kod Rujukan <span class="text-slate-400 font-normal">(Pilihan)</span></label>
+                                <input type="text" id="kod_rujukan" name="kod_rujukan" value="{{ old('kod_rujukan') }}" maxlength="50"
+                                       placeholder="Kod yang diberikan semasa live (jika ada)"
+                                       class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
+                            </div>
+
+                            {{-- Social media platform (required multi-select; options are admin-editable) --}}
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-2">Di mana anda mengetahui tentang kami? <span class="text-rose-500">*</span> <span class="text-slate-400 font-normal">(Boleh pilih lebih dari satu)</span></label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    @foreach(\App\Models\LeadPlatform::options() as $val => $label)
+                                    <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 hover:border-gold cursor-pointer text-sm text-slate-600 transition has-[:checked]:border-gold has-[:checked]:bg-gold-light">
+                                        <input type="checkbox" name="platform[]" value="{{ $val }}" class="accent-navy flex-shrink-0" @checked(in_array($val, old('platform', []))) > {{ $label }}
+                                    </label>
+                                    @endforeach
+                                    <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 hover:border-gold cursor-pointer text-sm text-slate-600 transition col-span-2 has-[:checked]:border-gold has-[:checked]:bg-gold-light">
+                                        <input type="checkbox" id="platform_lain_check" name="platform[]" value="lain_lain" class="accent-navy flex-shrink-0" @checked(in_array('lain_lain', old('platform', []))) > Lain-lain
+                                    </label>
+                                </div>
+                                @error('platform')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
+
+                                {{-- Others free-text: shown only when "Lain-lain" is ticked --}}
+                                <div id="platform_lain_wrap" class="hidden mt-3">
+                                    <label for="platform_lain" class="block text-xs font-semibold text-slate-600 mb-1.5">Nyatakan platform <span class="text-rose-500">*</span></label>
+                                    <input type="text" id="platform_lain" name="platform_lain" value="{{ old('platform_lain') }}" maxlength="100"
+                                           placeholder="Contoh: X (Twitter), YouTube"
+                                           class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
+                                    @error('platform_lain')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
 
@@ -713,6 +746,29 @@
                                            class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
                                     <p class="text-[10px] text-slate-400 mt-1 text-right"><span id="masalah_lain_count">0</span>/100 aksara</p>
                                     @error('masalah_lain')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
+
+                            {{-- Applied for a bank/koperasi loan in the last 3 months (required Ya/Tidak) --}}
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-2">Adakah anda telah memohon pinjaman daripada bank/koperasi dalam 3 bulan lepas? <span class="text-rose-500">*</span></label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 hover:border-gold cursor-pointer text-sm text-slate-600 transition has-[:checked]:border-gold has-[:checked]:bg-gold-light">
+                                        <input type="radio" name="apply_pinjaman_3bulan" value="1" class="accent-navy flex-shrink-0" @checked(old('apply_pinjaman_3bulan') === '1') required> Ya
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 hover:border-gold cursor-pointer text-sm text-slate-600 transition has-[:checked]:border-gold has-[:checked]:bg-gold-light">
+                                        <input type="radio" name="apply_pinjaman_3bulan" value="0" class="accent-navy flex-shrink-0" @checked(old('apply_pinjaman_3bulan') === '0')> Tidak
+                                    </label>
+                                </div>
+                                @error('apply_pinjaman_3bulan')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
+
+                                {{-- Institution name: shown only when "Ya" is selected --}}
+                                <div id="bank_koperasi_wrap" class="hidden mt-3">
+                                    <label for="bank_koperasi_nama" class="block text-xs font-semibold text-slate-600 mb-1.5">Nama bank / koperasi <span class="text-rose-500">*</span></label>
+                                    <input type="text" id="bank_koperasi_nama" name="bank_koperasi_nama" value="{{ old('bank_koperasi_nama') }}" maxlength="255"
+                                           placeholder="Contoh: Bank Rakyat, Koperasi ..."
+                                           class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition">
+                                    @error('bank_koperasi_nama')<p class="text-[11px] text-rose-500 mt-1">{{ $message }}</p>@enderror
                                 </div>
                             </div>
                         </div>
@@ -1017,6 +1073,49 @@
             // Restore state on validation redirect (old input present).
             if (input.value) { count.textContent = input.value.length; }
             if (check.checked) { toggle(); }
+        })();
+
+        // Show the platform "Lain-lain" free-text box only when that checkbox is ticked.
+        (function () {
+            var check = document.getElementById('platform_lain_check');
+            var wrap  = document.getElementById('platform_lain_wrap');
+            var input = document.getElementById('platform_lain');
+            if (!check) return;
+
+            function toggle() {
+                if (check.checked) {
+                    wrap.classList.remove('hidden');
+                    input.required = true;
+                } else {
+                    wrap.classList.add('hidden');
+                    input.required = false;
+                    input.value = '';
+                }
+            }
+            check.addEventListener('change', toggle);
+            if (check.checked) { toggle(); }
+        })();
+
+        // Show the bank/koperasi name field only when "Ya" is selected.
+        (function () {
+            var wrap  = document.getElementById('bank_koperasi_wrap');
+            var input = document.getElementById('bank_koperasi_nama');
+            var radios = document.querySelectorAll('input[name="apply_pinjaman_3bulan"]');
+            if (!radios.length) return;
+
+            function toggle() {
+                var yes = document.querySelector('input[name="apply_pinjaman_3bulan"]:checked');
+                if (yes && yes.value === '1') {
+                    wrap.classList.remove('hidden');
+                    input.required = true;
+                } else {
+                    wrap.classList.add('hidden');
+                    input.required = false;
+                    input.value = '';
+                }
+            }
+            radios.forEach(function (r) { r.addEventListener('change', toggle); });
+            toggle();
         })();
 
         // Client-side file-size warning (server enforces 5 MB — mirror it here).

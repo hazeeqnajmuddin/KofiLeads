@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\LeadPlatform;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -41,12 +42,30 @@ class StoreLeadRequest extends FormRequest
             'daerah' => ['required', 'string', 'max:100'],
             'poskod' => ['required', 'string', 'max:5'],
 
+            // Reference code (optional — typed by the applicant, announced by the live host)
+            'kod_rujukan' => ['nullable', 'string', 'max:50'],
+
+            // Social-media platform(s) — required multi-select from admin-editable options
+            'platform' => ['required', 'array', 'min:1'],
+            'platform.*' => [Rule::in(LeadPlatform::allowedValues())],
+            'platform_lain' => [
+                Rule::requiredIf(fn () => in_array('lain_lain', (array) $this->input('platform', []), true)),
+                'nullable', 'string', 'max:100',
+            ],
+
             // Employment
             'sektor' => ['required', Rule::in(['kerajaan', 'glc', 'berkanun', 'swasta'])],
             'nama_majikan' => ['required', 'string', 'max:255'],
             'jawatan' => ['required', 'string', 'max:255'],
             'gaji_asas' => ['required', 'numeric', 'min:0'],
             'status_pekerjaan' => ['required', Rule::in(['tetap', 'kontrak'])],
+
+            // Applied for a bank/koperasi loan in the last 3 months (Ya/Tidak + name if Ya)
+            'apply_pinjaman_3bulan' => ['required', 'boolean'],
+            'bank_koperasi_nama' => [
+                Rule::requiredIf(fn () => $this->boolean('apply_pinjaman_3bulan')),
+                'nullable', 'string', 'max:255',
+            ],
 
             // Issues (multi-select)
             'masalah' => ['required', 'array', 'min:1'],
@@ -83,6 +102,11 @@ class StoreLeadRequest extends FormRequest
     {
         return [
             'no_telefon.regex' => 'Nombor telefon tidak sah. Sila masukkan 7–11 digit sahaja.',
+            'platform.required' => 'Sila pilih sekurang-kurangnya satu platform media sosial.',
+            'platform.min' => 'Sila pilih sekurang-kurangnya satu platform media sosial.',
+            'platform_lain.required' => 'Sila nyatakan platform apabila memilih "Lain-lain".',
+            'apply_pinjaman_3bulan.required' => 'Sila pilih Ya atau Tidak untuk permohonan pinjaman.',
+            'bank_koperasi_nama.required' => 'Sila nyatakan nama bank atau koperasi.',
             'consent_pdpa.accepted' => 'Persetujuan Notis Perlindungan Data Peribadi diperlukan.',
             'consent_contact.accepted' => 'Persetujuan untuk dihubungi diperlukan.',
             'slip_gaji.size' => 'Sila muat naik slip gaji untuk 3 bulan.',

@@ -40,6 +40,9 @@ class Lead extends Model
         'jawatan',
         'gaji_asas',
         'status_pekerjaan',
+        'kod_rujukan',
+        'apply_pinjaman_3bulan',
+        'bank_koperasi_nama',
         'pipeline_status',
         'consent_pdpa',
         'consent_pdpa_at',
@@ -64,6 +67,7 @@ class Lead extends Model
     {
         return [
             'gaji_asas' => 'decimal:2',
+            'apply_pinjaman_3bulan' => 'boolean',
             'consent_pdpa' => 'boolean',
             'consent_pdpa_at' => 'datetime',
             'consent_contact' => 'boolean',
@@ -88,6 +92,14 @@ class Lead extends Model
     public function masalah(): HasMany
     {
         return $this->hasMany(LeadMasalah::class);
+    }
+
+    /**
+     * Social-media platforms the applicant found us on (checkbox multi-select).
+     */
+    public function platforms(): HasMany
+    {
+        return $this->hasMany(LeadPlatform::class);
     }
 
     /**

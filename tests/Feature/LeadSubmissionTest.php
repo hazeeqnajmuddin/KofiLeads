@@ -23,6 +23,8 @@ function validLeadPayload(array $overrides = []): array
         'gaji_asas' => 4500,
         'status_pekerjaan' => 'tetap',
         'masalah' => ['komitmen_tinggi', 'ccris'],
+        'platform' => ['facebook', 'instagram'],
+        'apply_pinjaman_3bulan' => '0',
         'slip_gaji' => [
             UploadedFile::fake()->create('slip1.pdf', 100, 'application/pdf'),
             UploadedFile::fake()->create('slip2.pdf', 100, 'application/pdf'),
@@ -110,6 +112,38 @@ it('stores the free-text detail on the lain_lain issue row', function () {
     expect($lain->keterangan)->toBe('Sedang dalam proses penjadualan semula');
     // Non-lain_lain rows carry no keterangan.
     expect(LeadMasalah::where('masalah', 'ccris')->first()->keterangan)->toBeNull();
+});
+
+it('stores reference code, platforms and bank/koperasi answer', function () {
+    Storage::fake('local');
+
+    $this->post('/leads', validLeadPayload([
+        'kod_rujukan' => 'LIVE20',
+        'platform' => ['facebook', 'lain_lain'],
+        'platform_lain' => 'YouTube',
+        'apply_pinjaman_3bulan' => '1',
+        'bank_koperasi_nama' => 'Bank Rakyat',
+    ]))->assertRedirect(route('leads.thankyou'));
+
+    $lead = Lead::first();
+    expect($lead->kod_rujukan)->toBe('LIVE20')
+        ->and($lead->apply_pinjaman_3bulan)->toBeTrue()
+        ->and($lead->bank_koperasi_nama)->toBe('Bank Rakyat')
+        ->and($lead->platforms->pluck('platform')->all())->toEqualCanonicalizing(['facebook', 'lain_lain']);
+
+    expect($lead->platforms->firstWhere('platform', 'lain_lain')->keterangan)->toBe('YouTube');
+});
+
+it('requires at least one platform and a bank name when applied', function () {
+    Storage::fake('local');
+
+    // Missing platform.
+    $this->post('/leads', array_diff_key(validLeadPayload(), ['platform' => null]))
+        ->assertSessionHasErrors('platform');
+
+    // Said "Ya" but no institution name.
+    $this->post('/leads', validLeadPayload(['apply_pinjaman_3bulan' => '1']))
+        ->assertSessionHasErrors('bank_koperasi_nama');
 });
 
 it('requires the free-text detail when lain_lain is ticked', function () {

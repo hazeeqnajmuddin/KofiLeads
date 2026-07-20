@@ -586,3 +586,44 @@ This works fully on one MacBook because the browser, WhatsApp, and the Laravel s
 - **Process safety:** invoke `gs` via `Symfony\Process` with array args; validate exit code; clean up temp parts.
 - **Failure isolation:** merge runs after commit and never blocks lead capture.
 - **Cloud API upgrade path:** if the consultancy later wants the PDF delivered *in* the chat automatically (no user tap, real attachment), switch handoff to the WhatsApp Cloud API (Meta business verification, WhatsApp Business Account, approved templates) — the merge/storage layer stays as-is.
+
+---
+
+## 11. Phase 10 — Client change request: 3 new intake fields
+
+**Status: Slice A (form + database) IN PROGRESS; Slice B (admin managers + filters) PLANNED.** Client asked for 3 new fields on the landing form, persisted to the DB. Confirmed with the user; this section is the spec.
+
+### 11a. The three fields
+
+| # | Field | Type | Required | Storage |
+|---|---|---|---|---|
+| 1 | **Kod Rujukan** (reference code, live-session attribution) | user-typed text, short/memorable | optional | `leads.kod_rujukan` (string, nullable) |
+| 2 | **Platform Sosial** (where they found us) | multi-select, admin-editable options + "Lain-lain" free text | required (≥1) | `lead_platform` child table (`lead_id`, `platform`, `keterangan`) |
+| 3 | **Pinjaman bank/koperasi 3 bulan lepas** | Ya/Tidak + institution name | required (name required when Ya) | `leads.apply_pinjaman_3bulan` (bool) + `leads.bank_koperasi_nama` (string, nullable) |
+
+**Field 1 — reference code:** the applicant *types* a short code the live host announced. Admin generates/announces these codes (Slice B: a "Kod Rujukan" manager in Tetapan Laman with an "active" code per live). Stored as a free string on the lead; matched to the admin registry for reporting. Optional on the form.
+
+**Field 2 — social platform:** multi-select checkboxes (like Masalah Utama). Options are admin-editable (Slice B: editor in Tetapan Laman); for Slice A they come from the `social_platforms` setting (seeded `Facebook, TikTok, Instagram`). A "Lain-lain" checkbox reveals a free-text box (stored as `keterangan` on the `lain_lain` row, mirroring `lead_masalah`). Required (min 1).
+
+**Field 3 — bank/koperasi:** "Adakah anda telah memohon pinjaman daripada bank/koperasi dalam 3 bulan lepas?" — Ya/Tidak radio (required); when Ya, the institution name text is required (reuses the conditional-toggle pattern).
+
+### 11b. Slice A — form + database (this increment)
+
+- **Migrations (all additive — safe `php artisan migrate`, no data loss):**
+  - `add_client_fields_to_leads`: `kod_rujukan`, `apply_pinjaman_3bulan`, `bank_koperasi_nama` (all nullable).
+  - `create_lead_platform_table`: `lead_id` FK cascade, `platform`, `keterangan` nullable, `created_at`.
+- **Models:** `LeadPlatform` (+ `Lead::platforms()` hasMany); `Lead` fillable/casts for the new columns. `LeadPlatform::options()` reads the `social_platforms` setting → `[slug => label]`; `allowedValues()` adds `lain_lain`.
+- **Seeder:** `social_platforms` setting default `Facebook,TikTok,Instagram`.
+- **`StoreLeadRequest`:** `kod_rujukan` nullable string; `platform` required array min:1 with each in `LeadPlatform::allowedValues()`; `platform_lain` required_if `lain_lain` selected; `apply_pinjaman_3bulan` required boolean; `bank_koperasi_nama` required_if Ya. BM messages.
+- **`landing.blade.php`:** reference code (Maklumat Peribadi), platform multi-select + Lain-lain toggle (Maklumat Peribadi), bank Ya/Tidak + conditional name (Maklumat Pekerjaan). `old()` repop + vanilla JS toggles (mirror the masalah `lain_lain` pattern).
+- **`LeadSubmissionController`:** save the 3 lead columns + write `lead_platform` rows (with `keterangan` for `lain_lain`).
+- **Factory/seeder + Pest tests.**
+
+### 11c. Slice B — admin managers + filters (next increment, NOT in Slice A)
+
+- `reference_codes` table (`host_name`, `code` unique, `is_active`) + **Kod Rujukan manager** in Tetapan Laman (generate code per live host, set active, history).
+- **Editable social-platform options** UI in Tetapan Laman (low-code list editor).
+- **Laporan:** filter by reference code / host; filter by social platform (+ optional breakdown panels).
+- **Permohonan:** filter by bank/koperasi Ya/Tidak; show the 3 new fields in the detail modal; optional reference-code column.
+- **WhatsApp tokens:** `{kod_rujukan}`, `{platform_sosial}`, `{bank_koperasi}` added to the editable template chips.
+
