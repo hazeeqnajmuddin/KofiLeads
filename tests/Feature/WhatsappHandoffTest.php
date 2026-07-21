@@ -3,12 +3,17 @@
 use App\Models\Lead;
 use App\Models\LeadMasalah;
 use App\Models\Setting;
+use App\Models\User;
 use App\Services\WhatsappMessageBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->actingAs(User::factory()->create());
+});
 
 it('renders the template, substituting known tokens and leaving unknown ones', function () {
     $lead = Lead::factory()->create(['nama' => 'Ali bin Ahmad', 'sektor' => 'swasta']);

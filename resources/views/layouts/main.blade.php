@@ -32,5 +32,28 @@
     <!-- Include Footer Partial -->
     @include('partials.footer')
 
+<script>
+/* Public-site browser hardening — mild deterrents against casual inspection. */
+(function () {
+    /* Disable right-click context menu. */
+    document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+    /* Block common DevTools keyboard shortcuts. */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12') { e.preventDefault(); return false; }
+        if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) { e.preventDefault(); return false; }
+        if (e.ctrlKey && e.key === 'U') { e.preventDefault(); return false; }
+    });
+
+    /* Suppress console output and clear periodically. */
+    if (window.console) {
+        var noop = function () {};
+        ['log', 'debug', 'info', 'warn', 'error', 'group', 'groupEnd', 'table', 'dir'].forEach(function (m) {
+            try { console[m] = noop; } catch (_) {}
+        });
+    }
+    setInterval(function () { try { console.clear(); } catch (_) {} }, 1000);
+})();
+</script>
 </body>
 </html>

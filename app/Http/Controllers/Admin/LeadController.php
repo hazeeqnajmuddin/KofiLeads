@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateLeadStatusRequest;
 use App\Models\Lead;
 use App\Models\PipelineLog;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,8 +70,7 @@ class LeadController extends Controller
                 'status_lama' => $old,
                 'status_baru' => $new,
                 'catatan' => $request->validated('catatan'),
-                // temp until Phase 3 auth: attribute to the seeded admin (first user)
-                'changed_by' => User::query()->value('id'),
+                'changed_by' => auth()->id(),
                 'created_at' => now(),
             ]);
         });

@@ -10,11 +10,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class DokumenController extends Controller
 {
     /**
-     * Stream an uploaded document from the private disk.
-     *
-     * NOTE: not auth-gated yet — the whole /admin/* area is open during the
-     * no-auth phase (Phase 3 deferred). Files still live on the private disk
-     * and are only reachable through this controller, never a public URL.
+     * Stream an uploaded document from the private disk (auth-gated via route middleware).
      */
     public function download(Dokumen $dokumen): StreamedResponse
     {

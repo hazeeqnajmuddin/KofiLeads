@@ -1,9 +1,14 @@
 <?php
 
 use App\Models\Lead;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->actingAs(User::factory()->create());
+});
 
 it('computes dashboard stats from real leads', function () {
     Lead::factory()->count(3)->create(['pipeline_status' => 'new_lead', 'submitted_at' => now()]);

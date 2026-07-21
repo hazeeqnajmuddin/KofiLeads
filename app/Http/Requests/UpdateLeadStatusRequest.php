@@ -8,9 +8,6 @@ use Illuminate\Validation\Rule;
 
 class UpdateLeadStatusRequest extends FormRequest
 {
-    /**
-     * Admin panel is open during the no-auth phase (Phase 3 deferred).
-     */
     public function authorize(): bool
     {
         return true;

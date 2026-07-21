@@ -15,9 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Preset admin account — credentials visible here for initial setup only.
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@rahmahconsultancy.com',
+            'password' => 'Admin@1234',
         ]);
 
         $this->call([

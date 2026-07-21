@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Storage;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    // Seeded admin the no-auth phase attributes pipeline changes to.
-    User::factory()->create(['name' => 'Admin Satu']);
+    // Create the admin user and act as them for every admin-panel test.
+    $admin = User::factory()->create(['name' => 'Admin Satu']);
+    $this->actingAs($admin);
 });
 
 it('lists real leads on the permohonan page', function () {
