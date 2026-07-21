@@ -626,4 +626,3 @@ This works fully on one MacBook because the browser, WhatsApp, and the Laravel s
 - **Laporan:** filter by reference code / host; filter by social platform (+ optional breakdown panels).
 - **Permohonan:** filter by bank/koperasi Ya/Tidak; show the 3 new fields in the detail modal; optional reference-code column.
 - **WhatsApp tokens:** `{kod_rujukan}`, `{platform_sosial}`, `{bank_koperasi}` added to the editable template chips.
-
