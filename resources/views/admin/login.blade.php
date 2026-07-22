@@ -26,18 +26,20 @@
     {{-- Card --}}
     <div class="relative w-full max-w-md">
 
-        {{-- Logo + heading --}}
-        <div class="text-center mb-8">
-            <div class="mx-auto mb-5 inline-flex items-center justify-center rounded-2xl bg-white p-4 shadow-sm ring-1 ring-white/70">
-                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services"
-                     class="h-14 w-auto object-contain drop-shadow-sm">
-            </div>
+        {{-- Heading --}}
+        <div class="text-center mb-6">
             <h1 class="text-white text-2xl font-bold tracking-tight">Panel Admin</h1>
             <p class="text-slate-400 text-sm mt-1">Log masuk untuk mengurus permohonan</p>
         </div>
 
         {{-- Login form card --}}
         <div class="bg-white rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+            <div class="px-8 pt-8 pb-4 bg-white">
+                <div class="mx-auto flex items-center justify-center rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+                    <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services"
+                         class="h-14 w-auto object-contain">
+                </div>
+            </div>
 
             {{-- Card top accent --}}
             <div class="h-1" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #C9A840);"></div>
