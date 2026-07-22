@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\DokumenFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Dokumen extends Model
 {
-    /** @use HasFactory<\Database\Factories\DokumenFactory> */
+    /** @use HasFactory<DokumenFactory> */
     use HasFactory;
 
     protected $table = 'dokumen';

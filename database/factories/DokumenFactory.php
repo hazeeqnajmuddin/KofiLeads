@@ -19,8 +19,8 @@ class DokumenFactory extends Factory
         return [
             'jenis' => $jenis,
             'bulan' => $jenis === 'slip_gaji' ? fake()->numberBetween(1, 3) : null,
-            'path' => 'dokumen/demo/' . fake()->uuid() . '.pdf',
-            'nama_fail' => fake()->word() . '.pdf',
+            'path' => 'dokumen/demo/'.fake()->uuid().'.pdf',
+            'nama_fail' => fake()->word().'.pdf',
             'saiz' => fake()->numberBetween(50_000, 2_000_000),
             'created_at' => now(),
         ];

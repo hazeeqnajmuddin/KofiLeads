@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MergedDocumentController extends Controller
 {
     /**
-     * Admin view of a lead's merged PDF (inside the open /admin/* area).
+     * Admin view of a lead's merged PDF (auth-gated via route middleware).
      */
     public function show(Lead $lead, DocumentMergeService $merger): StreamedResponse
     {

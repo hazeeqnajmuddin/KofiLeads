@@ -2,6 +2,7 @@
 
 use App\Models\Dokumen;
 use App\Models\Lead;
+use App\Models\User;
 use App\Services\DocumentMergeService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ beforeEach(function () {
         $this->markTestSkipped('Ghostscript (gs) not available.');
     }
     Storage::fake('local');
+    $this->actingAs(User::factory()->create());
 });
 
 /** Write a real one-page PDF onto the fake local disk and record a dokumen row. */

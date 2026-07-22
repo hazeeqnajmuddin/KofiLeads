@@ -4,10 +4,14 @@ use App\Models\Lead;
 use App\Models\LeadPlatform;
 use App\Models\ReferenceCode;
 use App\Models\Setting;
+use App\Models\User;
 use App\Services\WhatsappMessageBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+// Admin routes are auth-gated (Phase 3), so act as a logged-in user.
+beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
 /** Attach platform rows to a lead. */
 function attachPlatforms(Lead $lead, array $platforms): void

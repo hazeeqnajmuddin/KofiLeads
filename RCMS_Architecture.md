@@ -621,12 +621,14 @@ This works fully on one MacBook because the browser, WhatsApp, and the Laravel s
 
 ### 11c. Slice B — admin managers + filters — ✅ DONE
 
-- [x] `reference_codes` table (`host_name`, `code` unique, `is_active`) + `ReferenceCode` model (`scopeActive`, `activeCode()`, `generate()`).
-- [x] **Kod Rujukan manager** in Tetapan Laman (`ReferenceCodeController` + routes): enter host name → generate/enter code → auto-activate; activate switches the active one; delete; only one active at a time (enforced in a transaction).
+- [x] `reference_codes` table (`host_name`, `code` unique, `is_active`) + `ReferenceCode` model (`scopeActive`, `activeCode()`, `nextCode()`, `resolveActive()`).
+- [x] **Kod Rujukan manager** in Tetapan Laman (`ReferenceCodeController` + routes): enter host name → generate/enter code → activate. **Multiple codes may be active at once** (toggle Aktifkan/Nyahaktif); blank code auto-generates a **sequential** `RCMS01`, `RCMS02`, …
+- [x] **Verified attribution** — the landing-page `kod_rujukan` is typed (not a dropdown, so codes stay private) and validated against **active** codes **case-insensitively** (`ReferenceCode::resolveActive`); blank/unknown/inactive → null (house lead), silently. A non-null `kod_rujukan` therefore *means* verified.
 - [x] **Editable social-platform options** — `social_platforms` setting added to `UpdateSettingsRequest::EDITABLE_KEYS`; low-code editor card in Tetapan Laman.
-- [x] **Laporan — performance panels (revised).** The single-select kod_rujukan/platform filters were **dropped** in favour of two summary panels that answer "how many leads per live host / platform this period": **Prestasi Kod Rujukan** (host · code · lead count · "Lihat pemohon →" drill link) and **Prestasi Platform** (platform · lead count). Both scoped by submission date via the existing date filter. Built in `ReportController::buildPerformance()`.
-- [x] **Permohonan (revised)** — added a **`kod_rujukan` filter** + a **submission-date filter** (today/minggu/bulan/custom) so the Laporan drill-down lands on the actual leads ("who"). Bank/koperasi Ya/Tidak filter kept. Filter toolbar restructured into a uniform grid (title row + aligned control grid) for a tidy layout. The 3 new fields are shown in the detail modal (Kod Rujukan, Platform, Pinjaman 3 Bulan Lepas). No platform filter on Permohonan (per client — platform is view-only on Laporan).
+- [x] **Laporan — performance panels.** The single-select kod_rujukan/platform filters were **dropped** for two summary panels: **Prestasi Kod Rujukan** (host · code · lead count · "Lihat pemohon →" drill link) and **Prestasi Platform** (platform · lead count), both scoped by submission date. The 4 summary cards sit above them. Built in `ReportController::buildPerformance()`.
+- [x] **Permohonan** — `kod_rujukan` filter + submission-date filter (today/minggu/bulan/custom) so the Laporan drill-down lands on the actual leads; bank/koperasi Ya/Tidak filter; the 3 new fields in the detail modal; filter toolbar restructured into a tidy grid. No platform filter (platform is view-only on Laporan).
+- [x] **Tetapan Laman reorganized** into 7 labelled sections (Hero / Profil / Servis / Kelayakan / Hubungan / Borang Semakan / Integrasi WhatsApp); scroll position preserved across saves.
 - [x] **WhatsApp tokens** `{kod_rujukan}`, `{platform_sosial}`, `{bank_koperasi}` added to `WhatsappMessageBuilder` + the editable-template chips/preview.
-- [x] **Demo data** — `DemoLeadsSeeder` seeds 2 reference codes and backfills the new fields on existing leads.
-- [x] **Tests** — `tests/Feature/ClientFieldsAdminTest.php` (reference-code generate/activate/one-active, editable options, permohonan + laporan filters, WhatsApp tokens).
-
+- [x] **WhatsApp link fix** — the merged-PDF link now uses an unguessable **path token** (`leads.merged_token`, route `merged.token`) instead of a query-string signed URL, because a `?…&…` link is mangled inside WhatsApp's `text=` param (decoded once → split on `&`).
+- [x] **Demo data** — `DemoLeadsSeeder` seeds reference codes and backfills the new fields.
+- [x] **Tests** — `tests/Feature/ClientFieldsAdminTest.php` + additions to `LeadSubmissionTest`/`WhatsappHandoffTest` (multiple-active toggle, sequential codes, verified attribution, filters, panels, path-token link).
