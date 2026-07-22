@@ -28,8 +28,10 @@
 
         {{-- Logo + heading --}}
         <div class="text-center mb-8">
-            <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services"
-                 class="h-14 w-auto mx-auto mb-5 drop-shadow-lg">
+            <div class="mx-auto mb-5 inline-flex items-center justify-center rounded-2xl bg-white p-4 shadow-sm ring-1 ring-white/70">
+                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services"
+                     class="h-14 w-auto object-contain drop-shadow-sm">
+            </div>
             <h1 class="text-white text-2xl font-bold tracking-tight">Panel Admin</h1>
             <p class="text-slate-400 text-sm mt-1">Log masuk untuk mengurus permohonan</p>
         </div>
