@@ -7,6 +7,7 @@ use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
 use App\Models\LeadPlatform;
+use App\Models\ReferenceCode;
 use App\Services\DocumentMergeService;
 use App\Services\WhatsappMessageBuilder;
 use Illuminate\Contracts\View\View;
@@ -14,7 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class LeadSubmissionController extends Controller
 {
@@ -44,7 +45,9 @@ class LeadSubmissionController extends Controller
                 'jawatan' => $data['jawatan'],
                 'gaji_asas' => $data['gaji_asas'],
                 'status_pekerjaan' => $data['status_pekerjaan'],
-                'kod_rujukan' => $data['kod_rujukan'] ?? null,
+                // Verified attribution: only an ACTIVE code (any casing) is kept;
+                // blank/unknown/inactive → null (house lead), silently.
+                'kod_rujukan' => ReferenceCode::resolveActive($data['kod_rujukan'] ?? null),
                 'apply_pinjaman_3bulan' => $request->boolean('apply_pinjaman_3bulan'),
                 'bank_koperasi_nama' => $request->boolean('apply_pinjaman_3bulan') ? ($data['bank_koperasi_nama'] ?? null) : null,
                 'pipeline_status' => 'new_lead',
@@ -100,19 +103,24 @@ class LeadSubmissionController extends Controller
         // it's logged and left re-mergeable on demand from the admin panel.
         try {
             if ($path = $this->merger->merge($lead->load('dokumen'))) {
-                $lead->update(['merged_path' => $path, 'merged_at' => now()]);
+                $lead->update([
+                    'merged_path' => $path,
+                    'merged_at' => now(),
+                    'merged_token' => $lead->merged_token ?: Str::random(40),
+                ]);
             }
         } catch (\Throwable $e) {
             Log::warning("Merge failed for lead {$lead->id}: {$e->getMessage()}");
         }
 
-        // Build the WhatsApp hand-off (Phase 9, Slice 2): a signed, expiring link
-        // to the merged PDF + the lead's details, from the editable template.
-        $link = $lead->merged_path
-            ? URL::temporarySignedRoute('merged.signed', now()->addDays(3), ['lead' => $lead->id])
+        // Build the WhatsApp hand-off (Phase 9, Slice 2): a clean path-token link
+        // to the merged PDF (no query string — WhatsApp mangles URLs with "&") +
+        // the lead's details, from the editable template.
+        $link = $lead->merged_token
+            ? route('merged.token', ['token' => $lead->merged_token])
             : null;
 
-        $waUrl = $this->whatsapp->url($lead->load('masalah'), $link);
+        $waUrl = $this->whatsapp->url($lead->load(['masalah', 'platforms']), $link);
 
         // Show the "Terima Kasih" page, which offers the "Teruskan ke WhatsApp" button.
         return redirect()->route('leads.thankyou')

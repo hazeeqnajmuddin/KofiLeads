@@ -35,6 +35,7 @@ $masalahLabels = [
 
 $statusKerjaLabels = ['tetap' => 'Tetap', 'kontrak' => 'Kontrak'];
 $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'penyata_epf' => 'Penyata EPF'];
+$platformLabels = \App\Models\LeadPlatform::options();
 @endphp
 
 <!-- Filters + table card -->
@@ -42,26 +43,29 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
 
     <!-- Card header with filters (server-side GET form) -->
     <div class="px-6 py-5 border-b border-slate-100">
-        <form method="GET" action="{{ route('admin.permohonan') }}" class="flex flex-col sm:flex-row sm:items-end gap-4">
+        <form method="GET" action="{{ route('admin.permohonan') }}" class="space-y-4">
 
-            <div class="flex-1">
-                <h2 class="font-semibold text-slate-800 text-base mb-0.5">Senarai Permohonan</h2>
-                <p class="text-xs text-slate-400">Klik nama atau baris untuk lihat butiran penuh. Tukar status terus dalam lajur Pipeline.</p>
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <h2 class="font-semibold text-slate-800 text-base mb-0.5">Senarai Permohonan</h2>
+                    <p class="text-xs text-slate-400">Klik nama atau baris untuk lihat butiran penuh. Tukar status terus dalam lajur Pipeline.</p>
+                </div>
+                <span class="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg font-medium whitespace-nowrap flex-shrink-0">{{ $leads->total() }} rekod</span>
             </div>
 
-            <div class="flex flex-wrap gap-3 items-end">
+            {{-- Uniform filter grid: every control fills its cell so they align neatly --}}
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 items-end">
 
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 col-span-2 md:col-span-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Cari Nama / No. Tel</label>
-                    <input type="text" name="q" value="{{ $filters['q'] }}"
-                           placeholder="Nama atau nombor telefon..."
-                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-64 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                    <input type="text" name="q" value="{{ $filters['q'] }}" placeholder="Nama atau telefon..."
+                           class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                 </div>
 
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Status</label>
                     <select name="status" onchange="this.form.submit()"
-                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-52 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                         <option value="">Semua Status</option>
                         @foreach($pipelineConfig as $val => $cfg)
                         <option value="{{ $val }}" @selected($filters['status'] === $val)>{{ $cfg['label'] }}</option>
@@ -72,7 +76,7 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                 <div class="flex flex-col gap-1">
                     <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sektor</label>
                     <select name="sektor" onchange="this.form.submit()"
-                            class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
                         <option value="">Semua Sektor</option>
                         @foreach($sektorLabels as $val => $label)
                         <option value="{{ $val }}" @selected($filters['sektor'] === $val)>{{ $label }}</option>
@@ -80,17 +84,69 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                     </select>
                 </div>
 
-                <div class="flex items-end gap-2">
-                    <button type="submit" class="text-sm font-semibold bg-navy text-white px-4 py-1.5 rounded-lg hover:bg-navy-dark transition">Cari</button>
-                    <a href="{{ route('admin.permohonan') }}" class="text-sm font-medium text-slate-500 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Reset</a>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Kod Rujukan</label>
+                    <select name="kod_rujukan" onchange="this.form.submit()"
+                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value="">Semua Kod</option>
+                        @foreach($referenceCodes as $rc)
+                        <option value="{{ $rc->code }}" @selected($filters['kod_rujukan'] === $rc->code)>{{ $rc->code }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <div class="flex flex-col justify-end">
-                    <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg font-medium">{{ $leads->total() }} rekod</span>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Pinjaman 3 Bulan</label>
+                    <select name="pinjaman" onchange="this.form.submit()"
+                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value="">Semua</option>
+                        <option value="1" @selected($filters['pinjaman'] === '1')>Ya</option>
+                        <option value="0" @selected($filters['pinjaman'] === '0')>Tidak</option>
+                    </select>
                 </div>
 
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Tarikh Hantar</label>
+                    <select id="perm-date-mode" name="date_mode"
+                            class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                        <option value=""       @selected($filters['date_mode'] === '')>Semua masa</option>
+                        <option value="today"  @selected($filters['date_mode'] === 'today')>Hari ini</option>
+                        <option value="minggu" @selected($filters['date_mode'] === 'minggu')>Minggu ini</option>
+                        <option value="bulan"  @selected($filters['date_mode'] === 'bulan')>Bulan ini</option>
+                        <option value="custom" @selected($filters['date_mode'] === 'custom')>Tarikh tertentu</option>
+                    </select>
+                </div>
+            </div>
+
+            {{-- Custom date range (shown only when "Tarikh tertentu") --}}
+            <div id="perm-custom-date" class="{{ $filters['date_mode'] !== 'custom' ? 'hidden' : '' }} flex flex-wrap gap-3 items-end">
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Dari</label>
+                    <input type="date" name="date_from" value="{{ $filters['date_from'] }}"
+                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Hingga</label>
+                    <input type="date" name="date_to" value="{{ $filters['date_to'] }}"
+                           class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition bg-slate-50">
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button type="submit" class="text-sm font-semibold bg-navy text-white px-5 py-1.5 rounded-lg hover:bg-navy-dark transition">Cari</button>
+                <a href="{{ route('admin.permohonan') }}" class="text-sm font-medium text-slate-500 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Reset</a>
             </div>
         </form>
+        <script>
+            // Auto-submit on date preset; show the custom range instead of submitting for "custom".
+            document.getElementById('perm-date-mode').addEventListener('change', function () {
+                if (this.value === 'custom') {
+                    document.getElementById('perm-custom-date').classList.remove('hidden');
+                } else {
+                    this.form.submit();
+                }
+            });
+        </script>
     </div>
 
     <!-- Table -->
@@ -117,6 +173,13 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                         $label = $masalahLabels[$m->masalah] ?? $m->masalah;
                         return $m->masalah === 'lain_lain' && $m->keterangan ? "{$label}: {$m->keterangan}" : $label;
                     })->implode(', ');
+                    $platformText = $lead->platforms->map(function ($p) use ($platformLabels) {
+                        $label = $platformLabels[$p->platform] ?? ($p->platform === 'lain_lain' ? 'Lain-lain' : $p->platform);
+                        return $p->platform === 'lain_lain' && $p->keterangan ? "{$label}: {$p->keterangan}" : $label;
+                    })->implode(', ');
+                    $pinjamanText = $lead->apply_pinjaman_3bulan
+                        ? 'Ya' . ($lead->bank_koperasi_nama ? " — {$lead->bank_koperasi_nama}" : '')
+                        : 'Tidak';
                     $dokumenJson = $lead->dokumen->map(fn ($d) => [
                         'id'    => $d->id,
                         'label' => ($jenisLabels[$d->jenis] ?? $d->jenis) . ($d->bulan ? " (Bulan {$d->bulan})" : ''),
@@ -139,6 +202,9 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                     data-gaji="{{ $lead->gaji_asas }}"
                     data-status-kerja="{{ $statusKerjaLabels[$lead->status_pekerjaan] ?? $lead->status_pekerjaan }}"
                     data-masalah="{{ $masalahText }}"
+                    data-kod-rujukan="{{ $lead->kod_rujukan }}"
+                    data-platform="{{ $platformText }}"
+                    data-pinjaman="{{ $pinjamanText }}"
                     data-dokumen="{{ $dokumenJson->toJson() }}"
                     data-phone="{{ $phone }}">
                     <td class="px-5 py-4 font-semibold text-navy cell-title hover:underline underline-offset-2">{{ $lead->nama }}</td>
@@ -270,9 +336,17 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                         <span class="text-slate-400 w-36 flex-shrink-0">Daerah</span>
                         <span id="modal-daerah" class="font-medium text-slate-700 text-right"></span>
                     </div>
-                    <div class="flex justify-between items-center text-sm py-1.5">
+                    <div class="flex justify-between items-center text-sm py-1.5 border-b border-slate-50">
                         <span class="text-slate-400 w-36 flex-shrink-0">Poskod</span>
                         <span id="modal-poskod" class="font-medium text-slate-700 text-right"></span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm py-1.5 border-b border-slate-50">
+                        <span class="text-slate-400 w-36 flex-shrink-0">Kod Rujukan</span>
+                        <span id="modal-kod-rujukan" class="font-medium text-slate-700 text-right"></span>
+                    </div>
+                    <div class="flex justify-between items-start text-sm py-1.5">
+                        <span class="text-slate-400 w-36 flex-shrink-0">Platform</span>
+                        <span id="modal-platform" class="font-medium text-slate-700 text-right"></span>
                     </div>
                 </div>
             </div>
@@ -304,9 +378,13 @@ $jenisLabels = ['slip_gaji' => 'Slip Gaji', 'laporan_ctos' => 'Laporan CTOS', 'p
                         <span class="text-slate-400 w-36 flex-shrink-0">Status Pekerjaan</span>
                         <span id="modal-status-kerja" class="font-medium text-slate-700 text-right"></span>
                     </div>
-                    <div class="flex justify-between items-start text-sm py-1.5">
+                    <div class="flex justify-between items-start text-sm py-1.5 border-b border-slate-50">
                         <span class="text-slate-400 w-36 flex-shrink-0">Masalah Utama</span>
                         <div id="modal-masalah" class="flex flex-wrap gap-1 justify-end max-w-[55%]"></div>
+                    </div>
+                    <div class="flex justify-between items-start text-sm py-1.5">
+                        <span class="text-slate-400 w-36 flex-shrink-0">Pinjaman 3 Bulan Lepas</span>
+                        <span id="modal-pinjaman" class="font-medium text-slate-700 text-right max-w-[55%]"></span>
                     </div>
                 </div>
             </div>
@@ -371,6 +449,8 @@ function viewDetails(row) {
     set('modal-emel',   d.emel   || '—');
     set('modal-daerah', d.daerah || '—');
     set('modal-poskod', d.poskod || '—');
+    set('modal-kod-rujukan', d.kodRujukan || '—');
+    set('modal-platform',    d.platform   || '—');
 
     // Section 2
     set('modal-sektor',       d.sektorLabel || '—');
@@ -378,6 +458,7 @@ function viewDetails(row) {
     set('modal-jawatan',      d.jawatan     || '—');
     set('modal-gaji',         d.gaji ? 'RM ' + Number(d.gaji).toLocaleString() : '—');
     set('modal-status-kerja', d.statusKerja || '—');
+    set('modal-pinjaman',     d.pinjaman    || '—');
 
     const masalahEl = document.getElementById('modal-masalah');
     masalahEl.innerHTML = '';

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Lead;
+use App\Models\LeadPlatform;
 use App\Models\Setting;
 
 /**
@@ -81,14 +82,30 @@ class WhatsappMessageBuilder
             'emel' => $lead->emel ?? '-',
             'daerah' => $lead->daerah,
             'poskod' => $lead->poskod,
+            'kod_rujukan' => $lead->kod_rujukan ?: '-',
+            'platform_sosial' => $this->platformText($lead),
             'sektor' => self::SEKTOR_LABELS[$lead->sektor] ?? $lead->sektor,
             'nama_majikan' => $lead->nama_majikan,
             'jawatan' => $lead->jawatan,
             'gaji_asas' => number_format((float) $lead->gaji_asas, 2),
             'status_pekerjaan' => ucfirst($lead->status_pekerjaan),
             'masalah' => $this->masalahText($lead),
+            'bank_koperasi' => $lead->apply_pinjaman_3bulan
+                ? 'Ya'.($lead->bank_koperasi_nama ? " ({$lead->bank_koperasi_nama})" : '')
+                : 'Tidak',
             'link' => $link ?? '(akan dihantar kemudian)',
         ];
+    }
+
+    private function platformText(Lead $lead): string
+    {
+        $options = LeadPlatform::options();
+
+        return $lead->platforms->map(function ($p) use ($options) {
+            $label = $options[$p->platform] ?? ($p->platform === 'lain_lain' ? 'Lain-lain' : $p->platform);
+
+            return $p->platform === 'lain_lain' && $p->keterangan ? "{$label}: {$p->keterangan}" : $label;
+        })->implode(', ') ?: '-';
     }
 
     private function masalahText(Lead $lead): string

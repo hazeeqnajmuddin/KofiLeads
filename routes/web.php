@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DokumenController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\MergedDocumentController;
+use App\Http\Controllers\Admin\ReferenceCodeController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminDashboardController;
@@ -17,8 +18,9 @@ Route::get('/', function () {
 Route::post('/leads', [LeadSubmissionController::class, 'store'])->name('leads.store');
 Route::get('/terima-kasih', [LeadSubmissionController::class, 'thankYou'])->name('leads.thankyou');
 
-// Signed, expiring link to a lead's merged PDF — carried into the WhatsApp message (Phase 9, Slice 2).
-Route::get('/dokumen/gabungan/{lead}', [MergedDocumentController::class, 'signed'])->name('merged.signed');
+// Public link to a lead's merged PDF — carried into the WhatsApp message. Uses an
+// unguessable token in the PATH (no query string, so WhatsApp can't split it on "&").
+Route::get('/dokumen/gabungan/{token}', [MergedDocumentController::class, 'token'])->name('merged.token');
 
 // Admin panel. NOTE: no auth middleware yet — Phase 3 (auth) is deferred.
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -29,6 +31,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Site settings — "Tetapan Laman" (Phase 5)
     Route::get('/landing', [SettingController::class, 'edit'])->name('landing');
     Route::post('/landing', [SettingController::class, 'update'])->name('landing.update');
+
+    // Reference-code manager — "Kod Rujukan" (Phase 10, Slice B)
+    Route::post('/kod-rujukan', [ReferenceCodeController::class, 'store'])->name('kod-rujukan.store');
+    Route::patch('/kod-rujukan/{referenceCode}/aktif', [ReferenceCodeController::class, 'activate'])->name('kod-rujukan.activate');
+    Route::delete('/kod-rujukan/{referenceCode}', [ReferenceCodeController::class, 'destroy'])->name('kod-rujukan.destroy');
 
     // Lead management (Phase 4)
     Route::get('/permohonan', [LeadController::class, 'index'])->name('permohonan');

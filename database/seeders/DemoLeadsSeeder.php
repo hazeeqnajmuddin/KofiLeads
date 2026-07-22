@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
+use App\Models\LeadPlatform;
 use App\Models\PipelineLog;
+use App\Models\ReferenceCode;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
@@ -365,5 +367,37 @@ class DemoLeadsSeeder extends Seeder
                 DB::table('leads')->where('id', $lead->id)->update($statusDates);
             }
         }
+
+        $this->seedClientFields();
+    }
+
+    /**
+     * Phase 10 demo data: reference codes + backfill the new client fields
+     * (kod_rujukan, platforms, bank/koperasi answer) onto existing leads.
+     */
+    private function seedClientFields(): void
+    {
+        $codes = [
+            ['host_name' => 'Live TikTok Julai', 'code' => 'LIVE-JUL', 'is_active' => true],
+            ['host_name' => 'Live Facebook Jun', 'code' => 'LIVE-JUN', 'is_active' => false],
+        ];
+        foreach ($codes as $c) {
+            ReferenceCode::create($c);
+        }
+
+        $platforms = ['facebook', 'tiktok', 'instagram'];
+
+        Lead::query()->get()->each(function (Lead $lead) use ($platforms) {
+            // ~half the leads came from a live session.
+            $lead->update([
+                'kod_rujukan' => fake()->boolean(50) ? fake()->randomElement(['LIVE-JUL', 'LIVE-JUN']) : null,
+                'apply_pinjaman_3bulan' => $applied = fake()->boolean(40),
+                'bank_koperasi_nama' => $applied ? fake()->randomElement(['Bank Rakyat', 'Koperasi ANGKASA', 'BSN']) : null,
+            ]);
+
+            foreach ((array) fake()->randomElements($platforms, fake()->numberBetween(1, 2)) as $p) {
+                LeadPlatform::create(['lead_id' => $lead->id, 'platform' => $p, 'created_at' => now()]);
+            }
+        });
     }
 }

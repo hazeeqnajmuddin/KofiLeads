@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateSettingsRequest;
+use App\Models\ReferenceCode;
 use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -16,8 +17,10 @@ class SettingController extends Controller
     public function edit(): View
     {
         $settings = Setting::pluck('value', 'key')->all();
+        $referenceCodes = ReferenceCode::query()->latest()->get();
+        $nextRefCode = ReferenceCode::nextCode();
 
-        return view('admin.landing', compact('settings'));
+        return view('admin.landing', compact('settings', 'referenceCodes', 'nextRefCode'));
     }
 
     /**

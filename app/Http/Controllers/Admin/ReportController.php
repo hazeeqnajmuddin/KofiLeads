@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\LeadPlatform;
+use App\Models\ReferenceCode;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class ReportController extends Controller
@@ -101,7 +104,55 @@ class ReportController extends Controller
 
         $report = $this->buildReport($main, $trend, $filters, $sektorActive, $statusActive);
 
-        return view('admin.laporan', compact('report', 'filters', 'availableYears'));
+        // Per-host / per-platform performance for the selected period (by
+        // submission date), so the client can see "how many leads each live
+        // host / platform brought this month".
+        $performance = $this->buildPerformance($dateRange);
+
+        return view('admin.laporan', compact('report', 'filters', 'availableYears') + $performance);
+    }
+
+    /**
+     * Lead counts per reference code (live host) and per social platform, scoped
+     * to the selected period by submission date (created_at).
+     *
+     * @return array{refPerformance: Collection, platformPerformance: Collection}
+     */
+    private function buildPerformance(?array $dateRange): array
+    {
+        // Reference codes → lead count for the period.
+        $refCounts = Lead::query()
+            ->when($dateRange, fn ($q) => $q->whereBetween('created_at', $dateRange))
+            ->whereNotNull('kod_rujukan')
+            ->selectRaw('kod_rujukan, COUNT(*) as c')
+            ->groupBy('kod_rujukan')
+            ->pluck('c', 'kod_rujukan');
+
+        $refPerformance = ReferenceCode::query()->latest()->get()
+            ->map(fn (ReferenceCode $rc) => [
+                'host_name' => $rc->host_name,
+                'code' => $rc->code,
+                'is_active' => $rc->is_active,
+                'count' => (int) ($refCounts[$rc->code] ?? 0),
+            ])
+            ->sortByDesc('count')
+            ->values();
+
+        // Platforms → distinct lead count for the period.
+        $platformCounts = Lead::query()
+            ->when($dateRange, fn ($q) => $q->whereBetween('leads.created_at', $dateRange))
+            ->join('lead_platform', 'leads.id', '=', 'lead_platform.lead_id')
+            ->selectRaw('lead_platform.platform as platform, COUNT(DISTINCT leads.id) as c')
+            ->groupBy('lead_platform.platform')
+            ->pluck('c', 'platform');
+
+        $platformPerformance = collect(LeadPlatform::options())
+            ->map(fn ($label, $value) => ['label' => $label, 'value' => $value, 'count' => (int) ($platformCounts[$value] ?? 0)])
+            ->push(['label' => 'Lain-lain', 'value' => 'lain_lain', 'count' => (int) ($platformCounts['lain_lain'] ?? 0)])
+            ->sortByDesc('count')
+            ->values();
+
+        return compact('refPerformance', 'platformPerformance');
     }
 
     private function resolveDateRange(array $filters): ?array

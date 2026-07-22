@@ -3,6 +3,7 @@
 use App\Models\Dokumen;
 use App\Models\Lead;
 use App\Models\LeadMasalah;
+use App\Models\ReferenceCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -116,6 +117,7 @@ it('stores the free-text detail on the lain_lain issue row', function () {
 
 it('stores reference code, platforms and bank/koperasi answer', function () {
     Storage::fake('local');
+    ReferenceCode::create(['host_name' => 'Live', 'code' => 'LIVE20', 'is_active' => true]);
 
     $this->post('/leads', validLeadPayload([
         'kod_rujukan' => 'LIVE20',
@@ -132,6 +134,28 @@ it('stores reference code, platforms and bank/koperasi answer', function () {
         ->and($lead->platforms->pluck('platform')->all())->toEqualCanonicalizing(['facebook', 'lain_lain']);
 
     expect($lead->platforms->firstWhere('platform', 'lain_lain')->keterangan)->toBe('YouTube');
+});
+
+it('attributes a lead only to an active reference code, case-insensitively', function () {
+    Storage::fake('local');
+    ReferenceCode::create(['host_name' => 'Live A', 'code' => 'RCMS01', 'is_active' => true]);
+    ReferenceCode::create(['host_name' => 'Old', 'code' => 'RCMS02', 'is_active' => false]);
+
+    // Active code typed in lowercase → stored as the canonical "RCMS01".
+    $this->post('/leads', validLeadPayload(['kod_rujukan' => 'rcms01']))->assertRedirect(route('leads.thankyou'));
+    expect(Lead::latest('id')->first()->kod_rujukan)->toBe('RCMS01');
+
+    // Inactive code → silently treated as a house lead (null).
+    $this->post('/leads', validLeadPayload(['kod_rujukan' => 'RCMS02']))->assertRedirect();
+    expect(Lead::latest('id')->first()->kod_rujukan)->toBeNull();
+
+    // Unknown code → null.
+    $this->post('/leads', validLeadPayload(['kod_rujukan' => 'ZZZ']))->assertRedirect();
+    expect(Lead::latest('id')->first()->kod_rujukan)->toBeNull();
+
+    // Blank → null.
+    $this->post('/leads', validLeadPayload())->assertRedirect();
+    expect(Lead::latest('id')->first()->kod_rujukan)->toBeNull();
 });
 
 it('requires at least one platform and a bank name when applied', function () {

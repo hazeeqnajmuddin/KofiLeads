@@ -6,7 +6,6 @@ use App\Models\Setting;
 use App\Services\WhatsappMessageBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 
 uses(RefreshDatabase::class);
 
@@ -48,19 +47,22 @@ it('builds a wa.me url with the configured number, or null when none is set', fu
     expect($url)->toStartWith('https://wa.me/60123456789?text=');
 });
 
-it('serves the merged pdf through a valid signed link and rejects a tampered one', function () {
+it('serves the merged pdf through its path token and 404s an unknown token', function () {
     // Ghostscript-independent: seed a merged file directly.
     Storage::fake('local');
-    $lead = Lead::factory()->create();
+    $lead = Lead::factory()->create(['merged_token' => 'demo-token-123']);
     Storage::disk('local')->put("merged/{$lead->id}.pdf", '%PDF-1.4 fake');
     $lead->update(['merged_path' => "merged/{$lead->id}.pdf", 'merged_at' => now()]);
 
-    $signed = URL::temporarySignedRoute('merged.signed', now()->addDays(3), ['lead' => $lead->id]);
+    // The token lives in the URL path — no query string, so no "&" for WhatsApp to split.
+    $url = route('merged.token', ['token' => 'demo-token-123']);
+    expect($url)->not->toContain('?');
 
-    $this->get($signed)->assertOk()->assertHeader('content-type', 'application/pdf');
+    $this->get($url)->assertOk()->assertHeader('content-type', 'application/pdf');
 
-    // Tampering with the query invalidates the signature → friendly expired page (403).
-    $this->get($signed.'&x=1')->assertForbidden()->assertSee('Tamat Tempoh', false);
+    // Unknown token → friendly "tidak sah" page (404).
+    $this->get(route('merged.token', ['token' => 'nope']))
+        ->assertNotFound()->assertSee('Tamat Tempoh', false);
 });
 
 it('shows the thank-you page only after a submission', function () {

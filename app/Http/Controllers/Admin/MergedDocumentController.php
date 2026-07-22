@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Services\DocumentMergeService;
 use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -23,14 +22,17 @@ class MergedDocumentController extends Controller
     }
 
     /**
-     * Public, signed view of the merged PDF — the link carried into WhatsApp.
-     * Validated manually (instead of the `signed` middleware) so an expired or
-     * tampered link shows a friendly page rather than a bare 403.
+     * Public view of the merged PDF via its unguessable path token — the link
+     * carried into WhatsApp. The token in the URL path is the secret (no query
+     * string, so WhatsApp can't split the link on "&"). An unknown token shows a
+     * friendly page rather than a bare 404.
      */
-    public function signed(Request $request, Lead $lead, DocumentMergeService $merger): StreamedResponse|Responsable|Response
+    public function token(string $token, DocumentMergeService $merger): StreamedResponse|Responsable|Response
     {
-        if (! $request->hasValidSignature()) {
-            return response()->view('errors.link-expired', [], 403);
+        $lead = Lead::query()->where('merged_token', $token)->first();
+
+        if (! $lead) {
+            return response()->view('errors.link-expired', [], 404);
         }
 
         return $this->stream($lead, $merger);

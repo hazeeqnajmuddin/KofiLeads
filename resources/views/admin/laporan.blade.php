@@ -109,6 +109,81 @@
     </div>
 </div>
 
+<!-- Performance panels: leads per live host / per platform (for the selected period) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+
+    <!-- Prestasi Kod Rujukan -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+                <h3 class="font-semibold text-slate-800 text-sm">Prestasi Kod Rujukan</h3>
+                <p class="text-xs text-slate-400 mt-0.5">Bilangan lead setiap live host · {{ $report['label'] }}</p>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                        <th class="px-6 py-2.5 text-left">Live Host</th>
+                        <th class="px-4 py-2.5 text-left">Kod</th>
+                        <th class="px-4 py-2.5 text-center">Lead</th>
+                        <th class="px-6 py-2.5 text-right">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($refPerformance as $r)
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="px-6 py-3 text-slate-700 font-medium">
+                            {{ $r['host_name'] }}
+                            @if($r['is_active'])<span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full ml-1">AKTIF</span>@endif
+                        </td>
+                        <td class="px-4 py-3"><span class="font-mono text-xs text-slate-500">{{ $r['code'] }}</span></td>
+                        <td class="px-4 py-3 text-center font-bold text-navy">{{ $r['count'] }}</td>
+                        <td class="px-6 py-3 text-right">
+                            @if($r['count'] > 0)
+                            <a href="{{ route('admin.permohonan', array_filter(['kod_rujukan' => $r['code'], 'date_mode' => $filters['date_mode'], 'date_from' => $filters['date_from'], 'date_to' => $filters['date_to']])) }}"
+                               class="text-xs font-medium text-navy hover:text-gold transition whitespace-nowrap">Lihat pemohon →</a>
+                            @else
+                            <span class="text-xs text-slate-300">—</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="4" class="px-6 py-8 text-center text-sm text-slate-400">Tiada kod rujukan lagi. Jana di Tetapan Laman.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Prestasi Platform -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-semibold text-slate-800 text-sm">Prestasi Platform</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Bilangan lead setiap platform · {{ $report['label'] }}</p>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                        <th class="px-6 py-2.5 text-left">Platform</th>
+                        <th class="px-6 py-2.5 text-center">Lead</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($platformPerformance as $p)
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="px-6 py-3 text-slate-700 font-medium">{{ $p['label'] }}</td>
+                        <td class="px-6 py-3 text-center font-bold text-navy">{{ $p['count'] }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
 <!-- Monthly trend -->
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-5">
     <div class="flex items-start justify-between mb-1">

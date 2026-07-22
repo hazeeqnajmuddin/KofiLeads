@@ -591,7 +591,7 @@ This works fully on one MacBook because the browser, WhatsApp, and the Laravel s
 
 ## 11. Phase 10 — Client change request: 3 new intake fields
 
-**Status: Slice A (form + database) IN PROGRESS; Slice B (admin managers + filters) PLANNED.** Client asked for 3 new fields on the landing form, persisted to the DB. Confirmed with the user; this section is the spec.
+**Status: Slice A (form + database) ✅ DONE; Slice B (admin managers + filters) ✅ DONE.** Client asked for 3 new fields on the landing form, persisted to the DB, with admin management + reporting/filtering. Full suite green (50 passed).
 
 ### 11a. The three fields
 
@@ -619,11 +619,14 @@ This works fully on one MacBook because the browser, WhatsApp, and the Laravel s
 - **`LeadSubmissionController`:** save the 3 lead columns + write `lead_platform` rows (with `keterangan` for `lain_lain`).
 - **Factory/seeder + Pest tests.**
 
-### 11c. Slice B — admin managers + filters (next increment, NOT in Slice A)
+### 11c. Slice B — admin managers + filters — ✅ DONE
 
-- `reference_codes` table (`host_name`, `code` unique, `is_active`) + **Kod Rujukan manager** in Tetapan Laman (generate code per live host, set active, history).
-- **Editable social-platform options** UI in Tetapan Laman (low-code list editor).
-- **Laporan:** filter by reference code / host; filter by social platform (+ optional breakdown panels).
-- **Permohonan:** filter by bank/koperasi Ya/Tidak; show the 3 new fields in the detail modal; optional reference-code column.
-- **WhatsApp tokens:** `{kod_rujukan}`, `{platform_sosial}`, `{bank_koperasi}` added to the editable template chips.
+- [x] `reference_codes` table (`host_name`, `code` unique, `is_active`) + `ReferenceCode` model (`scopeActive`, `activeCode()`, `generate()`).
+- [x] **Kod Rujukan manager** in Tetapan Laman (`ReferenceCodeController` + routes): enter host name → generate/enter code → auto-activate; activate switches the active one; delete; only one active at a time (enforced in a transaction).
+- [x] **Editable social-platform options** — `social_platforms` setting added to `UpdateSettingsRequest::EDITABLE_KEYS`; low-code editor card in Tetapan Laman.
+- [x] **Laporan — performance panels (revised).** The single-select kod_rujukan/platform filters were **dropped** in favour of two summary panels that answer "how many leads per live host / platform this period": **Prestasi Kod Rujukan** (host · code · lead count · "Lihat pemohon →" drill link) and **Prestasi Platform** (platform · lead count). Both scoped by submission date via the existing date filter. Built in `ReportController::buildPerformance()`.
+- [x] **Permohonan (revised)** — added a **`kod_rujukan` filter** + a **submission-date filter** (today/minggu/bulan/custom) so the Laporan drill-down lands on the actual leads ("who"). Bank/koperasi Ya/Tidak filter kept. Filter toolbar restructured into a uniform grid (title row + aligned control grid) for a tidy layout. The 3 new fields are shown in the detail modal (Kod Rujukan, Platform, Pinjaman 3 Bulan Lepas). No platform filter on Permohonan (per client — platform is view-only on Laporan).
+- [x] **WhatsApp tokens** `{kod_rujukan}`, `{platform_sosial}`, `{bank_koperasi}` added to `WhatsappMessageBuilder` + the editable-template chips/preview.
+- [x] **Demo data** — `DemoLeadsSeeder` seeds 2 reference codes and backfills the new fields on existing leads.
+- [x] **Tests** — `tests/Feature/ClientFieldsAdminTest.php` (reference-code generate/activate/one-active, editable options, permohonan + laporan filters, WhatsApp tokens).
 

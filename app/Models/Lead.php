@@ -61,6 +61,7 @@ class Lead extends Model
         'follow_up_at',
         'merged_path',
         'merged_at',
+        'merged_token',
     ];
 
     protected function casts(): array

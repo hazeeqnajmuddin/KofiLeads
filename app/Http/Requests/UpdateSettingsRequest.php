@@ -13,7 +13,7 @@ class UpdateSettingsRequest extends FormRequest
      */
     public const EDITABLE_KEYS = [
         // WhatsApp + Contact + Hero
-        'whatsapp_number', 'whatsapp_template', 'contact_email', 'facebook_url', 'instagram_url', 'tiktok_url',
+        'whatsapp_number', 'whatsapp_template', 'social_platforms', 'contact_email', 'facebook_url', 'instagram_url', 'tiktok_url',
         'hero_title', 'hero_cta', 'hero_subtitle',
         // Biodata
         'bio_jawatan', 'bio_nama', 'bio_info',
@@ -48,6 +48,7 @@ class UpdateSettingsRequest extends FormRequest
             // WhatsApp + Contact + Hero
             'whatsapp_number' => ['sometimes', 'nullable', 'string', 'max:20'],
             'whatsapp_template' => ['sometimes', 'nullable', 'string', 'max:2000'],
+            'social_platforms' => ['sometimes', 'nullable', 'string', 'max:500'],
             'contact_email' => ['sometimes', 'nullable', 'email', 'max:255'],
             'facebook_url' => $url,
             'instagram_url' => $url,
