@@ -85,7 +85,7 @@
                             </div>
                             <input id="email" type="email" name="email" value="{{ old('email') }}"
                                    required autofocus autocomplete="username"
-                                   placeholder="admin@rahmahconsultancy.com"
+                                   placeholder="example@gmail.com"
                                    class="w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm transition
                                           {{ $errors->has('email') ? 'border-red-300 bg-red-50 focus:ring-red-200 focus:border-red-400' : 'border-slate-200 bg-slate-50 focus:ring-navy/20 focus:border-navy' }}
                                           focus:outline-none focus:ring-2">

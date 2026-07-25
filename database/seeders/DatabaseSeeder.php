@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // Preset admin account — credentials visible here for initial setup only.
         User::create([
             'name' => 'Admin',
-            'email' => 'admin@rahmahconsultancy.com',
+            'email' => 'rahmahconsultant@gmail.com',
             'password' => 'Admin@1234',
         ]);
 
