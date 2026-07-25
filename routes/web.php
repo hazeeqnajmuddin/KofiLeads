@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\LeadSubmissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,17 @@ Route::get('/dokumen/gabungan/{token}', [MergedDocumentController::class, 'token
 Route::get('/admin/login', [AdminDashboardController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [LoginController::class, 'logout'])->middleware('auth')->name('admin.logout');
+
+// Password reset ("Lupa kata laluan") — guest flow via Laravel's password broker.
+// The POST that emails the link is IP-throttled on top of the broker's per-user throttle.
+Route::get('/admin/forgot-password', [PasswordResetController::class, 'showLinkRequest'])->name('admin.password.request');
+Route::post('/admin/forgot-password', [PasswordResetController::class, 'sendLink'])
+    ->middleware('throttle:5,1')
+    ->name('admin.password.email');
+Route::get('/admin/reset-password/{token}', [PasswordResetController::class, 'showReset'])->name('admin.password.reset');
+Route::post('/admin/reset-password', [PasswordResetController::class, 'update'])
+    ->middleware('throttle:5,1')
+    ->name('admin.password.update');
 
 // Admin panel — requires authentication.
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
