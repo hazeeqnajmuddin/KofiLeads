@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Welcome to Our App')</title>
-    
+
+    <!-- Google Fonts: DM Serif Display for hero headline -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.jpeg') }}">
+
     <!-- Vite Directive for Tailwind -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased text-slate-900 bg-slate-50 flex flex-col min-h-screen">
-    
+
+    {{-- Flash notifications (success / error / validation) --}}
+    @include('partials.flash')
+
     <!-- Include Header Partial -->
     @include('partials.header')
 
@@ -22,5 +32,28 @@
     <!-- Include Footer Partial -->
     @include('partials.footer')
 
+<script>
+/* Public-site browser hardening — mild deterrents against casual inspection. */
+// (function () {
+//     /* Disable right-click context menu. */
+//     document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+//     /* Block common DevTools keyboard shortcuts. */
+//     document.addEventListener('keydown', function (e) {
+//         if (e.key === 'F12') { e.preventDefault(); return false; }
+//         if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) { e.preventDefault(); return false; }
+//         if (e.ctrlKey && e.key === 'U') { e.preventDefault(); return false; }
+//     });
+
+//     /* Suppress console output and clear periodically. */
+//     if (window.console) {
+//         var noop = function () {};
+//         ['log', 'debug', 'info', 'warn', 'error', 'group', 'groupEnd', 'table', 'dir'].forEach(function (m) {
+//             try { console[m] = noop; } catch (_) {}
+//         });
+//     }
+//     setInterval(function () { try { console.clear(); } catch (_) {} }, 1000);
+// })();
+</script>
 </body>
 </html>

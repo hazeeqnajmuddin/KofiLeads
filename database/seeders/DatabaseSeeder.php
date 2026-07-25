@@ -15,11 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Preset admin account — credentials visible here for initial setup only.
+        User::create([
+            'name' => 'Admin',
+            'email' => 'rahmahconsultant@gmail.com',
+            'password' => 'Admin@1234',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            SettingsSeeder::class,
+            DemoLeadsSeeder::class,
         ]);
     }
 }
