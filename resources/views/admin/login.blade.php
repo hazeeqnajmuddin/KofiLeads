@@ -7,6 +7,7 @@
     <title>Log Masuk — Panel Admin RCS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.jpeg') }}">
+    @PwaHead
 </head>
 <body class="font-sans antialiased min-h-screen flex items-center justify-center px-4"
       style="background: linear-gradient(135deg, #0F1A45 0%, #1B2B6B 60%, #0F1A45 100%);">
@@ -171,5 +172,6 @@
     }
     </script>
 
+    @RegisterServiceWorkerScript
 </body>
 </html>
