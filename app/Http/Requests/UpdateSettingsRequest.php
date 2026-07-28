@@ -46,7 +46,7 @@ class UpdateSettingsRequest extends FormRequest
 
         return [
             // WhatsApp + Contact + Hero
-            'whatsapp_number' => ['sometimes', 'nullable', 'string', 'max:20'],
+            'whatsapp_number' => ['sometimes', 'required', 'regex:/^\+60\d{8,10}$/'],
             'whatsapp_template' => ['sometimes', 'nullable', 'string', 'max:2000'],
             'social_platforms' => ['sometimes', 'nullable', 'string', 'max:500'],
             'contact_email' => ['sometimes', 'nullable', 'email', 'max:255'],
@@ -87,6 +87,14 @@ class UpdateSettingsRequest extends FormRequest
 
             // Video (promo)
             'video_iklan' => ['sometimes', 'nullable', 'mimes:mp4,mov,webm', 'max:102400'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'whatsapp_number.required' => 'Nombor WhatsApp tidak boleh kosong.',
+            'whatsapp_number.regex'    => 'Nombor WhatsApp tidak sah. Masukkan nombor Malaysia yang lengkap, contoh: +60123456789.',
         ];
     }
 }
