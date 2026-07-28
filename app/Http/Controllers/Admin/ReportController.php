@@ -207,10 +207,8 @@ class ReportController extends Controller
             });
 
         $total = (int) (clone $main)->count();
-        $everLayak      = (int) (clone $main)->whereNotNull('layak_at')->count();
-        $everTidakLayak = (int) (clone $main)->whereNotNull('tidak_layak_at')->count();
-        $processed = $everLayak + $everTidakLayak;
-        $rate = $processed ? (int) round($everLayak / $processed * 100) : 0;
+        $approved = $pipeline['layak'] + $pipeline['submit_bank'];
+        $rate = $total ? (int) round($approved / $total * 100) : 0;
 
         return [
             'label' => $this->rangeLabel($filters, $sektorActive, $statusActive),
