@@ -108,9 +108,50 @@ class DocumentMergeService
     }
 
     /**
-     * Concatenate PDFs into one file using Ghostscript.
+     * Concatenate PDFs into one file.
+     *
+     * Prefer qpdf: it does a true page-level merge, copying pages/objects
+     * verbatim so embedded (often subsetted) fonts stay intact. Ghostscript's
+     * pdfwrite re-distills every input and can corrupt such fonts into
+     * missing-glyph boxes, so it's only a fallback when qpdf is unavailable.
      */
     private function concatenate(array $pdfPaths, string $outputPath): void
+    {
+        if ($this->qpdfAvailable()) {
+            $this->concatenateWithQpdf($pdfPaths, $outputPath);
+
+            return;
+        }
+
+        $this->concatenateWithGhostscript($pdfPaths, $outputPath);
+    }
+
+    /**
+     * True page-level merge with qpdf (preserves fonts exactly).
+     */
+    private function concatenateWithQpdf(array $pdfPaths, string $outputPath): void
+    {
+        $slash = fn (string $p) => str_replace('\\', '/', $p);
+
+        // qpdf --empty --warning-exit-0 --pages <in...> -- <out>
+        $process = new Process(array_merge(
+            [$this->qpdf(), '--empty', '--warning-exit-0', '--pages'],
+            array_map($slash, $pdfPaths),
+            ['--', $slash($outputPath)],
+        ));
+
+        $process->setTimeout(120);
+        $process->run();
+
+        if (! is_file($outputPath)) {
+            throw new RuntimeException('qpdf merge failed: '.$process->getErrorOutput());
+        }
+    }
+
+    /**
+     * Fallback concatenation using Ghostscript (re-distills; may alter fonts).
+     */
+    private function concatenateWithGhostscript(array $pdfPaths, string $outputPath): void
     {
         // Ghostscript on Windows misparses backslashes in -sOutputFile= and input paths.
         $slash = fn (string $p) => str_replace('\\', '/', $p);
@@ -131,6 +172,36 @@ class DocumentMergeService
         if (! $process->isSuccessful() || ! is_file($outputPath)) {
             throw new RuntimeException('Ghostscript merge failed: '.$process->getErrorOutput());
         }
+    }
+
+    /**
+     * Resolve the qpdf binary. Overridable via QPDF_PATH; otherwise probes the
+     * usual locations, falling back to `qpdf` on PATH.
+     */
+    private function qpdf(): string
+    {
+        if ($env = env('QPDF_PATH')) {
+            return $env;
+        }
+
+        foreach (['/opt/homebrew/bin/qpdf', '/usr/local/bin/qpdf', '/usr/bin/qpdf'] as $candidate) {
+            if (is_executable($candidate)) {
+                return $candidate;
+            }
+        }
+
+        return 'qpdf';
+    }
+
+    /**
+     * Is qpdf available? Controls whether we use it over the Ghostscript fallback.
+     */
+    public function qpdfAvailable(): bool
+    {
+        $process = new Process([$this->qpdf(), '--version']);
+        $process->run();
+
+        return $process->isSuccessful();
     }
 
     /**

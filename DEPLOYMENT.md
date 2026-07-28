@@ -41,8 +41,12 @@ GitHub (main)  --push-->  GitHub Actions  --SSH-->  DigitalOcean Droplet
 
 ## 3. Installed stack
 
-- nginx 1.24 · PHP 8.4 (fpm+cli) · MySQL 8 · Ghostscript 10 · Composer 2 · Node 22
+- nginx 1.24 · PHP 8.4 (fpm+cli) · MySQL 8 · Ghostscript 10 · **qpdf** · Composer 2 · Node 22
 - PHP extensions: gd, pdo_mysql, mbstring, curl, zip, bcmath, intl, gmp, xml, openssl
+- **Document merge** (`DocumentMergeService`) uses **qpdf** to concatenate PDFs (true
+  page-level copy — preserves embedded/subsetted fonts). Ghostscript is only a
+  fallback and re-distills, which can corrupt Identity-H subsetted CID fonts into
+  boxes on older GS versions — so `qpdf` must be installed: `apt install qpdf`.
 - PHP limits (`/etc/php/8.4/fpm/conf.d/99-rcms.ini`): upload 64M, post 80M, memory 256M
 - nginx site: `/etc/nginx/sites-available/rcms` (root `/var/www/rcms/public`, client_max_body_size 80M)
 
