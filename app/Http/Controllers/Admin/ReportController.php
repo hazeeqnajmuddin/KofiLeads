@@ -25,13 +25,14 @@ class ReportController extends Controller
      * Laporan page.
      *
      * Sektor + status combine with OR logic. Date filter behaviour:
-     *   - With a status selected: filters by the status-specific date column
-     *     (e.g. dalam_semakan_at for "dalam_semakan"), so filtering Feb +
-     *     Dalam Semakan shows every lead that ENTERED Dalam Semakan in Feb,
-     *     even if they have since moved to a different status.
-     *   - Without a status selected: filters by leads.created_at (submission
-     *     date), answering "how many leads came in during this period".
+     *   - With a specific status selected: filters by that status's dedicated
+     *     _at column (e.g. dalam_semakan_at for "dalam_semakan"), so filtering
+     *     Feb + Dalam Semakan shows every lead that ENTERED Dalam Semakan in
+     *     Feb, even if they have since moved to a different status.
      *   - new_lead always uses created_at (no dedicated _at column).
+     *   - Without a status selected ("Semua Status"): OR across created_at +
+     *     every status _at column, so any lead that had activity (submitted or
+     *     reached any status) in the period is included.
      *
      * Trend Bulanan is always submission-date based and has its own year
      * selector, independent of the date filter.
@@ -68,10 +69,24 @@ class ReportController extends Controller
 
         // Date scope (AND on top of OR filters).
         if ($dateRange) {
-            $dateCol = ($statusActive && $filters['status'] !== 'new_lead')
-                ? $filters['status'].'_at'
-                : 'created_at';
-            $main->whereBetween($dateCol, $dateRange);
+            if ($statusActive && $filters['status'] !== 'new_lead') {
+                // Specific non-new_lead status: filter by its dedicated timestamp.
+                $main->whereBetween($filters['status'].'_at', $dateRange);
+            } elseif ($statusActive) {
+                // new_lead has no dedicated _at column — use submission date.
+                $main->whereBetween('created_at', $dateRange);
+            } else {
+                // "Semua status": include any lead that had activity in the period.
+                // OR across created_at + every status-specific _at column.
+                $main->where(function (Builder $q) use ($dateRange) {
+                    $q->whereBetween('created_at', $dateRange);
+                    foreach (Lead::PIPELINE_STATUSES as $status) {
+                        if ($status !== 'new_lead') {
+                            $q->orWhereBetween($status.'_at', $dateRange);
+                        }
+                    }
+                });
+            }
         }
 
         // Trend query: same OR filters but NO date scope — uses created_at + tahun.
