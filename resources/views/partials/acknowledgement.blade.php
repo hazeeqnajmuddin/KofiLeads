@@ -38,7 +38,7 @@
                                 class="w-5 h-5 rounded border-gray-300 accent-brand-gold cursor-pointer">
                         </div>
                         <span class="text-sm text-brand-gray group-hover:text-brand-navy transition-colors duration-200">
-                            Saya telah membaca, memahami dan bersetuju dengan Notis Perlindungan Data Peribadi.
+                            Saya telah membaca, memahami dan bersetuju dengan <a href="https://www.pdp.gov.my/ppdpv1/en/akta/pdp-act-2010-en/" target="_blank" rel="noopener noreferrer" class="text-brand-navy underline">Notis Perlindungan Data Peribadi</a>.
                         </span>
                     </label>
 

@@ -17,13 +17,17 @@ class StoreLeadRequest extends FormRequest
     }
 
     /**
-     * Prepend +60 to the phone number and strip non-digits from the user's input.
+     * Normalise the phone number into +60 international format:
+     * strip non-digits, drop a leading 60 country code and/or a leading 0
+     * trunk prefix the user may have typed, then prepend +60.
      */
     protected function prepareForValidation(): void
     {
         $digits = preg_replace('/\D/', '', $this->no_telefon ?? '');
-        // Drop leading 60 if user typed it themselves
+        // Drop leading 60 if user typed the country code themselves
         $digits = preg_replace('/^60/', '', $digits);
+        // Drop a leading 0 (local trunk prefix) — it must not appear after +60
+        $digits = preg_replace('/^0+/', '', $digits);
         $this->merge(['no_telefon' => '+60'.$digits]);
     }
 
@@ -36,11 +40,11 @@ class StoreLeadRequest extends FormRequest
 
         return [
             // Personal
-            'nama' => ['required', 'string', 'max:255'],
-            'no_telefon' => ['required', 'string', 'regex:/^\+60\d{7,11}$/'],
+            'nama' => ['required', 'string', 'max:100'],
+            'no_telefon' => ['required', 'string', 'regex:/^\+60\d{9,10}$/'],
             'emel' => ['nullable', 'email', 'max:255'],
             'daerah' => ['required', 'string', 'max:100'],
-            'poskod' => ['required', 'string', 'max:5'],
+            'poskod' => ['required', 'string', 'regex:/^\d{5}$/'],
 
             // Reference code (optional — typed by the applicant, announced by the live host)
             'kod_rujukan' => ['nullable', 'string', 'max:50'],
@@ -57,7 +61,7 @@ class StoreLeadRequest extends FormRequest
             'sektor' => ['required', Rule::in(['kerajaan', 'glc', 'berkanun', 'swasta'])],
             'nama_majikan' => ['required', 'string', 'max:255'],
             'jawatan' => ['required', 'string', 'max:255'],
-            'gaji_asas' => ['required', 'numeric', 'min:0'],
+            'gaji_asas' => ['required', 'numeric', 'min:1'],
             'status_pekerjaan' => ['required', Rule::in(['tetap', 'kontrak'])],
 
             // Applied for a bank/koperasi loan in the last 3 months (Ya/Tidak + name if Ya)
@@ -101,7 +105,10 @@ class StoreLeadRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'no_telefon.regex' => 'Nombor telefon tidak sah. Sila masukkan 7–11 digit sahaja.',
+            'no_telefon.regex' => 'Nombor telefon tidak sah. Masukkan 9–10 digit selepas +60, tanpa 0 di hadapan (cth: 123456789).',
+            'poskod.regex' => 'Poskod tidak sah. Sila masukkan 5 digit sahaja (cth: 47810).',
+            'gaji_asas.min' => 'Gaji asas mestilah lebih daripada 0.',
+            'nama.max' => 'Nama tidak boleh melebihi 100 aksara.',
             'platform.required' => 'Sila pilih sekurang-kurangnya satu platform media sosial.',
             'platform.min' => 'Sila pilih sekurang-kurangnya satu platform media sosial.',
             'platform_lain.required' => 'Sila nyatakan platform apabila memilih "Lain-lain".',
