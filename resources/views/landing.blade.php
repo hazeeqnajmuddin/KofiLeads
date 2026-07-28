@@ -603,7 +603,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="nama" class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Penuh <span class="text-rose-500">*</span></label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama seperti dalam IC" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama seperti dalam IC" maxlength="100" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
@@ -611,13 +611,15 @@
                                     <div class="flex">
                                         <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm select-none">+60</span>
                                         <input type="tel" id="no_tele" name="no_telefon"
-                                               value="{{ preg_replace('/^\+?60/', '', old('no_telefon', '')) }}"
+                                               value="{{ preg_replace('/^0+/', '', preg_replace('/^\+?60/', '', old('no_telefon', ''))) }}"
                                                placeholder="123456789"
                                                inputmode="numeric"
-                                               maxlength="11"
+                                               maxlength="10"
+                                               pattern="[1-9]\d{8,9}"
+                                               title="9–10 digit selepas +60, tanpa 0 di hadapan (cth: 123456789)"
                                                class="flex-1 rounded-r-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition"
                                                required
-                                               oninput="this.value=this.value.replace(/\D/g,'')">
+                                               oninput="this.value=this.value.replace(/\D/g,'').replace(/^0+/,'')">
                                     </div>
                                 </div>
                                 <div>
@@ -632,7 +634,7 @@
                                 </div>
                                 <div>
                                     <label for="poskod" class="block text-xs font-semibold text-slate-600 mb-1.5">Poskod <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="poskod" name="poskod" value="{{ old('poskod') }}" placeholder="Contoh: 47810" maxlength="5" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
+                                    <input type="text" id="poskod" name="poskod" value="{{ old('poskod') }}" placeholder="Contoh: 47810" maxlength="5" inputmode="numeric" pattern="\d{5}" title="Sila masukkan 5 digit poskod (cth: 47810)" oninput="this.value=this.value.replace(/\D/g,'')" class="w-full rounded-lg border-slate-200 focus:border-navy focus:ring-navy p-2.5 border text-sm transition" required>
                                 </div>
                             </div>
 
@@ -839,7 +841,7 @@
                         Hantar Untuk Semakan Awal
                     </button>
                     <p class="text-center text-[10px] text-slate-400">
-                        Dengan menghantar borang ini, anda bersetuju dengan <a href="#" class="text-navy underline">Dasar Privasi</a> kami.
+                        Dengan menghantar borang ini, anda bersetuju dengan <a href="https://www.pdp.gov.my/ppdpv1/en/akta/pdp-act-2010-en/" target="_blank" rel="noopener noreferrer" class="text-navy underline">Dasar Privasi</a> kami.
                     </p>
                 </form>
 
@@ -881,7 +883,7 @@
                                 <label id="label-consent-pdpa" class="flex items-start gap-3 cursor-pointer group rounded-lg p-1 -m-1 transition">
                                     <input type="checkbox" id="modal-consent-pdpa" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
                                     <span class="text-xs text-slate-600 leading-relaxed group-hover:text-slate-800 transition">
-                                        Saya telah membaca, memahami dan bersetuju dengan <a href="#" class="text-navy underline font-medium">Notis Perlindungan Data Peribadi</a>.
+                                        Saya telah membaca, memahami dan bersetuju dengan <a href="https://www.pdp.gov.my/ppdpv1/en/akta/pdp-act-2010-en/" target="_blank" rel="noopener noreferrer" class="text-navy underline font-medium">Notis Perlindungan Data Peribadi</a>.
                                     </span>
                                 </label>
 

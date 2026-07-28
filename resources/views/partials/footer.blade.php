@@ -31,8 +31,8 @@
             <div>
                 <h3 class="text-gold font-semibold text-xs tracking-widest uppercase mb-4">Undang-Undang</h3>
                 <div class="flex flex-col space-y-2.5">
-                    <a href="#" class="text-sm text-slate-400 hover:text-white transition">Dasar Privasi</a>
-                    <a href="#" class="text-sm text-slate-400 hover:text-white transition">Terma Perkhidmatan</a>
+                    <a href="https://www.pdp.gov.my/ppdpv1/en/akta/pdp-act-2010-en/" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-400 hover:text-white transition">Dasar Privasi</a>
+                    <!-- <a href="#" class="text-sm text-slate-400 hover:text-white transition">Terma Perkhidmatan</a> -->
                 </div>
             </div>
 
