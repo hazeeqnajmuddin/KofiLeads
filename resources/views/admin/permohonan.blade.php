@@ -185,7 +185,7 @@ $platformLabels = \App\Models\LeadPlatform::options();
                         'label' => ($jenisLabels[$d->jenis] ?? $d->jenis) . ($d->bulan ? " (Bulan {$d->bulan})" : ''),
                         'nama'  => $d->nama_fail,
                     ])->values();
-                    $waText = 'Assalamualaikum ' . $lead->nama . ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.';
+                    $waText = 'Assalamualaikum ' . $lead->nama . ', kami dari pihak perundingan kewangan ingin maklumkan status permohonan anda.';
                 @endphp
                 <tr class="table-row cursor-pointer transition hover:bg-slate-50/80 select-none"
                     onclick="viewDetails(this)"
@@ -436,7 +436,7 @@ function set(id, text) { document.getElementById(id).textContent = text; }
 
 function viewDetails(row) {
     const d = row.dataset;
-    const waText = encodeURIComponent('Assalamualaikum ' + d.nama + ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.');
+    const waText = encodeURIComponent('Assalamualaikum ' + d.nama + ', kami dari pihak perundingan kewangan ingin maklumkan status permohonan anda.');
 
     // Header
     set('modal-nama', d.nama);

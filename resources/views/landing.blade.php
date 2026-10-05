@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Rahmah Consultancy Services — Solusi Kewangan, Masa Depan Terjamin')
+@section('title', 'KofiLeads — Semakan Kelayakan & Pengurusan Lead Sales')
 
 @section('content')
 
@@ -14,18 +14,18 @@
 
         {{-- Overlay: Darkened to make text and video pop --}}
         <div class="absolute inset-0"
-             style="background: linear-gradient(to right, rgba(15,26,69,0.95) 0%, rgba(15,26,69,0.85) 100%);"></div>
+             style="background: linear-gradient(to right, rgba(30,27,75,0.95) 0%, rgba(30,27,75,0.85) 100%);"></div>
 
         {{-- Metallic gold top-border accent --}}
         <div class="absolute top-0 left-0 right-0 h-1 z-10"
-             style="background: linear-gradient(90deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);"></div>
+             style="background: linear-gradient(90deg, #D97706, #FDE68A, #F59E0B, #FDE68A, #D97706);"></div>
 
         {{-- Main Content Container (Grid for 2 columns on large screens) --}}
         <div class="relative z-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
             {{-- LEFT COLUMN: Text Content --}}
             <div class="text-center lg:text-left">
-                <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#C9A840;">
+                <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#F59E0B;">
                     Solusi Kewangan Dipercayai
                 </p>
 
@@ -35,7 +35,7 @@
                 </h1>
 
                 <p class="text-slate-100 text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    {{ \App\Models\Setting::get('hero_subtitle', 'Rahmah Consultancy Services menyediakan penyelesaian kewangan yang inovatif. Sertai lebih 10,000 pelanggan yang telah mempercayai kami.') }}
+                    {{ \App\Models\Setting::get('hero_subtitle', 'Penyelesaian perkhidmatan perundingan kewangan yang telus dan profesional.') }}
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
@@ -84,7 +84,7 @@
                     >
                         @php
                             $vid = \App\Models\Setting::get('video_iklan');
-                            $videoSrc = $vid ? \Illuminate\Support\Facades\Storage::disk('public')->url($vid) : asset('videos/TestVid.mp4');
+                            $videoSrc = $vid ? \Illuminate\Support\Facades\Storage::disk('public')->url($vid) : asset('videos/TestVid2.mp4');
                             // Match the <source> type to the real file so the browser knows the container.
                             $videoMime = match (strtolower(pathinfo($vid ?: 'x.mp4', PATHINFO_EXTENSION))) {
                                 'webm' => 'video/webm',
@@ -114,53 +114,67 @@
 
                 {{-- Owner photo with metallic gold ring --}}
                 <div class="reveal flex-shrink-0 flex justify-center">
-                    <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);">
+                    <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #D97706, #FDE68A, #F59E0B, #FDE68A, #D97706);">
                         <div class="rounded-full p-1 bg-white">
-                            <img src="{{ ($bi = \App\Models\Setting::get('bio_image')) ? \Illuminate\Support\Facades\Storage::disk('public')->url($bi) : asset('images/a5e960547f3d1fb5b0f887a23b10d43a~tplv-tiktokx-cropcenter_1080_1080.jpeg') }}"
-                                 alt="Pengasas Rahmah Consultancy"
-                                 class="w-44 h-44 sm:w-52 sm:h-52 rounded-full object-cover object-top block">
+                            @if($bi = \App\Models\Setting::get('bio_image'))
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($bi) }}"
+                                     alt="Profil Konsultan"
+                                     class="w-44 h-44 sm:w-52 sm:h-52 rounded-full object-cover object-top block">
+                            @else
+                                <div class="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                                    <svg class="w-24 h-24 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="1.2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 {{-- Biodata --}}
                 <div class="reveal text-center md:text-left">
-                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">{{ \App\Models\Setting::get('bio_jawatan', 'Pengarah Urusan') }}</p>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">{{ \App\Models\Setting::get('bio_nama', 'Khairul Amri Chamili') }}</h2>
+                    <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-2">{{ \App\Models\Setting::get('bio_jawatan', 'Konsultan Kewangan') }}</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-navy mb-1">{{ \App\Models\Setting::get('bio_nama', 'Nama Ejen / Sales') }}</h2>
                     
                     {{-- Social Media Icons --}}
                 <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+                    @if($fb = \App\Models\Setting::get('social_facebook'))
                     <!-- Facebook -->
-                    <a href="{{ \App\Models\Setting::get('social_facebook', 'https://facebook.com/YOUR_USERNAME') }}" target="_blank" rel="noopener noreferrer"
+                    <a href="{{ $fb }}" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300 shadow-sm"
                     title="Facebook">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M9 8H7v3h2v9h4v-9h3l.5-3H13V6c0-.5.5-1 1-1h2V2h-3a4 4 0 0 0-4 4v2z"/>
                         </svg>
                     </a>
+                    @endif
                     
+                    @if($ig = \App\Models\Setting::get('social_instagram'))
                     <!-- Instagram -->
-                    <a href="{{ \App\Models\Setting::get('social_instagram', 'https://instagram.com/YOUR_USERNAME') }}" target="_blank" rel="noopener noreferrer"
+                    <a href="{{ $ig }}" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition-all duration-300 shadow-sm"
                     title="Instagram">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
                         </svg>
                     </a>
+                    @endif
                     
+                    @if($tt = \App\Models\Setting::get('social_tiktok'))
                     <!-- TikTok -->
-                    <a href="{{ \App\Models\Setting::get('social_tiktok', 'https://www.tiktok.com/@khairulconsultant3') }}" target="_blank" rel="noopener noreferrer"
+                    <a href="{{ $tt }}" target="_blank" rel="noopener noreferrer"
                     class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300 shadow-sm"
                     title="TikTok">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                             <path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.74 4.05 1.08.97 2.52 1.44 3.93 1.55v3.7c-1.78-.05-3.5-.66-4.88-1.84-.02 2.44.02 4.88-.01 7.32-.12 2.78-1.57 5.43-4.13 6.6a8.04 8.04 0 0 1-8.52-.77 8.08 8.08 0 0 1-3.41-6.98 8.12 8.12 0 0 1 4.2-7.25c1.47-.84 3.19-1.15 4.86-.87v3.8a4.23 4.23 0 0 0-2.73 1.4c-.95 1.07-1.28 2.6-1.1 4.02.18 1.63 1.3 3.09 2.87 3.58 1.52.5 3.28.1 4.43-.96.95-1 1.2-2.47 1.18-3.85l.02-14.14z"/>
                         </svg>
                     </a>
+                    @endif
                 </div>
-                <p class="text-slate-400 text-sm mb-5">Rahmah Consultancy Services</p>
-                    <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+                <p class="text-slate-400 text-sm mb-5">{{ \App\Models\Setting::get('site_title', 'KofiLeads') }}</p>
+                    <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #D97706, #FDE68A, #D97706);"></div>
                 <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
-                    {{ \App\Models\Setting::get('bio_info', 'Dengan lebih 8 tahun pengalaman dalam industri kewangan Malaysia, beliau telah membantu ribuan pelanggan mencapai kebebasan kewangan melalui penyelesaian yang inovatif dan terancang. Pakar dalam perancangan kewangan, semakan pinjaman, dan penyatuan hutang dikenali kerana pendekatan yang telus dan berorientasikan hasil.') }}
+                    {{ \App\Models\Setting::get('bio_info', 'Isikan maklumat profil dan latar belakang perkhidmatan anda di sini.') }}
                 </p>
 
                     {{-- Credential stats --}}
@@ -180,7 +194,7 @@
                     </div>
 
                     <p class="text-xs text-slate-400 mt-4 max-w-sm mx-auto md:mx-0 leading-relaxed italic">
-                        * Kelulusan tertakluk kepada profil kewangan pelanggan, rekod CCRIS/CTOS, dokumen sokongan dan penilaian akhir pihak bank/koperasi. RCS tidak menjamin sebarang kelulusan pembiayaan.
+                        * Kelulusan tertakluk kepada profil kewangan pelanggan, rekod CCRIS/CTOS, dokumen sokongan dan penilaian akhir pihak bank/koperasi. Pihak kami tidak menjamin sebarang kelulusan pembiayaan.
                     </p>
 
             </div>
@@ -270,9 +284,9 @@
                         Alhamdulillah, pelanggan berjaya mendapatkan solusi penyatuan hutang selepas semakan kelayakan dibuat secara teratur.
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-white font-bold text-xs flex-shrink-0">RCS</div>
+                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-gold font-extrabold text-[11px] flex-shrink-0">KL</div>
                         <div>
-                            <p class="font-semibold text-navy text-sm">Pelanggan RCS</p>
+                            <p class="font-semibold text-navy text-sm">Pelanggan KofiLeads</p>
                             <p class="text-slate-400 text-xs">Penyatuan Hutang</p>
                         </div>
                     </div>
@@ -284,9 +298,9 @@
                         Pelanggan lebih jelas tentang komitmen bulanan dan pilihan pembiayaan yang sesuai selepas sesi konsultasi.
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-white font-bold text-xs flex-shrink-0">RCS</div>
+                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-gold font-extrabold text-[11px] flex-shrink-0">KL</div>
                         <div>
-                            <p class="font-semibold text-navy text-sm">Pelanggan RCS</p>
+                            <p class="font-semibold text-navy text-sm">Pelanggan KofiLeads</p>
                             <p class="text-slate-400 text-xs">Konsultasi Kewangan</p>
                         </div>
                     </div>
@@ -298,9 +312,9 @@
                         Proses semakan dibantu daripada peringkat dokumen sehingga permohonan dihantar kepada pihak berkaitan.
                     </p>
                     <div class="mt-6 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-white font-bold text-xs flex-shrink-0">RCS</div>
+                        <div class="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-gold font-extrabold text-[11px] flex-shrink-0">KL</div>
                         <div>
-                            <p class="font-semibold text-navy text-sm">Pelanggan RCS</p>
+                            <p class="font-semibold text-navy text-sm">Pelanggan KofiLeads</p>
                             <p class="text-slate-400 text-xs">Semakan Kelayakan</p>
                         </div>
                     </div>
@@ -451,7 +465,7 @@
         </div>
 
         <p class="reveal text-center text-xs text-slate-500 mt-10 max-w-2xl mx-auto leading-relaxed">
-            Nota: Semakan sendiri ("self-check") tidak menjejaskan rekod kredit anda. Rahmah Consultancy Services tidak menjamin kelulusan pinjaman; kami membantu anda memahami laporan ini dan menyediakan dokumen sokongan yang tepat sebelum permohonan dibuat.
+            Nota: Semakan sendiri ("self-check") tidak menjejaskan rekod kredit anda. Pihak kami tidak menjamin kelulusan pinjaman; kami membantu anda memahami laporan ini dan menyediakan dokumen sokongan yang tepat sebelum permohonan dibuat.
         </p>
 
     </div>
@@ -469,11 +483,11 @@
 
                 <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
-                        <span>Apakah servis utama RCS?</span>
+                        <span>Apakah servis utama KofiLeads?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="faq-answer hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed">
-                        RCS menyediakan khidmat konsultasi kewangan, semakan kelayakan pembiayaan peribadi, penyatuan hutang dan panduan berkaitan isu CCRIS, CTOS, AKPK, SAA, legal action serta komitmen kewangan.
+                        KofiLeads menyediakan khidmat konsultasi kewangan, semakan kelayakan pembiayaan peribadi, penyatuan hutang dan panduan berkaitan isu CCRIS, CTOS, AKPK, SAA, legal action serta komitmen kewangan.
                     </div>
                 </div>
 
@@ -508,7 +522,7 @@
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="faq-answer hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed">
-                        Tidak. RCS mengamalkan konsep bayaran hanya apabila permohonan berjaya diluluskan, tertakluk kepada terma perkhidmatan.
+                        Tidak. Pihak kami mengamalkan konsep bayaran hanya apabila permohonan berjaya diluluskan, tertakluk kepada terma perkhidmatan.
                     </div>
                 </div>
 
@@ -544,11 +558,11 @@
 
                 <div class="reveal faq-item bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
                     <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-navy hover:text-gold transition text-sm">
-                        <span>Adakah RCS menjamin kelulusan pinjaman?</span>
+                        <span>Adakah kelulusan pinjaman dijamin?</span>
                         <svg class="faq-icon w-5 h-5 text-gold flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="faq-answer hidden px-5 pb-5 text-slate-600 text-sm leading-relaxed">
-                        Tidak. Kelulusan adalah tertakluk sepenuhnya kepada penilaian pihak bank atau koperasi. RCS membantu dari segi semakan awal, konsultasi, penyusunan dokumen dan cadangan solusi yang bersesuaian.
+                        Tidak. Kelulusan adalah tertakluk sepenuhnya kepada penilaian pihak bank atau koperasi. Pihak kami membantu dari segi semakan awal, konsultasi, penyusunan dokumen dan cadangan solusi yang bersesuaian.
                     </div>
                 </div>
 
@@ -872,7 +886,7 @@
                             {{-- Declaration text --}}
                             <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    Saya mengesahkan bahawa semua maklumat dan dokumen yang diberikan adalah benar. Saya bersetuju membenarkan <span class="font-semibold text-navy">Rahmah Consultancy Services</span> mengumpul, menyimpan, memproses dan berkongsi maklumat saya kepada bank, koperasi, institusi kewangan, banker, panel atau rakan strategik berkaitan bagi tujuan semakan kelayakan, penyatuan hutang, permohonan pembiayaan, pemulihan rekod dan susulan kes. Saya faham bahawa semakan ini <span class="font-semibold">tidak menjamin kelulusan</span>.
+                                    Saya mengesahkan bahawa semua maklumat dan dokumen yang diberikan adalah benar. Saya bersetuju membenarkan <span class="font-semibold text-navy">pihak pengurusan</span> mengumpul, menyimpan, memproses dan berkongsi maklumat saya kepada bank, koperasi, institusi kewangan, banker, panel atau rakan strategik berkaitan bagi tujuan semakan kelayakan, penyatuan hutang, permohonan pembiayaan, pemulihan rekod dan susulan kes. Saya faham bahawa semakan ini <span class="font-semibold">tidak menjamin kelulusan</span>.
                                 </p>
                             </div>
 
@@ -902,7 +916,7 @@
                                 <label class="flex items-start gap-3 cursor-pointer group">
                                     <input type="checkbox" id="modal-consent-marketing" name="consent_marketing" class="mt-0.5 accent-navy flex-shrink-0 w-4 h-4">
                                     <span class="text-xs text-slate-500 leading-relaxed group-hover:text-slate-700 transition">
-                                        Saya bersetuju menerima maklumat promosi/pendidikan kewangan daripada Rahmah Consultancy Services.
+                                        Saya bersetuju menerima maklumat promosi/pendidikan kewangan.
                                     </span>
                                 </label>
                             </div>
@@ -1010,7 +1024,7 @@
             </div>
 
             @php
-                $footerEmail = \App\Models\Setting::get('contact_email', 'rahmahconsultant@gmail.com');
+                $footerEmail = \App\Models\Setting::get('contact_email', 'sales@example.com');
                 $footerPhone = \App\Models\Setting::get('whatsapp_number', '+60 12-345 6789');
                 $footerTel   = 'tel:' . preg_replace('/\D/', '', $footerPhone);
             @endphp

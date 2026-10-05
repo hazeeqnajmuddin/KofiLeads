@@ -53,21 +53,21 @@ class ReferenceCode extends Model
     }
 
     /**
-     * The next sequential code suggestion (RCMS01, RCMS02, …), one higher than
-     * the largest existing RCMS-prefixed code.
+     * The next sequential code suggestion (KL01, KL02, …), one higher than
+     * the largest existing KL-prefixed code.
      */
     public static function nextCode(): string
     {
         $max = static::query()
-            ->where('code', 'like', 'RCMS%')
+            ->where('code', 'like', 'KL%')
             ->get()
             ->map(fn (self $rc) => (int) preg_replace('/\D/', '', $rc->code))
             ->max() ?? 0;
 
-        return 'RCMS'.str_pad((string) ($max + 1), 2, '0', STR_PAD_LEFT);
+        return 'KL'.str_pad((string) ($max + 1), 2, '0', STR_PAD_LEFT);
     }
 
-    /** A unique code to use when the admin doesn't type one (e.g. "RCMS03"). */
+    /** A unique code to use when the admin doesn't type one (e.g. "KL01"). */
     public static function generate(): string
     {
         return static::nextCode();

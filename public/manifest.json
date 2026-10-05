@@ -1,9 +1,9 @@
 {
-    "name": "RCMS — Panel Admin",
-    "short_name": "RCMS Admin",
+    "name": "KofiLeads — Panel Admin",
+    "short_name": "KofiLeads Admin",
     "background_color": "#0F1A45",
     "display": "standalone",
-    "description": "Panel pentadbir Rahmah Consultancy Services.",
+    "description": "Panel Pentadbir Lead Management Sales.",
     "theme_color": "#1B2B6B",
     "start_url": "/admin/dashboard",
     "icons": [

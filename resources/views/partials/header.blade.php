@@ -2,8 +2,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
 
-            <a href="/" class="flex-shrink-0">
-                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services" class="h-30 w-auto">
+            <a href="/" class="flex items-center gap-2.5 group">
+                @if($logo = \App\Models\Setting::get('site_logo'))
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($logo) }}" alt="{{ \App\Models\Setting::get('site_title', 'KofiLeads') }}" class="h-10 w-auto object-contain">
+                @else
+                    <div class="w-9 h-9 rounded-xl bg-navy text-gold flex items-center justify-center font-black text-lg shadow-md group-hover:scale-105 transition-transform">
+                        K
+                    </div>
+                    <span class="text-xl font-black text-navy tracking-tight group-hover:text-gold transition-colors">KofiLeads</span>
+                @endif
             </a>
 
             <nav class="hidden md:flex items-center space-x-8">

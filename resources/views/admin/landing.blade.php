@@ -390,25 +390,25 @@
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Alamat Emel</label>
                             <input type="email" name="contact_email" value="{{ old('contact_email', $settings['contact_email'] ?? '') }}"
-                                   placeholder="info@rahmahconsultancy.com"
+                                   placeholder="sales@example.com"
                                    class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Facebook URL</label>
                             <input type="url" name="facebook_url" value="{{ old('facebook_url', $settings['facebook_url'] ?? '') }}"
-                                   placeholder="https://facebook.com/rahmahconsultancy"
+                                   placeholder="https://facebook.com/yourpage"
                                    class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">TikTok URL</label>
                             <input type="url" name="tiktok_url" value="{{ old('tiktok_url', $settings['tiktok_url'] ?? '') }}"
-                                   placeholder="https://tiktok.com/@rahmahconsultancy"
+                                   placeholder="https://tiktok.com/@yourhandle"
                                    class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Instagram URL</label>
                             <input type="url" name="instagram_url" value="{{ old('instagram_url', $settings['instagram_url'] ?? '') }}"
-                                   placeholder="https://instagram.com/rahmahconsultancy"
+                                   placeholder="https://instagram.com/yourhandle"
                                    class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy transition">
                         </div>
                     </div>

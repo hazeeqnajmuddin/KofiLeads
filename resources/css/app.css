@@ -9,12 +9,12 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-navy:       #1B2B6B;
-    --color-navy-dark:  #0F1A45;
-    --color-navy-light: #2D4080;
-    --color-gold:       #C9A840;
-    --color-gold-dark:  #A8882E;
-    --color-gold-light: #FBF3D5;
+    --color-navy:       #312E81;
+    --color-navy-dark:  #1E1B4B;
+    --color-navy-light: #4338CA;
+    --color-gold:       #F59E0B;
+    --color-gold-dark:  #D97706;
+    --color-gold-light: #FEF3C7;
 }
 
 /* Desktop typography — scales all rem-based sizes proportionally, mobile untouched */
@@ -28,7 +28,7 @@
 /* Elegant dot-grid background for light content sections */
 .bg-dot-grid {
     background-color: #f8fafc;
-    background-image: radial-gradient(circle, rgba(27, 43, 107, 0.06) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(49, 46, 129, 0.06) 1px, transparent 1px);
     background-size: 24px 24px;
 }
 
@@ -39,7 +39,7 @@
 
 /* Metallic gold gradient text */
 .gold-metallic-text {
-    background: linear-gradient(135deg, #C9A840 0%, #FFE87C 30%, #F5D060 50%, #C9A840 70%, #A8882E 100%);
+    background: linear-gradient(135deg, #F59E0B 0%, #FDE68A 30%, #FBBF24 50%, #F59E0B 70%, #D97706 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -47,16 +47,16 @@
 
 /* Metallic gold CTA button */
 .btn-gold-metallic {
-    background: linear-gradient(135deg, #A8882E 0%, #C9A840 25%, #FFE87C 50%, #C9A840 75%, #A8882E 100%);
-    color: #0F1A45;
+    background: linear-gradient(135deg, #D97706 0%, #F59E0B 25%, #FDE68A 50%, #F59E0B 75%, #D97706 100%);
+    color: #1E1B4B;
     border-radius: 0.75rem;
     display: inline-block;
     transition: filter 0.25s ease, box-shadow 0.25s ease;
     text-decoration: none;
 }
 .btn-gold-metallic:hover {
-    filter: brightness(0.87);
-    box-shadow: 0 6px 28px rgba(201, 168, 64, 0.5);
+    filter: brightness(0.92);
+    box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
 }
 
 /* Hero background photo — subtle zoom on load */

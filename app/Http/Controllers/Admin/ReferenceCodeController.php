@@ -12,7 +12,7 @@ class ReferenceCodeController extends Controller
 {
     /**
      * Create a reference code for a live session. If the admin leaves the code
-     * blank, the next sequential one (RCMS01, RCMS02, …) is generated. New codes
+     * blank, the next sequential one (KL01, KL02, …) is generated. New codes
      * start active; more than one code may be active at the same time.
      */
     public function store(Request $request): RedirectResponse

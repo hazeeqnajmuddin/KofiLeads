@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tetapkan Semula Kata Laluan — Panel Admin RCS</title>
+    <title>Tetapkan Semula Kata Laluan — Panel Admin KofiLeads</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.jpeg') }}">
 </head>
 <body class="font-sans antialiased min-h-screen flex items-center justify-center px-4"
-      style="background: linear-gradient(135deg, #0F1A45 0%, #1B2B6B 60%, #0F1A45 100%);">
+      style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 60%, #1E1B4B 100%);">
 
     <div class="fixed top-0 left-0 right-0 h-1 z-10"
-         style="background: linear-gradient(90deg, #A8882E, #FFE87C, #C9A840, #FFE87C, #A8882E);"></div>
+         style="background: linear-gradient(90deg, #D97706, #FDE68A, #F59E0B, #FDE68A, #D97706);"></div>
 
     <div class="pointer-events-none fixed inset-0 overflow-hidden">
         <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full opacity-10"
-             style="background: radial-gradient(circle, #C9A840, transparent);"></div>
+             style="background: radial-gradient(circle, #F59E0B, transparent);"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full opacity-10"
-             style="background: radial-gradient(circle, #C9A840, transparent);"></div>
+             style="background: radial-gradient(circle, #F59E0B, transparent);"></div>
     </div>
 
     <div class="relative w-full max-w-md">
 
         <div class="flex justify-center mb-6">
-            <div class="bg-white rounded-xl px-6 py-3 shadow-xl ring-1 ring-white/10">
-                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services"
-                     class="h-24 w-auto object-contain">
+            <div class="bg-white rounded-xl px-6 py-3 shadow-xl ring-1 ring-white/10 flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-lg bg-navy text-gold flex items-center justify-center font-black text-xl">
+                    K
+                </div>
+                <span class="text-2xl font-black text-navy tracking-tight">KofiLeads</span>
             </div>
         </div>
 
@@ -36,7 +38,7 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="h-1" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #C9A840);"></div>
+            <div class="h-1" style="background: linear-gradient(90deg, #D97706, #FDE68A, #F59E0B);"></div>
 
             <div class="px-8 py-8">
 
@@ -128,7 +130,7 @@
                 </svg>
                 Kembali ke Log Masuk
             </a>
-            <p class="text-slate-600 text-[11px] mt-2">© {{ date('Y') }} Rahmah Consultancy Services</p>
+            <p class="text-slate-600 text-[11px] mt-2">© {{ date('Y') }} KofiLeads</p>
         </div>
 
     </div>

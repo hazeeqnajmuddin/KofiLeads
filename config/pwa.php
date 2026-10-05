@@ -19,15 +19,15 @@ return [
     */
 
     'manifest' => [
-        'name' => 'RCMS — Panel Admin',
-        'short_name' => 'RCMS Admin',
+        'name' => 'KofiLeads — Panel Admin',
+        'short_name' => 'KofiLeads Admin',
         // NOTE: erag:update-manifest hard-codes start_url to '/'. This is an
         // admin-only PWA, so after running that command re-set start_url to
         // '/admin/dashboard' in public/manifest.json (done there already).
         'start_url' => '/admin/dashboard',
         'background_color' => '#0F1A45',
         'display' => 'standalone',
-        'description' => 'Panel pentadbir Rahmah Consultancy Services.',
+        'description' => 'Panel Pentadbir Lead Management Sales.',
         'theme_color' => '#1B2B6B',
         'icons' => [
             [
