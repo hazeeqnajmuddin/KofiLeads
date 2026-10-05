@@ -1,6 +1,6 @@
 <head>
-    <title>Rahmah Consultancy Services</title>
-    <meta name="description" content="Rahmah Consultancy Services - Semak Kelayakan & Penyatuan Hutang">
+    <title>{{ \App\Models\Setting::get('site_title', 'KofiLeads') }}</title>
+    <meta name="description" content="Semak Kelayakan & Pengurusan Lead Sales">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     @vite('resources/css/app.css')
@@ -15,14 +15,14 @@
                 Pengesahan & Persetujuan
             </h2>
             <p class="text-brand-gold text-xs text-spacing-wide uppercase mt-1.5 font-semibold">
-                Rahmah Consultancy Services
+                {{ \App\Models\Setting::get('site_title', 'KofiLeads') }}
             </p>
         </div>
 
         <div class="px-6 py-6 overflow-y-auto max-h-[70vh]">
             
             <p class="text-brand-gray text-sm md:text-base leading-relaxed mb-8 text-justify">
-                Saya mengesahkan bahawa semua maklumat dan dokumen yang diberikan adalah benar. Saya bersetuju membenarkan <span class="font-semibold text-brand-navy">Rahmah Consultancy Services</span> mengumpul, menyimpan, memproses dan berkongsi maklumat saya kepada bank, koperasi, institusi kewangan, banker, panel atau rakan strategik berkaitan bagi tujuan semakan kelayakan, penyatuan hutang, permohonan pembiayaan, pemulihan rekod dan susulan kes. Saya faham bahawa semakan ini tidak menjamin kelulusan.
+                Saya mengesahkan bahawa semua maklumat dan dokumen yang diberikan adalah benar. Saya bersetuju membenarkan <span class="font-semibold text-brand-navy">pihak pengurusan</span> mengumpul, menyimpan, memproses dan berkongsi maklumat saya kepada bank, koperasi, institusi kewangan, banker, panel atau rakan strategik berkaitan bagi tujuan semakan kelayakan, penyatuan hutang, permohonan pembiayaan, pemulihan rekod dan susulan kes. Saya faham bahawa semakan ini tidak menjamin kelulusan.
             </p>
 
             <form id="acknowledgement-form" class="space-y-8">
@@ -64,7 +64,7 @@
                                 class="w-5 h-5 rounded border-gray-300 accent-brand-gold cursor-pointer">
                         </div>
                         <span class="text-sm text-brand-gray group-hover:text-brand-navy transition-colors duration-200">
-                            Saya bersetuju menerima maklumat promosi/pendidikan kewangan daripada Rahmah Consultancy Services.
+                            Saya bersetuju menerima maklumat promosi/pendidikan kewangan.
                         </span>
                     </label>
                 </div>

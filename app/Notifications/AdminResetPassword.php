@@ -33,12 +33,12 @@ class AdminResetPassword extends Notification
         $expire = Config::get('auth.passwords.'.Config::get('auth.defaults.passwords').'.expire', 60);
 
         return (new MailMessage)
-            ->subject('Tetapan Semula Kata Laluan — Rahmah Consultancy Services')
+            ->subject('Tetapan Semula Kata Laluan — KofiLeads')
             ->greeting('Salam,')
             ->line('Kami menerima permintaan untuk menetapkan semula kata laluan akaun admin anda.')
             ->action('Tetapkan Semula Kata Laluan', $url)
             ->line("Pautan ini akan tamat tempoh dalam {$expire} minit.")
             ->line('Jika anda tidak membuat permintaan ini, abaikan e-mel ini — kata laluan anda kekal tidak berubah.')
-            ->salutation('Terima kasih, Rahmah Consultancy Services');
+            ->salutation('Terima kasih, Pasukan KofiLeads');
     }
 }

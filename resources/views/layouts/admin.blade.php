@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Panel Admin') — Rahmah Consulting</title>
+    <title>@yield('title', 'Panel Admin') — KofiLeads</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @PwaHead
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.jpeg') }}">
@@ -28,8 +28,11 @@ $adminLinks = [
 
         <!-- Left: Logo -->
         <div class="flex-shrink-0">
-            <a href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('images/logo4.png') }}" alt="Rahmah Consultancy Services" class="h-11 sm:h-30 w-auto">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-lg bg-navy text-gold flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
+                    K
+                </div>
+                <span class="text-lg font-black text-navy tracking-tight group-hover:text-gold transition-colors">KofiLeads</span>
             </a>
         </div>
 
@@ -162,7 +165,7 @@ document.addEventListener('click', function (e) {
 <!-- Footer -->
 <footer class="border-t border-slate-200 bg-white">
     <div class="max-w-screen-xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
-        <p class="text-xs text-slate-400">© {{ date('Y') }} Rahmah Consultancy Services. Hak Cipta Terpelihara.</p>
+        <p class="text-xs text-slate-400">© {{ date('Y') }} KofiLeads. Hak Cipta Terpelihara.</p>
         <p class="text-xs text-slate-300">Panel Pentadbir v1.0</p>
     </div>
 </footer>
@@ -263,7 +266,7 @@ document.addEventListener('click', function (e) {
         console.clear();
         console.log('%c⚠ AMARAN KESELAMATAN', 'color:#dc2626;font-size:28px;font-weight:bold;font-family:sans-serif;');
         console.log('%cRuang ini adalah untuk pembangun sahaja.\nJika seseorang meminta anda menyalin atau menaip sesuatu di sini, ini mungkin penipuan.', 'color:#374151;font-size:14px;line-height:1.6;font-family:sans-serif;');
-        console.log('%cRahmah Consultancy Services — Panel Pentadbir', 'color:#6b7280;font-size:11px;font-family:sans-serif;');
+        console.log('%cKofiLeads — Panel Pentadbir', 'color:#6b7280;font-size:11px;font-family:sans-serif;');
     };
     warn();
     /* Re-emit on visibility change (catches open-on-tab-switch). */

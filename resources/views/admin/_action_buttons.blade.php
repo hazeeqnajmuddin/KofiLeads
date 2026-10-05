@@ -1,5 +1,5 @@
 <div class="flex items-center justify-end gap-2">
-    <a href="https://wa.me/{{ $phone }}?text={{ urlencode('Assalamualaikum ' . $nama . ', kami dari Rahmah Consultancy Services ingin maklumkan status permohonan anda.') }}"
+    <a href="https://wa.me/{{ $phone }}?text={{ urlencode('Assalamualaikum ' . $nama . ', kami dari pihak perundingan kewangan ingin maklumkan status permohonan anda.') }}"
        target="_blank"
        class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg hover:bg-emerald-100 transition">
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">

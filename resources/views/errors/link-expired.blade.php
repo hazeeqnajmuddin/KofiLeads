@@ -12,7 +12,7 @@
         </div>
         <h1 class="text-xl font-bold text-navy mb-2">Pautan Tamat Tempoh</h1>
         <p class="text-sm text-slate-500 leading-relaxed mb-6">
-            Pautan dokumen ini telah tamat tempoh atau tidak sah. Sila hubungi Rahmah Consultancy Services untuk mendapatkan pautan yang baharu.
+            Pautan dokumen ini telah tamat tempoh atau tidak sah. Sila hubungi pihak kami untuk mendapatkan pautan yang baharu.
         </p>
         <a href="{{ url('/') }}" class="inline-block bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-6 py-3 rounded-xl transition">
             Kembali ke Laman Utama
