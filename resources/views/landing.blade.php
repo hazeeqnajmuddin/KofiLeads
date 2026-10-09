@@ -14,18 +14,18 @@
 
         {{-- Overlay: Darkened to make text and video pop --}}
         <div class="absolute inset-0"
-             style="background: linear-gradient(to right, rgba(30,27,75,0.95) 0%, rgba(30,27,75,0.85) 100%);"></div>
+             style="background: linear-gradient(to right, rgba(5,3,39,0.95) 0%, rgba(5,3,39,0.85) 100%);"></div>
 
         {{-- Metallic gold top-border accent --}}
         <div class="absolute top-0 left-0 right-0 h-1 z-10"
-             style="background: linear-gradient(90deg, #D97706, #FDE68A, #F59E0B, #FDE68A, #D97706);"></div>
+             style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #1B82E5, #7CC0F5, #0F51C5);"></div>
 
         {{-- Main Content Container (Grid for 2 columns on large screens) --}}
         <div class="relative z-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
             {{-- LEFT COLUMN: Text Content --}}
             <div class="text-center lg:text-left">
-                <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#F59E0B;">
+                <p class="font-semibold text-xs tracking-widest uppercase mb-5" style="color:#1B82E5;">
                     Solusi Kewangan Dipercayai
                 </p>
 
@@ -57,11 +57,11 @@
                 {{-- Trust badges --}}
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-400 text-xs">
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <svg class="w-4 h-4" style="color:#1B82E5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                         <span>Selamat & Terjamin</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" style="color:#C9A840" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                        <svg class="w-4 h-4" style="color:#1B82E5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
                         <span>10,000+ Pelanggan</span>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
             {{-- RIGHT COLUMN: Client Video --}}
             <div class="w-full max-w-lg mx-auto lg:max-w-none relative">
                 {{-- Decorative glow behind video --}}
-                <div class="absolute -inset-1 bg-gradient-to-r from-[#A8882E] to-[#FFE87C] rounded-2xl blur opacity-30"></div>
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#0F51C5] to-[#7CC0F5] rounded-2xl blur opacity-30"></div>
                 
                 <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                     <video 
@@ -114,7 +114,7 @@
 
                 {{-- Owner photo with metallic gold ring --}}
                 <div class="reveal flex-shrink-0 flex justify-center">
-                    <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #D97706, #FDE68A, #F59E0B, #FDE68A, #D97706);">
+                    <div class="rounded-full p-[3px]" style="background: linear-gradient(135deg, #0F51C5, #7CC0F5, #1B82E5, #7CC0F5, #0F51C5);">
                         <div class="rounded-full p-1 bg-white">
                             @if($bi = \App\Models\Setting::get('bio_image'))
                                 <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($bi) }}"
@@ -172,7 +172,7 @@
                     @endif
                 </div>
                 <p class="text-slate-400 text-sm mb-5">{{ \App\Models\Setting::get('site_title', 'KofiLeads') }}</p>
-                    <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #D97706, #FDE68A, #D97706);"></div>
+                    <div class="w-12 h-0.5 mb-5 mx-auto md:mx-0" style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #0F51C5);"></div>
                 <p class="text-slate-600 leading-relaxed mb-8 text-sm max-w-lg">
                     {{ \App\Models\Setting::get('bio_info', 'Isikan maklumat profil dan latar belakang perkhidmatan anda di sini.') }}
                 </p>
@@ -207,7 +207,7 @@
             <div class="reveal text-center mb-14">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Apa Yang Kami Tawarkan</p>
                 <h2 class="text-3xl sm:text-4xl font-bold text-navy">Servis Kami</h2>
-                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #0F51C5);"></div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -274,7 +274,7 @@
             <div class="reveal text-center mb-12">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Testimoni Pelanggan</p>
                 <h2 class="text-3xl font-bold text-navy">Apa Kata Mereka?</h2>
-                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #0F51C5);"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -331,7 +331,7 @@
         <div class="reveal text-center mb-14">
             <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Semak Sendiri Rekod Anda</p>
             <h2 class="text-3xl sm:text-4xl font-bold text-navy">Panduan Mendapatkan Laporan Kredit Individu</h2>
-            <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+            <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #0F51C5);"></div>
             <p class="text-slate-500 text-sm mt-5 max-w-2xl mx-auto leading-relaxed">
                 CCRIS, CTOS dan Experian adalah tiga sumber utama yang digunakan bank dan institusi kewangan untuk menilai kelayakan kredit anda. Berikut adalah panduan ringkas untuk mendapatkan setiap laporan secara sah dan terus daripada penyedia rasmi.
             </p>
@@ -477,7 +477,7 @@
             <div class="reveal text-center mb-12">
                 <p class="text-gold font-semibold text-xs tracking-widest uppercase mb-3">Ada Soalan?</p>
                 <h2 class="text-3xl font-bold text-navy">Soalan Lazim</h2>
-                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #A8882E, #FFE87C, #A8882E);"></div>
+                <div class="mt-4 w-16 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, #0F51C5, #7CC0F5, #0F51C5);"></div>
             </div>
             <div class="space-y-3">
 

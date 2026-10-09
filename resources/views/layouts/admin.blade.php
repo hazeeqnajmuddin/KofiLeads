@@ -29,9 +29,7 @@ $adminLinks = [
         <!-- Left: Logo -->
         <div class="flex-shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 rounded-lg bg-navy text-gold flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
-                    K
-                </div>
+                <img src="{{ asset('images/kofikod-logo.jpeg') }}" alt="Kofi Kod" class="w-8 h-8 object-contain group-hover:scale-105 transition-transform">
                 <span class="text-lg font-black text-navy tracking-tight group-hover:text-gold transition-colors">KofiLeads</span>
             </a>
         </div>

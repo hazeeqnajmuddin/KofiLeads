@@ -6,9 +6,7 @@
                 @if($logo = \App\Models\Setting::get('site_logo'))
                     <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($logo) }}" alt="{{ \App\Models\Setting::get('site_title', 'KofiLeads') }}" class="h-10 w-auto object-contain">
                 @else
-                    <div class="w-9 h-9 rounded-xl bg-navy text-gold flex items-center justify-center font-black text-lg shadow-md group-hover:scale-105 transition-transform">
-                        K
-                    </div>
+                    <img src="{{ asset('images/kofikod-logo.jpeg') }}" alt="Kofi Kod" class="w-9 h-9 object-contain group-hover:scale-105 transition-transform">
                     <span class="text-xl font-black text-navy tracking-tight group-hover:text-gold transition-colors">KofiLeads</span>
                 @endif
             </a>

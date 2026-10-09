@@ -680,11 +680,11 @@
         border-radius: 6px; padding: 1px 8px; font-weight: 600;
     }
     .rcms-revert-btn {
-        color: #1B2B6B; font-weight: 600; text-decoration: underline;
+        color: #09073D; font-weight: 600; text-decoration: underline;
         cursor: pointer; background: none; border: none; padding: 0;
         display: inline-flex; align-items: center; gap: 3px;
     }
-    .rcms-revert-btn:hover { color: #C9A840; }
+    .rcms-revert-btn:hover { color: #1B82E5; }
 </style>
 <script>
 (function () {
